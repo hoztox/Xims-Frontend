@@ -291,7 +291,7 @@ const Companies = () => {
         }`}
       >
         <Toaster position="top-center" reverseOrder={false} />
-        <h1 className="cmpilisthead">Companies List</h1>
+        <h1 className="cmpilisthead">Companies</h1>
         <div className="lg:flex gap-3 p-5 navcomitems">
           <div className="relative">
             <input
