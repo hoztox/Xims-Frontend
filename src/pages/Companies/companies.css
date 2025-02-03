@@ -376,34 +376,51 @@
   margin-top: 5px;
   padding: 2px 7px;
 }
-.activesubdatetext {
-  background-color: #ffefe2;
-  border-radius: 3px;
-  margin-top: 5px;
-  padding: 2px 7px;
-}
 .activesubplantexttext {
   color: #12809f;
   font-family: "Switzer Regular";
   font-size: 12px;
   line-height: 16px;
 }
-.activesubdatetexttext {
+.expire-on-text {
+  border-radius: 3px;
   color: #fea354;
+  background-color: #ffefe2;
   font-family: "Switzer Regular";
   font-size: 12px;
   line-height: 16px;
+  padding: 3px 7px;
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.expired-text {
+  border-radius: 3px;
+  color: #ff7f7f;
+  background-color: #fef2f2;
+  font-family: "Switzer Regular";
+  font-size: 12px;
+  line-height: 16px;
+  margin-top: 5px;
+  padding: 3px 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .main.dark .activesubplantext {
   background-color: #022c37;
 }
-.main.dark .activesubdatetext {
+.main.dark .expire-on-text {
   background-color: #2d1501;
+}
+.main.dark .expired-text {
+  background-color: #e13f231c;
 }
 .main.dark .activesubplantexttext {
   color: #23b8e1;
 }
-.main.dark .activesubdatetexttext {
+.main.dark .expire-on-text {
   color: #e17c23;
 }
 .inactivesubtext {
@@ -434,6 +451,8 @@
 .paginationmob.dark .paginationnorecent {
   color: white;
 }
+
+
 
 @media (min-width: 1100px) {
   .dropdown-imgtab {
@@ -514,7 +533,7 @@
   .companiestheadlogo {
     width: 100px;
   }
-  .inactivesubtexttext, .activesubplantexttext, .activesubdatetexttext  {
+  .inactivesubtexttext, .activesubplantexttext, .expire-on-text, .expired-text {
     font-size: 10px; 
 }
 .compnyname, .companydataname {
@@ -813,14 +832,26 @@
     font-size: 10px;
     line-height: 16px;
   }
-  .activesubdatetext {
+  .expire-on-text {
     background-color: #ffefe2;
     border-radius: 3px;
     margin-top: 5px;
     padding: 2px 7px;
   }
-  .activesubdatetexttext {
+  .expire-on-text {
     color: #fea354;
+    font-family: "Switzer Regular";
+    font-size: 10px;
+    line-height: 16px;
+  }
+  .expired-text {
+    background-color: #fef2f2;
+    border-radius: 3px;
+    margin-top: 5px;
+    padding: 2px 7px;
+  }
+  .expired-text {
+    color: #ff7f7f;
     font-family: "Switzer Regular";
     font-size: 10px;
     line-height: 16px;
@@ -877,8 +908,14 @@
     font-size: 9px;
     line-height: 16px;
   }
-  .activesubdatetexttext {
+  .expire-on-text {
     color: #fea354;
+    font-family: "Switzer Regular";
+    font-size: 9px;
+    line-height: 16px;
+  }
+  .expired-text {
+    color: #ff7f7f;
     font-family: "Switzer Regular";
     font-size: 9px;
     line-height: 16px;
@@ -923,8 +960,14 @@
     font-size: 8px;
     line-height: 16px;
   }
-  .activesubdatetexttext {
+  .expire-on-text {
     color: #fea354;
+    font-family: "Switzer Regular";
+    font-size: 8px;
+    line-height: 16px;
+  }
+  .expired-text {
+    color: #ff7f7f;
     font-family: "Switzer Regular";
     font-size: 8px;
     line-height: 16px;
@@ -961,8 +1004,14 @@
     font-size: 8px;
     line-height: 16px;
   }
-  .activesubdatetexttext {
+  .expire-on-text {
     color: #fea354;
+    font-family: "Switzer Regular";
+    font-size: 8px;
+    line-height: 16px;
+  }
+  .expired-text {
+    color: #ff7f7f;
     font-family: "Switzer Regular";
     font-size: 8px;
     line-height: 16px;

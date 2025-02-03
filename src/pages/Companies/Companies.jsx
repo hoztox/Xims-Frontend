@@ -178,19 +178,27 @@ const Companies = () => {
     const subscriber = subscribers.find(
       (subscriber) => subscriber.company === companyId
     );
-
+  
     if (!subscriber || !subscriber.expiry_date) return "";
-
+  
     // Convert the expiry_date to a date object
-    const date = new Date(subscriber.expiry_date);
-
-    // Format the date as dd-mm-yyyy
-    const formattedDate = `${String(date.getDate()).padStart(2, "0")}-${String(
-      date.getMonth() + 1
-    ).padStart(2, "0")}-${date.getFullYear()}`;
-
+    const expiryDate = new Date(subscriber.expiry_date);
+    const currentDate = new Date();
+  
+    // Check if the expiry date has passed
+    if (expiryDate < currentDate) {
+      return "Expired"; // Return "Expired" if the date has passed
+    }
+  
+    // Format the expiry date as dd-mm-yyyy
+    const formattedDate = `${String(expiryDate.getDate()).padStart(2, "0")}-${String(
+      expiryDate.getMonth() + 1
+    ).padStart(2, "0")}-${expiryDate.getFullYear()}`;
+  
     return formattedDate;
   };
+  
+
   const handleDeleteClick = (companyId) => {
     setCompanyToDelete(companyId);
     setShowDeleteModal(true);
@@ -410,25 +418,28 @@ const Companies = () => {
                       {company.company_name}
                       <br />
                       {getPlanName(company.id) ? (
-                        <div className="flex activeplan md:space-x-1">
-                          <div className=" activesubplantext">
-                            <span className="activesubplantexttext">
-                              {getPlanName(company.id)}
-                            </span>
-                          </div>
-                          <div className="activesubdatetext">
-                            <span className="activesubdatetexttext">
-                              Expire On: {getExpiry(company.id)}
-                            </span>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="inactivesubtext">
-                          <span className="inactivesubtexttext">
-                            No Active Subscription Plan
-                          </span>
-                        </div>
-                      )}
+  <div className="flex activeplan md:space-x-1">
+    <div className="activesubplantext">
+      <span className="activesubplantexttext">
+        {getPlanName(company.id)}
+      </span>
+    </div>
+    <div>
+      <span className={`${getExpiry(company.id) === "Expired" ? "expired-text" : "expire-on-text"}`}>
+        {getExpiry(company.id) === "Expired" ? "Expired" : `Expire On: ${getExpiry(company.id)}`}
+      </span>
+    </div>
+  </div>
+) : (
+  <div className="inactivesubtext">
+    <span className="inactivesubtexttext">
+      No Active Subscription Plan
+    </span>
+  </div>
+)}
+
+
+
                     </td>
 
                     <td className="companiesdata nodisplaydata cmpyadminnametab">
