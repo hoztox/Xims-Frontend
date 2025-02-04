@@ -178,26 +178,26 @@ const Companies = () => {
     const subscriber = subscribers.find(
       (subscriber) => subscriber.company === companyId
     );
-  
+
     if (!subscriber || !subscriber.expiry_date) return "";
-  
+
     // Convert the expiry_date to a date object
     const expiryDate = new Date(subscriber.expiry_date);
     const currentDate = new Date();
-  
+
     // Check if the expiry date has passed
     if (expiryDate < currentDate) {
       return "Expired"; // Return "Expired" if the date has passed
     }
-  
+
     // Format the expiry date as dd-mm-yyyy
     const formattedDate = `${String(expiryDate.getDate()).padStart(2, "0")}-${String(
       expiryDate.getMonth() + 1
     ).padStart(2, "0")}-${expiryDate.getFullYear()}`;
-  
+
     return formattedDate;
   };
-  
+
 
   const handleDeleteClick = (companyId) => {
     setCompanyToDelete(companyId);
@@ -260,9 +260,9 @@ const Companies = () => {
             prevCompanies.map((company) =>
               company.id === companyToBlock
                 ? {
-                    ...company,
-                    status: newAction === "block" ? "Blocked" : "Active",
-                  }
+                  ...company,
+                  status: newAction === "block" ? "Blocked" : "Active",
+                }
                 : company
             )
           );
@@ -294,9 +294,8 @@ const Companies = () => {
   return (
     <div>
       <div
-        className={`border rounded-lg main ${
-          theme === "dark" ? "dark" : "light"
-        }`}
+        className={`border rounded-lg main ${theme === "dark" ? "dark" : "light"
+          }`}
       >
         <Toaster position="top-center" reverseOrder={false} />
         <h1 className="cmpilisthead">Companies</h1>
@@ -359,8 +358,8 @@ const Companies = () => {
           message={successMessage}
         />
         <BlockErrorModal
-        showBlockErrorModal={showBlockErrorModal}
-        onClose={() => setShowBlockErrorModal(false)}
+          showBlockErrorModal={showBlockErrorModal}
+          onClose={() => setShowBlockErrorModal(false)}
         />
 
         <div className="overflow-x-auto w-full">
@@ -400,9 +399,8 @@ const Companies = () => {
                 <React.Fragment key={company.id}>
                   <tr
                     key={company.id}
-                    className={`cursor-pointer tblrows ${
-                      activeDropdown === company.id ? "no-border" : ""
-                    }`}
+                    className={`cursor-pointer tblrows ${activeDropdown === company.id ? "no-border" : ""
+                      }`}
                   >
                     <td className="companiesdatasl">
                       {String(index + 1 + indexOfFirstItem).padStart(2, "0")}
@@ -418,25 +416,25 @@ const Companies = () => {
                       {company.company_name}
                       <br />
                       {getPlanName(company.id) ? (
-  <div className="flex activeplan md:space-x-1">
-    <div className="activesubplantext">
-      <span className="activesubplantexttext">
-        {getPlanName(company.id)}
-      </span>
-    </div>
-    <div>
-      <span className={`${getExpiry(company.id) === "Expired" ? "expired-text" : "expire-on-text"}`}>
-        {getExpiry(company.id) === "Expired" ? "Expired" : `Expire On: ${getExpiry(company.id)}`}
-      </span>
-    </div>
-  </div>
-) : (
-  <div className="inactivesubtext">
-    <span className="inactivesubtexttext">
-      No Active Subscription Plan
-    </span>
-  </div>
-)}
+                        <div className="flex activeplan md:space-x-1">
+                          <div className="activesubplantext">
+                            <span className="activesubplantexttext">
+                              {getPlanName(company.id)}
+                            </span>
+                          </div>
+                          <div>
+                            <span className={`${getExpiry(company.id) === "Expired" ? "expired-text" : "expire-on-text"}`}>
+                              {getExpiry(company.id) === "Expired" ? "Expired" : `Expire On: ${getExpiry(company.id)}`}
+                            </span>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="inactivesubtext">
+                          <span className="inactivesubtexttext">
+                            No Active Subscription Plan
+                          </span>
+                        </div>
+                      )}
 
 
 
@@ -453,11 +451,10 @@ const Companies = () => {
                     </td>
                     <td className="companiesdata nodisplaydata tabview">
                       <span
-                        className={`p-1 rounded block ${
-                          company.status.toLowerCase() === "active"
+                        className={`p-1 rounded block ${company.status.toLowerCase() === "active"
                             ? "companiesactivestate"
                             : "companiesblockstate"
-                        }`}
+                          }`}
                       >
                         {company.status.charAt(0).toUpperCase() +
                           company.status.slice(1).toLowerCase()}
@@ -487,21 +484,19 @@ const Companies = () => {
                     <td className="companiesdata nodisplaydata tabview">
                       <div className="flex justify-center items-center w-full">
                         <button
-                          className={`items-center rounded-full p-1 toggle ${
-                            company.status.toLowerCase() === "blocked"
+                          className={`items-center rounded-full p-1 toggle ${company.status.toLowerCase() === "blocked"
                               ? "toggleblock"
                               : "toggleactive"
-                          }`}
+                            }`}
                           onClick={() =>
                             toggleBlockStatus(company.id, company.status)
                           }
                         >
                           <div
-                            className={`rounded-full transform transition-transform bar ${
-                              company.status.toLowerCase() === "blocked"
+                            className={`rounded-full transform transition-transform bar ${company.status.toLowerCase() === "blocked"
                                 ? "translate-x-2"
                                 : "translate-x-0"
-                            }`}
+                              }`}
                           />
                         </button>
                       </div>
@@ -522,33 +517,29 @@ const Companies = () => {
                       </div>
                     </td>
                     <div
-                      className={`bgarrow ${
-                        activeDropdown === company.id ? "active" : ""
-                      }`}
+                      className={`bgarrow ${activeDropdown === company.id ? "active" : ""
+                        }`}
                       onClick={() => toggleDropdown(company.id)}
                     >
                       <img
                         src={arrow}
                         alt=""
-                        className={`dropdown-img w-[10px] ${
-                          activeDropdown === company.id ? "rotated" : ""
-                        }`}
-                        
+                        className={`dropdown-img w-[10px] ${activeDropdown === company.id ? "rotated" : ""
+                          }`}
+
                       />
                     </div>
 
                     <div
-                      className={`bgarrowtab ${
-                        activeDropdown === company.id ? "active" : ""
-                      }`}
+                      className={`bgarrowtab ${activeDropdown === company.id ? "active" : ""
+                        }`}
                       onClick={() => toggleDropdown(company.id)}
                     >
                       <img
                         src={arrow}
                         alt=""
-                        className={`dropdown-imgtab ${
-                          activeDropdown === company.id ? "rotated" : ""
-                        }`}
+                        className={`dropdown-imgtab ${activeDropdown === company.id ? "rotated" : ""
+                          }`}
                       />
                     </div>
                   </tr>
@@ -579,11 +570,10 @@ const Companies = () => {
                             <div>
                               <h4 className="text-end mobhead">Status</h4>
                               <span
-                                className={`rounded block text-xs blocks ${
-                                  company.status.toLowerCase() === "active"
+                                className={`rounded block text-xs blocks ${company.status.toLowerCase() === "active"
                                     ? "mobstatusactive"
                                     : "mobstatusInactive"
-                                }`}
+                                  }`}
                               >
                                 {company.status.charAt(0).toUpperCase() +
                                   company.status.slice(1).toLowerCase()}
@@ -616,21 +606,19 @@ const Companies = () => {
                             <div className="mobresactions">
                               <h4 className="mobhead">Block</h4>
                               <button
-                                className={`items-center rounded-full p-1 toggle mobicon ${
-                                  company.status.toLowerCase() === "blocked"
+                                className={`items-center rounded-full p-1 toggle mobicon ${company.status.toLowerCase() === "blocked"
                                     ? "mobtoggleblock"
                                     : "mobtoggleactive"
-                                }`}
+                                  }`}
                                 onClick={() =>
                                   toggleBlockStatus(company.id, company.status)
                                 }
                               >
                                 <div
-                                  className={`bg-white rounded-full transform transition-transform bar ${
-                                    company.status.toLowerCase() === "blocked"
+                                  className={`bg-white rounded-full transform transition-transform bar ${company.status.toLowerCase() === "blocked"
                                       ? "translate-x-2"
                                       : "translate-x-0"
-                                  }`}
+                                    }`}
                                 />
                               </button>
                             </div>
@@ -664,9 +652,8 @@ const Companies = () => {
       </div>
 
       <div
-        className={`flex justify-between items-center mt-1 paginationmob ${
-          theme === "dark" ? "dark" : "light"
-        }`}
+        className={`flex justify-between items-center mt-1 paginationmob ${theme === "dark" ? "dark" : "light"
+          }`}
       >
         <p className="pagination">
           Showing{" "}
@@ -681,18 +668,16 @@ const Companies = () => {
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className={`px-0 py-2 ${
-              currentPage === 1
+            className={`px-0 py-2 ${currentPage === 1
                 ? "cursor-not-allowed  arrowblocked"
                 : "arrowactived"
-            }`}
+              }`}
           >
             <img
               src={rightarrow}
               alt="Previous"
-              className={`w-3 h-3 rotate-180 ${
-                currentPage === 1 ? "arrowblocked" : "arrowactived"
-              }`}
+              className={`w-3 h-3 rotate-180 ${currentPage === 1 ? "arrowblocked" : "arrowactived"
+                }`}
             />
           </button>
 
@@ -700,9 +685,8 @@ const Companies = () => {
             <button
               key={i}
               onClick={() => handlePageChange(i + 1)}
-              className={`px-1 py-2 ${
-                currentPage === i + 1 ? "pagenocom" : "pagenonotcom"
-              }`}
+              className={`px-1 py-2 ${currentPage === i + 1 ? "pagenocom" : "pagenonotcom"
+                }`}
             >
               {i + 1}
             </button>
@@ -711,18 +695,16 @@ const Companies = () => {
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className={`px-0 py-2 ${
-              currentPage === totalPages
+            className={`px-0 py-2 ${currentPage === totalPages
                 ? "arrowblocked cursor-not-allowed "
                 : "arrowactived"
-            }`}
+              }`}
           >
             <img
               src={rightarrow}
               alt="Next"
-              className={`w-3 h-3 ${
-                currentPage === totalPages ? "arrowblocked" : "arrowactived"
-              }`}
+              className={`w-3 h-3 ${currentPage === totalPages ? "arrowblocked" : "arrowactived"
+                }`}
             />
           </button>
         </div>

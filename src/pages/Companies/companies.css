@@ -416,6 +416,7 @@
 }
 .main.dark .expired-text {
   background-color: #e13f231c;
+  color: #b3331d;
 }
 .main.dark .activesubplantexttext {
   color: #23b8e1;
