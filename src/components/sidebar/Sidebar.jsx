@@ -9,6 +9,7 @@ import addsub from "../../assets/images/Sidebar/addsub.svg";
 import managesub from "../../assets/images/Sidebar/managesub.svg";
 import "./sidebar.css";
 import { useTheme } from "../../ThemeContext";
+import { motion, AnimatePresence  } from "framer-motion";
 
 const Sidebar = () => {
   const { theme } = useTheme();
@@ -154,71 +155,68 @@ const Sidebar = () => {
             Subscribers
           </span>
         </div>
-
-        {isSubscribersDropdownOpen && (
-          <div className="subscriberdropdownmenus">
-            <h3 className="subhead">Subscribers</h3>
-            <div className="flex gap-3">
-              {/* Add Subscriber */}
-              <Link
-                to="/admin/add-subscriber"
-                onClick={() => {
-                  setIsSubscribersDropdownOpen(false);
-                  setActiveSubscribersMenu("add-subscriber");
-                }}
+        
+        <AnimatePresence>
+      {isSubscribersDropdownOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="subscriberdropdownmenus"
+        >
+          <h3 className="subhead">Subscribers</h3>
+          <div className="flex gap-3">
+            {/* Add Subscriber */}
+            <Link
+              to="/admin/add-subscriber"
+              onClick={() => {
+                setIsSubscribersDropdownOpen(false);
+                setActiveSubscribersMenu("add-subscriber");
+              }}
+            >
+              <div
+                className={`addsubbox cursor-pointer ${
+                  activeSubscribersMenu === "add-subscriber" ? "active" : ""
+                }`}
               >
-                <div
-                  className={`addsubbox cursor-pointer ${
-                    activeSubscribersMenu === "add-subscriber" ? "active" : ""
-                  }`}
-                >
-                  <div className="addsubcontent">
-                    <img
-                      src={addsub}
-                      alt=""
-                      className="addsubimg "
-                    />
-                  </div>
-                  <p className="addsubtext duration-200">
-                    Add
-                    <br />
-                    Subscribers
-                  </p>
+                <div className="addsubcontent">
+                  <img src={addsub} alt="" className="addsubimg " />
                 </div>
-              </Link>
+                <p className="addsubtext duration-200">
+                  Add
+                  <br />
+                  Subscribers
+                </p>
+              </div>
+            </Link>
 
-              {/* Manage Subscriber */}
-              <Link
-                to="/admin/manage-subscriber"
-                onClick={() => {
-                  setIsSubscribersDropdownOpen(false);
-                  setActiveSubscribersMenu("manage-subscriber");
-                  
-                }}
+            {/* Manage Subscriber */}
+            <Link
+              to="/admin/manage-subscriber"
+              onClick={() => {
+                setIsSubscribersDropdownOpen(false);
+                setActiveSubscribersMenu("manage-subscriber");
+              }}
+            >
+              <div
+                className={`managesubbox cursor-pointer ${
+                  activeSubscribersMenu === "manage-subscriber" ? "active" : ""
+                }`}
               >
-                <div
-                  className={`managesubbox cursor-pointer ${
-                    activeSubscribersMenu === "manage-subscriber"
-                      ? "active"
-                      : ""
-                  }`}
-                >
-                  <div className="managesubcontent">
-                    <img
-                      src={managesub}
-                      alt=""
-                      className="managesubimg "
-                    />
-                  </div>
-                  <p className="managesubtext duration-200">
-                    Manage
-                    <br /> Subscribers
-                  </p>
+                <div className="managesubcontent">
+                  <img src={managesub} alt="" className="managesubimg " />
                 </div>
-              </Link>
-            </div>
+                <p className="managesubtext duration-200">
+                  Manage
+                  <br /> Subscribers
+                </p>
+              </div>
+            </Link>
           </div>
-        )}
+        </motion.div>
+      )}
+    </AnimatePresence>
 
         {/* Subscription menu */}
         <div
@@ -243,8 +241,14 @@ const Sidebar = () => {
           </span>
         </div>
 
+        <AnimatePresence>
         {isSubscriptionDropdownOpen && (
-          <div className="subscriptiondropdownmenus">
+          <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="subscriptiondropdownmenus">
             <h3 className="subheadss">Subscriptions</h3>
             <div className="flex gap-3">
               {/* Add Subscription */}
@@ -293,8 +297,9 @@ const Sidebar = () => {
                 </div>
               </Link>
             </div>
-          </div>
+            </motion.div>
         )}
+        </AnimatePresence> 
       </nav>
     </div>
   );
