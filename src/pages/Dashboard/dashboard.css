@@ -260,6 +260,29 @@
   }
 }
 
+@media(min-width:432px) and (max-width:624px) {
+  .cardslay {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .subheads {
+    font-size: 16px;
+    line-height: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .card {
+    height: 165px;
+  }
+  .singlecard {
+    width: 50px;
+    height: 50px;
+  }
+  .dashicons {
+    height: 20px;
+    width: 20px;
+  }
+}
+
 @media (min-width: 432px) {
   .dashtoptext {
     display: none;
