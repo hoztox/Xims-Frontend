@@ -43,9 +43,16 @@
   filter: brightness(0) saturate(100%) invert(19%) sepia(77%) saturate(2567%)
     hue-rotate(209deg) brightness(93%) contrast(96%);
 }
+.mainsidebar.dark .item:hover .sideicon {
+  filter: brightness(0) saturate(100%) invert(38%) sepia(88%) saturate(431%)
+    hue-rotate(152deg) brightness(97%) contrast(93%);
+}
 
 .mainsidebar .item:hover .spans {
   color: #1e4da1;
+}
+.mainsidebar.dark .item:hover .spans {
+  color: #1e84af;
 }
 
 /* Active State */
@@ -340,15 +347,30 @@ height: 20px;
   filter: brightness(0) saturate(100%) invert(19%) sepia(77%) saturate(2567%)
     hue-rotate(209deg) brightness(93%) contrast(96%);
 }
+.mainsidebar.dark .subscribersdiv:hover .subscribersIcon
+{
+  filter: brightness(0) saturate(100%) invert(38%) sepia(88%) saturate(431%)
+    hue-rotate(152deg) brightness(97%) contrast(93%);
+}
 .subscribersdiv:hover .subscribersdivtext {
   color: #1e4da1;
+}
+.mainsidebar.dark .subscribersdiv:hover .subscribersdivtext {
+  color: #1e84af;
 }
 .subscriptiondiv:hover .subscriptionIcon {
   filter: brightness(0) saturate(100%) invert(19%) sepia(77%) saturate(2567%)
   hue-rotate(209deg) brightness(93%) contrast(96%);
 }
+.mainsidebar.dark .subscriptiondiv:hover .subscriptionIcon {
+  filter: brightness(0) saturate(100%) invert(38%) sepia(88%) saturate(431%)
+    hue-rotate(152deg) brightness(97%) contrast(93%);
+}
 .subscriptiondiv:hover .subscriptionsdivtext {
   color: #1e4da1;
+}
+.mainsidebar.dark .subscriptiondiv:hover .subscriptionsdivtext {
+  color: #1e84af;
 }
 
 .mainsidebar.dark .subscribersdiv.active {
