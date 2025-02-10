@@ -25,6 +25,7 @@
     "canvas-to-blob": "^1.0.0",
     "cropperjs": "^1.6.2",
     "framer-motion": "",
+    "lucide-react": "^0.475.0",
     "react": "",
     "react-advanced-cropper": "^0.20.0",
     "react-bootstrap": "^2.10.7",
