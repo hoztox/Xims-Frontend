@@ -169,7 +169,7 @@ const AdminLogin = () => {
                             </button>
                         </form>
                     </div>
-                    <div className="absolute right-[12%] flex flex-col justify-center items-center">
+                    <div className="absolute right-0 flex flex-col justify-center items-center w-[48%]">
                         <div className="flex gap-2">
                             <img src={img1} alt="comapny-login-picture" className="h-[165px] w-[148px] pic1 cursor-pointer duration-200" />
                             <img src={img2} alt="comapny-login-picture" className="h-[165px] w-[148px] pic2 cursor-pointer duration-200" />
