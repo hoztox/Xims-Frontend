@@ -169,18 +169,18 @@ const AdminLogin = () => {
                             </button>
                         </form>
                     </div>
-                    <div className="flex absolute flex-col justify-center items-center right-0 w-1/3">
+                    <div className="flex absolute flex-col justify-end items-center right-0 w-1/3 company-login-screen">
                         <div className="flex gap-2 relative">
-                            <img src={img1} alt="comapny-login-picture" className="h-[165px] w-[148px] pic1 cursor-pointer duration-200" />
-                            <img src={img2} alt="comapny-login-picture" className="h-[165px] w-[148px] pic2 cursor-pointer duration-200" />
-                            <img src={img3} alt="comapny-login-picture" className="h-[165px] w-[148px] pic3 cursor-pointer duration-200" />
+                            <img src={img1} alt="comapny-login-picture" className="h-[165px] w-[148px] pic1 cursor-pointer duration-300" />
+                            <img src={img2} alt="comapny-login-picture" className="h-[165px] w-[148px] pic2 cursor-pointer duration-300" />
+                            <img src={img3} alt="comapny-login-picture" className="h-[165px] w-[148px] pic3 cursor-pointer duration-300" />
                         </div>
                         <div className="flex gap-2 absolute top-[134px]">
-                            <img src={img4} alt="comapny-login-picture" className="h-[165px] w-[148px] pic4 cursor-pointer duration-200" />
-                            <img src={img5} alt="comapny-login-picture" className="h-[165px] w-[148px] pic5 cursor-pointer duration-200" />
+                            <img src={img4} alt="comapny-login-picture" className="h-[165px] w-[148px] pic4 cursor-pointer duration-300" />
+                            <img src={img5} alt="comapny-login-picture" className="h-[165px] w-[148px] pic5 cursor-pointer duration-300" />
                         </div>
                         <div className="flex absolute top-[268px]">
-                            <img src={img6} alt="comapny-login-picture" className="h-[165px] w-[148px] pic6 cursor-pointer duration-200" />
+                            <img src={img6} alt="comapny-login-picture" className="h-[165px] w-[148px] pic6 cursor-pointer duration-300" />
                         </div>
                     </div>
                 </div>
