@@ -17,6 +17,7 @@ import AddSubscriptionPlan from "./pages/Subscriptions/AddSubscriptionPlan/AddSu
 import ManageSubscription from "./pages/Subscriptions/ManageSubscription/ManageSubscription";
 import EditSubscription from "./pages/Subscriptions/EditSubscription.jsx/EditSubscription";
 import ChangePassword from "./pages/ChangePassowrd/ChangePassword";
+import CompanyLogin from "./pages/CompanyLogin/CompanyLogin";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -34,6 +35,10 @@ const ThemedApp = () => {
           <Route index element={<AdminLogin />} />
           <Route path="forgotpassword" element={<Password />} />
           <Route path="changepassword" element={<ChangePassword/>} />
+        </Route>
+
+        <Route path="/company-login">
+           <Route index element={<CompanyLogin/>} />
         </Route>
 
         {/* Admin Routes with Layout */}

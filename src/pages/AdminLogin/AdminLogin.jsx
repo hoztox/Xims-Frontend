@@ -63,7 +63,7 @@ const AdminLogin = () => {
       } else {
         toast.error(
           error.message ||
-            "An error occurred during login. Please try again later."
+          "An error occurred during login. Please try again later."
         );
       }
     } finally {
@@ -93,72 +93,74 @@ const AdminLogin = () => {
       <Toaster position="top-center" />
       {/* Logo Section */}
       <div className="adminloginstyle">
-      <div className="mb-9 mt-14">
-        <p className="text-[#52D3D8] loginheadtext">
-          Solutions you can count on.
-        </p>
-        <p className="text-[#52D3D8] loginheadtext">Partners you can trust. </p>
-      </div>
+        <div className="mb-9 mt-14">
+          <p className="text-[#52D3D8] loginheadtext">
+            Solutions you can count on.
+          </p>
+          <p className="text-[#52D3D8] loginheadtext">Partners you can trust. </p>
+        </div>
 
-      {/* Login Card Section */}
-      <div className="rounded-lg shadow-lg mains">
-        <h2 className="mb-7 lg:ml-12 text-white loginheading">Admin Login</h2>
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          <div className="relative">
-            <label className="labels">Email</label>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={handleEmailChange}
-              className="rounded-lg bg-[#161C23] mt-1 email outline-none inputs border-transparent"
-            />
-          </div>
-
-          <div className="relative">
-            <label className="labels">Password</label>
-            <div className="relative w-full">
+        {/* Login Card Section */}
+        <div className="rounded-lg shadow-lg mains">
+          <h2 className="mb-7 lg:ml-12 text-white loginheading">Admin Login</h2>
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div className="relative">
+              <label className="labels">Email</label>
               <input
-                type={passwordVisible ? "text" : "password"}
-                placeholder="Password"
-                value={password}
-                onChange={handlePasswordChange}
-                className="rounded-lg w-full bg-[#161C23] text-[#72787C] mt-1 outline-none inputs border-transparent"
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={handleEmailChange}
+                className="rounded-lg bg-[#161C23] mt-1 email outline-none inputs border-transparent"
               />
-              <span
-                className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
-                onClick={togglePasswordVisibility}
-              >
-                {passwordVisible ? (
-                  <IoEyeOff size={20} className="text-white" />
-                ) : (
-                  <IoEye size={20} className="text-white" />
-                )}
-              </span>
             </div>
-          </div>
 
-          <div className="flex justify-between text-sm text-white">
-            <Link
-              to="/forgotpassword"
-              className="hover:underline forgotpassword"
+            <div className="relative">
+              <label className="labels">Password</label>
+              <div className="relative w-full">
+                <input
+                  type={passwordVisible ? "text" : "password"}
+                  placeholder="Password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  className="rounded-lg w-full bg-[#161C23] text-[#72787C] mt-1 outline-none inputs border-transparent"
+                />
+                <span
+                  className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
+                  onClick={togglePasswordVisibility}
+                >
+                  {passwordVisible ? (
+                    <IoEyeOff size={20} className="text-white" />
+                  ) : (
+                    <IoEye size={20} className="text-white" />
+                  )}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex justify-between text-sm text-white">
+              <Link
+                to="/forgotpassword"
+                className="hover:underline forgotpassword"
+              >
+                Forgot password?
+              </Link>
+              <Link
+                to="/company-login"
+                className="hover:underline adminlogin">
+                Company Login
+              </Link>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-[#3C3B3B] text-white py-2 px-4 rounded-lg my-6 hover:bg-[#2d2d2d] transition signin"
+              disabled={loading}
             >
-              Forgot password?
-            </Link>
-            <a href="" className="hover:underline adminlogin">
-              Company Login
-            </a>
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-[#3C3B3B] text-white py-2 px-4 rounded-lg my-6 hover:bg-[#2d2d2d] transition signin"
-            disabled={loading}
-          >
-            {loading ? "Signing In..." : <p>Sign In</p>}
-          </button>
-        </form>
-      </div>
+              {loading ? "Signing In..." : <p>Sign In</p>}
+            </button>
+          </form>
+        </div>
       </div>
       <div className="right-bottom">
         <img src={logo} alt="" className="footerlogo" />
