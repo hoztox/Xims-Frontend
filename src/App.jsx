@@ -20,6 +20,7 @@ import ChangePassword from "./pages/ChangePassowrd/ChangePassword";
 import CompanyLogin from "./pages/CompanyLogin/CompanyLogin";
 import CompanyLayout from "./pages/CompanyLayout";
 import CompanyDashboard from "./pages/Company Dashboard/CompanyDashboard";
+import CompanyBackup from "./pages/Company Backup/CompanyBackup";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -44,15 +45,10 @@ const ThemedApp = () => {
            <Route index element={<CompanyLogin/>} />
         </Route>
 
-
-
-
         <Route path="/company" element={<CompanyLayout/>}>
           <Route path="company-dashboard" element={<CompanyDashboard/>} />
+          <Route path="company-backup" element={<CompanyBackup/>} />
         </Route>
-
-
-
 
         {/* Admin Routes with Layout */}
         <Route path="/admin" element={<Layout />}>

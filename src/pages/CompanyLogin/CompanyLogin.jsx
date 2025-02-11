@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
-import { Link } from "react-router-dom";
-// import { toast, Toaster } from "react-hot-toast";
-// import axios from "axios";
-// import { BASE_URL } from "../../Utils/Config";
+import { Link, useNavigate } from "react-router-dom";
+import { toast, Toaster } from "react-hot-toast";
+import axios from "axios";
+import { BASE_URL } from "../../Utils/Config";
 import "./companylogin.css";
 import logo from "../../assets/images/logo.svg";
 
@@ -18,15 +18,15 @@ const AdminLogin = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    //   const navigate = useNavigate();
+    const navigate = useNavigate();
 
-    //   const handleEmailChange = (e) => {
-    //     setEmail(e.target.value);
-    //   };
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+    };
 
-    //   const handlePasswordChange = (e) => {
-    //     setPassword(e.target.value);
-    //   };
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+    };
 
     const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -34,70 +34,73 @@ const AdminLogin = () => {
         setPasswordVisible(!passwordVisible);
     };
 
-    //   const handleSubmit = async (e) => {
-    //     e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    //     if (!email || !password) {
-    //       toast.error("Username and Password are required");
-    //       return;
-    //     }
+        if (!email || !password) {
+            toast.error("Username and Password are required");
+            return;
+        }
 
-    //     try {
-    //       setLoading(true);
-    //       console.log("Attempting to send request to backend...");
-    //       const response = await axios.post(`${BASE_URL}/accounts/login/`, {
-    //         email: email,
-    //         password: password,
-    //       });
-    //       console.log("Response:", response);
-    //       if (response.status === 200) {
-    //         const adminToken = response.data.access;
-    //         const expirationTime = 24 * 60 * 60 * 1000;
-    //         const logoutTime = new Date().getTime() + expirationTime;
+        try {
+            setLoading(true);
+            console.log("Attempting to send request to backend...");
+            const response = await axios.post(`${BASE_URL}/company/company/login/`, {
+                email: email,
+                password: password,
+            });
+            console.log("Response:", response);
+            if (response.status === 200) {
+                const adminToken = response.data.access;
+                const expirationTime = 24 * 60 * 60 * 1000;
+                const logoutTime = new Date().getTime() + expirationTime;
 
-    //         localStorage.setItem("adminAuthToken", adminToken);
-    //         localStorage.setItem("logoutTime", logoutTime);
+                localStorage.setItem("adminAuthToken", adminToken);
+                localStorage.setItem("logoutTime", logoutTime);
 
-    //         toast.success("Admin Login Success");
-    //         navigate("/admin/dashboard");
-    //       } else {
-    //         throw new Error(response.data.error || "Login failed");
-    //       }
-    //     } catch (error) {
-    //       console.error("Error during login request:", error);
-    //       if (error.response && error.response.status === 400) {
-    //         toast.error("Invalid username or password");
-    //       } else {
-    //         toast.error(
-    //           error.message ||
-    //           "An error occurred during login. Please try again later."
-    //         );
-    //       }
-    //     } finally {
-    //       setLoading(false);
-    //     }
-    //   };
+                toast.success("Successfully Logged In");
+                setTimeout(() => {
+                    navigate("/company/company-dashboard");
+                }, 500);
 
-    //   useEffect(() => {
-    //     const adminToken = localStorage.getItem("adminAuthToken");
-    //     const logoutTime = localStorage.getItem("logoutTime");
+            } else {
+                throw new Error(response.data.error || "Login failed");
+            }
+        } catch (error) {
+            console.error("Error during login request:", error);
+            if (error.response && error.response.status === 400) {
+                toast.error("Invalid username or password");
+            } else {
+                toast.error(
+                    error.message ||
+                    "An error occurred during login. Please try again later."
+                );
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    //     if (adminToken && logoutTime) {
-    //       const currentTime = new Date().getTime();
-    //       if (currentTime >= logoutTime) {
-    //         // Token has expired, perform logout
-    //         localStorage.removeItem("adminAuthToken");
-    //         localStorage.removeItem("logoutTime");
-    //         navigate("/");
-    //       } else {
-    //         navigate("/admin/dashboard");
-    //       }
-    //     }
-    //   }, [navigate]);
+    useEffect(() => {
+        const adminToken = localStorage.getItem("adminAuthToken");
+        const logoutTime = localStorage.getItem("logoutTime");
+
+        if (adminToken && logoutTime) {
+            const currentTime = new Date().getTime();
+            if (currentTime >= logoutTime) {
+                // Token has expired, perform logout
+                localStorage.removeItem("adminAuthToken");
+                localStorage.removeItem("logoutTime");
+                navigate("/company-login");
+            } else {
+                navigate("/company/company-dashboard");
+            }
+        }
+    }, [navigate]);
 
     return (
         <div className="flex flex-col h-screen items-center justify-center companyloginscreen">
-            {/* <Toaster position="top-center" /> */}
+            <Toaster position="top-center" />
             {/* Logo Section */}
             <div className="adminloginstyle">
                 <div className="mb-9 mt-14">
@@ -111,14 +114,14 @@ const AdminLogin = () => {
                 <div className="flex ">
                     <div className="rounded-lg shadow-lg mains">
                         <h2 className="mb-7 lg:ml-12 text-white loginheading">Company Login</h2>
-                        <form className="space-y-6" >
+                        <form className="space-y-6" onSubmit={handleSubmit} >
                             <div className="relative">
                                 <label className="labels">Email</label>
                                 <input
                                     type="email"
                                     placeholder="Email"
-                                    // value={email}
-                                    // onChange={handleEmailChange}
+                                    value={email}
+                                    onChange={handleEmailChange}
                                     className="rounded-lg bg-[#161C23] mt-1 email outline-none inputs border-transparent"
                                 />
                             </div>
@@ -129,8 +132,8 @@ const AdminLogin = () => {
                                     <input
                                         type={passwordVisible ? "text" : "password"}
                                         placeholder="Password"
-                                        //   value={password}
-                                        //   onChange={handlePasswordChange}
+                                        value={password}
+                                        onChange={handlePasswordChange}
                                         className="rounded-lg w-full bg-[#161C23] text-[#72787C] mt-1 outline-none inputs border-transparent"
                                     />
                                     <span

@@ -1,11 +1,11 @@
 import React from 'react'
 
-const CompanyDashboard = () => {
+const CompanyBackup = () => {
   return (
     <div className='text-white text-center'>
-      Dashboard Page
+      Company Backup
     </div>
   )
 }
 
-export default CompanyDashboard
+export default CompanyBackup

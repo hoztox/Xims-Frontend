@@ -24,12 +24,15 @@ import rightarrow from "../../assets/images/Company-Sidebar/rightarrow.svg";
 import downarrow from "../../assets/images/Company-Sidebar/down-arrow.svg";
 import "./companysidebar.css"
 import { motion } from "framer-motion";
+import { useNavigate } from 'react-router-dom';
 
 const CompanySidebar = () => {
   const [activeBar, setActiveBar] = useState('none');
   const [activeMenu, setActiveMenu] = useState('Dashboard');
   const [expandedMenu, setExpandedMenu] = useState(null);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
+
+  const navigate = useNavigate();
 
   const menuItems = [
     {
@@ -138,6 +141,17 @@ const CompanySidebar = () => {
       setExpandedMenu(expandedMenu === item.label ? null : item.label);
     }
     setActiveMenu(item.label);
+
+    if (item.label === "Dashboard") {
+      navigate("/company/company-dashboard");
+    }
+    if (item.label === "Backup") {
+      navigate("/company/company-backup");
+    }
+    if (item.label === "Log Out") {
+      localStorage.removeItem("adminAuthToken");
+      navigate("/company-login");
+    }
   };
 
   const handleSubmenuClick = (subItem) => {
@@ -148,6 +162,8 @@ const CompanySidebar = () => {
     hidden: { opacity: 0, height: 0 },
     visible: { opacity: 1, height: "auto", transition: { duration: 0.3, ease: "easeInOut" } }
   };
+
+
 
   return (
     <div className='sidebar-main bg-[#1C1C24]' style={{ width: '371px' }}>
