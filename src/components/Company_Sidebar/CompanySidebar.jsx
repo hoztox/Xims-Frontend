@@ -271,7 +271,7 @@ const CompanySidebar = () => {
                       <img src={ximsletter} alt="" className='w-[14px]' />
                       <p className='second-sidebar-full-text'>{item.full}</p>
                     </div>
-                    <img src={rightarrow} alt="" className='h-[16px] rightarrow' />
+                    <img src={rightarrow} alt="" className='h-[12px] rightarrow' />
                   </div>
                 )}
               </div>
