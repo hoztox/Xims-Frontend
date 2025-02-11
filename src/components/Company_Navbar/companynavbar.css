@@ -1,0 +1,45 @@
+.text-1 {
+    font-family: 'Switzer Regular';
+    font-size: 16px;
+    color: #677487;
+    line-height: 30px;
+}
+.text-2 {
+    font-family: 'Switzer SemiBold';
+    font-size: 26px;
+    color: white;
+    line-height: 18px;
+}
+.nav-search {
+    width: 266px;
+    height: 46px;
+    border-color: #383840;
+    font-family: 'Switzer Light';
+}
+.nav-search::placeholder {
+    color: #414345;
+    font-family: 'Switzer Light';
+    font-size: 14px;
+}
+.bell-icon {
+    border: 1px solid #383840;
+    width: 46px;
+    height: 46px;
+    border-radius: 100%;
+}
+.settings-icon {
+    border: 1px solid #383840;
+    width: 46px;
+    height: 46px;
+    border-radius: 100%;
+}
+.text-3 {
+    font-family: 'Switzer Light';
+    font-size: 16px;
+    line-height: 21.12px;
+}
+.text-4 {
+    font-family: 'Switzer Light';
+    font-size: 12px;
+    line-height: 15.84px;
+}
