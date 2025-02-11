@@ -1,23 +1,118 @@
 .custom-scrollbar::-webkit-scrollbar {
-    width: 8px; /* Width of scrollbar */
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: #1C1C24; /* Track color */
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #555; /* Scrollbar color */
-    border-radius: 4px;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #888; /* Scrollbar hover color */
-  }
-  
-  /* Firefox scrollbar */
-  .custom-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: #555 #1C1C24;
-  }
-  
+  width: 8px; /* Width of scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #1C1C24; /* Track color */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #1C1C24; /* Scrollbar color */
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #1C1C24; /* Scrollbar hover color */
+}
+
+/* Firefox scrollbar */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #1C1C24 #1C1C24;
+}
+
+.main-sidebar-label {
+  font-family: 'Switzer Light';
+  font-size: 16px;
+  color: #5B5B5B;
+}
+
+.second-sidebar-short-text {
+  font-family: 'Switzer Regular';
+  font-size: 15px;
+  color: white;
+}
+
+.second-sidebar-full-text {
+  font-family: 'Switzer Light';
+  font-size: 16px;
+  color: white;
+}
+.main-sidebar-menu:hover .icons, .main-sidebar-menu:hover .main-sidebar-label  {
+  filter: brightness(0) saturate(100%) invert(91%) sepia(0%) saturate(0%) hue-rotate(202deg) brightness(83%) contrast(86%);
+}
+
+.menu-item.active .icons,.menu-item.active .main-sidebar-label, .active-dropdown, .dots.active  {
+  filter: brightness(0) saturate(100%) invert(98%) sepia(9%) saturate(2%) hue-rotate(70deg) brightness(115%) contrast(100%);
+}
+
+.submenu-text {
+  color: #5B5B5B;
+  font-family: 'Switzer Light';
+  font-size: 15px;
+}
+
+.submenu-text:hover {
+  color: rgb(184, 184, 184);
+}
+.submenu-text.active {
+  color: white;
+}
+
+
+
+.menu-item {
+  position: relative;
+}
+
+.menu-item.active .pseudo-class {
+  position: absolute;
+  content: "";
+  top: 50px;
+  border-color: transparent;
+  left: 0px;
+  background: transparent;
+  width: 20px;
+  height: 20px;
+  border-bottom-right-radius: 100%;
+  box-shadow: 7px 7px 0 7px #1E84AF;
+  transform: rotate(-90deg) scaleY(-1);
+}
+
+.menu-item.active::after {
+position: absolute;
+content: "";
+top: 0px;
+left: 0px;
+background: transparent;
+border-color: transparent;
+width: 17px;
+height: 20px;
+border-bottom-right-radius: 100%;
+box-shadow: 7px 7px 0 7px #1E84AF;
+transform: rotate(100deg) ;
+}
+
+.menu-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 45px;
+  height: 31px;
+  border-color: transparent;
+  background-color: #1E84AF;
+  border-radius: 0 50px 50px 0;
+}
+
+.menu-item.active.none-active::before {
+  width: 75px;
+}
+
+
+/* Make sure the icon and text stay above the background */
+.main-sidebar-menu {
+  position: relative;
+  z-index: 1;
+}

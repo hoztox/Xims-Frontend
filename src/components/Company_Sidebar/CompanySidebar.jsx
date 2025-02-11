@@ -21,31 +21,96 @@ import icon18 from '../../assets/images/Company-Sidebar/icon18.svg';
 import closeicon from '../../assets/images/Company-Sidebar/close-icon.svg';
 import ximsletter from "../../assets/images/Company-Sidebar/xims-letter.svg";
 import rightarrow from "../../assets/images/Company-Sidebar/rightarrow.svg";
-
+import downarrow from "../../assets/images/Company-Sidebar/down-arrow.svg";
+import "./companysidebar.css"
+import { motion } from "framer-motion";
 
 const CompanySidebar = () => {
   const [activeBar, setActiveBar] = useState('none');
-  const [activeMenu, setActiveMenu] = useState('Employee Training');
+  const [activeMenu, setActiveMenu] = useState('Dashboard');
+  const [expandedMenu, setExpandedMenu] = useState(null);
+  const [activeSubmenu, setActiveSubmenu] = useState(null);
 
   const menuItems = [
-    { icon: <img src={icon1} alt="dashboard" className='w-5 h-5' />, label: 'Dashboard' },
-    { icon: <img src={icon2} alt="documentation" className='w-5 h-5' />, label: 'Documentation' },
-    { icon: <img src={icon3} alt="Employee Training & Performance" className='w-5 h-5' />, label: 'Employee Training & Performance' },
-    { icon: <img src={icon4} alt="Actions, Meeting and Communication Management" className='w-5 h-5' />, label: 'Actions, Meeting and Communication Management' },
-    { icon: <img src={icon5} alt="Audits & Inspections Management" className='w-5 h-5' />, label: 'Audits & Inspections Management' },
-    { icon: <img src={icon6} alt="Customer Management" className='w-5 h-5' />, label: 'Customer Management' },
-    { icon: <img src={icon7} alt="Supplier Management" className='w-5 h-5' />, label: 'Supplier Management' },
-    { icon: <img src={icon8} alt="Compliance, Sustainability & Management of Change" className='w-5 h-5' />, label: 'Compliance, Sustainability & Management of Change' },
-    { icon: <img src={icon9} alt="Risk, Opportunities & Incident Management" className='w-5 h-5' />, label: 'Risk, Opportunities & Incident Management' },
-    { icon: <img src={icon10} alt="Energy Management" className='w-5 h-5' />, label: 'Energy Management ' },
-    { icon: <img src={icon11} alt="Correction Corrective Actions & Preventive Actions" className='w-5 h-5' />, label: 'Correction Corrective Actions & Preventive Actions' },
-    { icon: <img src={icon12} alt="Objectives & Targets" className='w-5 h-5' />, label: 'Objectives & Targets' },
-    { icon: <img src={icon13} alt="User Management" className='w-5 h-5' />, label: 'User Management' },
-    { icon: <img src={icon14} alt="Reports & Analysis" className='w-5 h-5' />, label: 'Reports & Analysis' },
-    { icon: <img src={icon15} alt="Non Conformity Report Management" className='w-5 h-5' />, label: 'Non Conformity Report Management' },
-    { icon: <img src={icon16} alt="Analysis Graph" className='w-5 h-5' />, label: 'Analysis Graph' },
-    { icon: <img src={icon17} alt="Backup" className='w-5 h-5' />, label: 'Backup' },
-    { icon: <img src={icon18} alt="Log Out" className='w-5 h-5' />, label: 'Log Out' },
+    {
+      icon: <img src={icon1} alt="dashboard" className='w-5 h-5' />,
+      label: 'Dashboard',
+      hasSubmenu: false
+    },
+    {
+      icon: <img src={icon2} alt="documentation" className='w-5 h-5' />,
+      label: 'Documentation',
+      submenu: ['Company Documents', 'Department Documents', 'Personal Documents']
+    },
+    {
+      icon: <img src={icon3} alt="Employee Training & Performance" className='w-5 h-5' />,
+      label: 'Employee Training & Performance',
+      submenu: ['Add Training', 'List Training', 'List User Training', 'Training Evaluation', 'Employee Performance Evaluation', 'Employee Satisfaction Survey', 'Awareness Training']
+    },
+    {
+      icon: <img src={icon4} alt="Actions, Meeting and Communication Management" className='w-5 h-5' />,
+      label: 'Actions, Meeting and Communication Management',
+      submenu: ['Meetings', 'Action Items', 'Communications']
+    },
+    {
+      icon: <img src={icon5} alt="Audits & Inspections Management" className='w-5 h-5' />,
+      label: 'Audits & Inspections Management',
+      submenu: ['Internal Audits', 'External Audits', 'Inspection Reports']
+    },
+    {
+      icon: <img src={icon6} alt="Customer Management" className='w-5 h-5' />,
+      label: 'Customer Management',
+      submenu: ['Customer Database', 'Feedback', 'Complaints']
+    },
+    {
+      icon: <img src={icon7} alt="Supplier Management" className='w-5 h-5' />,
+      label: 'Supplier Management',
+      submenu: ['Supplier List', 'Evaluations', 'Contracts']
+    },
+    {
+      icon: <img src={icon8} alt="Compliance, Sustainability & Management of Change" className='w-5 h-5' />,
+      label: 'Compliance, Sustainability & Management of Change'
+    },
+    {
+      icon: <img src={icon9} alt="Risk, Opportunities & Incident Management" className='w-5 h-5' />,
+      label: 'Risk, Opportunities & Incident Management'
+    },
+    {
+      icon: <img src={icon10} alt="Energy Management" className='w-5 h-5' />,
+      label: 'Energy Management'
+    },
+    {
+      icon: <img src={icon11} alt="Correction Corrective Actions & Preventive Actions" className='w-5 h-5' />,
+      label: 'Correction Corrective Actions & Preventive Actions'
+    },
+    {
+      icon: <img src={icon12} alt="Objectives & Targets" className='w-5 h-5' />,
+      label: 'Objectives & Targets'
+    },
+    {
+      icon: <img src={icon13} alt="User Management" className='w-5 h-5' />,
+      label: 'User Management'
+    },
+    {
+      icon: <img src={icon14} alt="Reports & Analysis" className='w-5 h-5' />,
+      label: 'Reports & Analysis'
+    },
+    {
+      icon: <img src={icon15} alt="Non Conformity Report Management" className='w-5 h-5' />,
+      label: 'Non Conformity Report Management'
+    },
+    {
+      icon: <img src={icon16} alt="Analysis Graph" className='w-5 h-5' />,
+      label: 'Analysis Graph'
+    },
+    {
+      icon: <img src={icon17} alt="Backup" className='w-5 h-5' />,
+      label: 'Backup'
+    },
+    {
+      icon: <img src={icon18} alt="Log Out" className='w-5 h-5' />,
+      label: 'Log Out'
+    },
   ];
 
   const subMenuItems = [
@@ -55,7 +120,7 @@ const CompanySidebar = () => {
     { full: 'Energy', short: 'EMS', bg: '#10B8FF' },
     { full: 'BCMS', short: 'BMS', bg: '#F310FF' },
     { full: 'AMS', short: 'AMS', bg: '#DD6B06' },
-    { full: 'IMS', short: 'IMS',bg: '#CBA301' },
+    { full: 'IMS', short: 'IMS', bg: '#CBA301' },
   ];
 
 
@@ -68,10 +133,20 @@ const CompanySidebar = () => {
   };
 
   const handleMenuClick = (item) => {
-    setActiveMenu(item.label);
-    if (activeBar === 'first') {
-      setActiveBar('none');
+    if (!item.hasSubmenu && item.submenu) {
+      // If clicking the same menu, close it. If clicking a different menu, open it and close others
+      setExpandedMenu(expandedMenu === item.label ? null : item.label);
     }
+    setActiveMenu(item.label);
+  };
+
+  const handleSubmenuClick = (subItem) => {
+    setActiveSubmenu(subItem);
+  };
+
+  const submenuVariants = {
+    hidden: { opacity: 0, height: 0 },
+    visible: { opacity: 1, height: "auto", transition: { duration: 0.3, ease: "easeInOut" } }
   };
 
   return (
@@ -86,7 +161,7 @@ const CompanySidebar = () => {
             }`}
         // style={{minWidth:'105px', maxWidth:'301px'}}
         >
-          <div className="flex items-center justify-center p-4 absolute right-[-30px]">
+          <div className="flex items-center justify-center p-4 absolute right-[-30px] z-30">
             <button
               onClick={() => toggleSidebar('first')}
               className="p-1 rounded-full border border-[#383840] h-[28px] w-[28px] flex justify-center items-center bg-[#1C1C24]"
@@ -106,60 +181,103 @@ const CompanySidebar = () => {
             className="flex-1 overflow-y-auto pb-24 [scrollbar-width:thin] [scrollbar-color:rgb(28_28_36)_transparent] 
             [&::-webkit-scrollbar]:w-0
             [&::-webkit-scrollbar-track]:bg-transparent
-            [&::-webkit-scrollbar-thumb]:bg-zinc-500
+            [&::-webkit-scrollbar-thumb]:bg-[#1C1C24]
             [&::-webkit-scrollbar-thumb]:rounded-full
             [&::-webkit-scrollbar-thumb]:border-[0.5px]
             [&::-webkit-scrollbar-thumb]:border-solid
             [&::-webkit-scrollbar-thumb]:border-transparent
             [&::-webkit-scrollbar-thumb]:bg-clip-padding
-            hover:[&::-webkit-scrollbar-thumb]:bg-zinc-400"
+            hover:[&::-webkit-scrollbar-thumb]:bg-[#1C1C24]"
           >
             {menuItems.map((item, index) => (
-              <div
-                key={index}
-                className={`flex items-center px-4 py-4 text-gray-300 hover:bg-gray-800 cursor-pointer
-                ${activeMenu === item.label ? 'bg-gray-800' : ''}`}
-                onClick={() => handleMenuClick(item)}
-              >
-                <div className={`flex items-center space-x-4 w-full ${activeBar === 'none' ? 'justify-center' : ''}`}>
-                  {item.icon}
-                  {activeBar === 'first' && (
-                    <>
-                      <span>{item.label}</span>
-                    </>
-                  )}
+              <div key={index}>
+                <div
+                  className={`flex items-center px-4 py-3 cursor-pointer menu-item
+                 ${activeMenu === item.label ? 'active' : ''}
+                 ${activeBar === 'none' ? 'none-active' : ''}`}
+                  onClick={() => handleMenuClick(item)}
+                >                  
+                <div className="p-0 m-0 pseudo-class"></div>
+                  <div className={`flex items-center space-x-4 w-full main-sidebar-menu ${activeBar === 'none' ? 'justify-center' : ''
+                    }`}>
+                    <div className='icons flex items-center'>{item.icon}</div>
+                    {activeBar === 'first' && (
+                      <div className="flex items-center justify-between w-full">
+                        <span className='main-sidebar-label'>{item.label}</span>
+                        {item.submenu && (
+                          <img
+                            src={downarrow}
+                            alt="drop-down"
+                            className={`w-[12px] transition-transform duration-300 ${expandedMenu === item.label ? 'rotate-180 active-dropdown' : 'rotate-0'
+                              }`}
+                          />
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
+                {/* Submenu */}
+                {activeBar === 'first' && item.submenu && expandedMenu === item.label && (
+                  <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    variants={submenuVariants}
+                    className="relative"
+                  >
+                    {item.submenu.map((subItem, subIndex, array) => (
+                      <div
+                        key={subIndex}
+                        className={`pl-6 pr-4 pb-4 pt-1 cursor-pointer submenu-text relative flex items-center group
+                        ${activeSubmenu === subItem ? 'active' : ''}`}
+                        onClick={() => handleSubmenuClick(subItem)}
+                      >
+                        {/* Vertical line */}
+                        {subIndex !== array.length - 1 && (
+                          <div className='absolute left-[1.7rem] top-[18px] w-[2px] h-[calc(100%)] bg-[#363538]'></div>
+                        )}
+                        {/* Dot */}
+                        <div className={`relative z-10 w-2 h-2 rounded-full bg-[#363538] mr-7 dots
+                       group-hover:bg-[#b8b8b8]
+                        ${activeSubmenu === subItem ? 'active' : ''}`}
+                        ></div>
+                        {subItem}
+                      </div>
+                    ))}
+                  </motion.div>
+                )}
               </div>
             ))}
           </div>
         </div>
 
         {/* Second Sidebar */}
-        <div
-          className={`bg-[#1C1C24] transition-all duration-300 ${activeBar === 'first' ? 'w-[70px]' : activeBar === 'none' ? 'w-[266px]' : 'w-[70px]'
-            }`}
-        >
-          
-            <div className='mt-2'>
-              {subMenuItems.map((item, index) => (
-                <div
+        <div className={`bg-[#1C1C24] transition-all duration-300 ${activeBar === 'first' ? 'w-[70px]' : activeBar === 'none' ? 'w-[266px]' : 'w-[70px]'
+          }`}>
+          <div className='mt-2'>
+            {subMenuItems.map((item, index) => (
+              <div
                 key={index}
-                className={`px-0 py-[1px] cursor-pointer text-center font-medium  ${
-                  activeBar === 'first' ? 'text-white justify-end flex' : 'text-white justify-center flex'
-                }`}
-                title={item.full}
+                className={`px-0 py-[1px] cursor-pointer text-center font-medium ${activeBar === 'first' ? 'text-white justify-end flex' : 'text-white justify-center flex'
+                  }`}
+              // title={item.full}
               >
-                {activeBar === 'first' ? <div style={{ backgroundColor: item.bg, width:'55px', height:'47px', display:'flex', justifyContent:'center', alignItems:'center', borderRadius:'6px 0px 0px 6px' }}>{item.short}</div> : <div style={{ backgroundColor: item.bg, width: '227px', height:'auto', padding: '9px 15px', borderRadius: '70px', marginBottom:'11px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div className='flex justify-start items-center gap-2'>
-                  <img src={ximsletter} alt="" className='w-[14px]' />
-                  <p>{item.full}</p>
+                {activeBar === 'first' ? (
+                  <div style={{ backgroundColor: item.bg }} className='w-[55px] h-[47px] flex justify-center items-center rounded-l-md second-sidebar-short-text'>
+                    {item.short}
                   </div>
-                  <img src={rightarrow} alt="" className='h-[16px]' />
-                  </div>}
+                ) : (
+                  <div style={{ backgroundColor: item.bg }} className='w-[227px] px-4 py-2 rounded-full mb-3 flex justify-between items-center'>
+                    <div className='flex items-center gap-2'>
+                      <img src={ximsletter} alt="" className='w-[14px]' />
+                      <p className='second-sidebar-full-text'>{item.full}</p>
+                    </div>
+                    <img src={rightarrow} alt="" className='h-[16px]' />
+                  </div>
+                )}
               </div>
-              
-              ))}
-            </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
