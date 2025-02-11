@@ -1,5 +1,5 @@
 import React from 'react'
-import { Bell, Settings, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import hand from "../../assets/images/Company-Navbar/hand.png";
 import bell from "../../assets/images/Company-Navbar/bell.svg";
 import settings from "../../assets/images/Company-Navbar/settings.svg";
