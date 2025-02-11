@@ -116,3 +116,9 @@ transform: rotate(100deg) ;
   position: relative;
   z-index: 1;
 }
+
+
+.second-sidebar-tabs:hover .rightarrow {
+  transform: translateX(10px); /* Moves the arrow 5px to the right */
+  transition: transform 0.3s ease-in-out; /* Smooth animation */
+}

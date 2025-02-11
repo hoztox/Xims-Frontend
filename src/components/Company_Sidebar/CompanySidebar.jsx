@@ -260,19 +260,18 @@ const CompanySidebar = () => {
                 key={index}
                 className={`px-0 py-[1px] cursor-pointer text-center font-medium ${activeBar === 'first' ? 'text-white justify-end flex' : 'text-white justify-center flex'
                   }`}
-              // title={item.full}
               >
                 {activeBar === 'first' ? (
                   <div style={{ backgroundColor: item.bg }} className='w-[55px] h-[47px] flex justify-center items-center rounded-l-md second-sidebar-short-text'>
                     {item.short}
                   </div>
                 ) : (
-                  <div style={{ backgroundColor: item.bg }} className='w-[227px] px-4 py-2 rounded-full mb-3 flex justify-between items-center'>
+                  <div style={{ backgroundColor: item.bg }} className='w-[227px] px-4 py-2 rounded-full mb-3 flex justify-between items-center second-sidebar-tabs'>
                     <div className='flex items-center gap-2'>
                       <img src={ximsletter} alt="" className='w-[14px]' />
                       <p className='second-sidebar-full-text'>{item.full}</p>
                     </div>
-                    <img src={rightarrow} alt="" className='h-[16px]' />
+                    <img src={rightarrow} alt="" className='h-[16px] rightarrow' />
                   </div>
                 )}
               </div>
