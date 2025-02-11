@@ -43,7 +43,7 @@ const CompanySidebar = () => {
     {
       icon: <img src={icon2} alt="documentation" className='w-5 h-5' />,
       label: 'Documentation',
-      submenu: ['Company Documents', 'Department Documents', 'Personal Documents']
+      submenu: ['Policy', 'Manual', 'Procedure', 'Record Format', 'Interested Parties', 'Processes', 'Scope statements']
     },
     {
       icon: <img src={icon3} alt="Employee Training & Performance" className='w-5 h-5' />,
@@ -53,59 +53,74 @@ const CompanySidebar = () => {
     {
       icon: <img src={icon4} alt="Actions, Meeting and Communication Management" className='w-5 h-5' />,
       label: 'Actions, Meeting and Communication Management',
-      submenu: ['Meetings', 'Action Items', 'Communications']
+      submenu: ['List Meeting', 'Add Meeting', 'System Messaging', 'Internal Problems and Observations', 'Actions']
     },
     {
       icon: <img src={icon5} alt="Audits & Inspections Management" className='w-5 h-5' />,
       label: 'Audits & Inspections Management',
-      submenu: ['Internal Audits', 'External Audits', 'Inspection Reports']
+      submenu: ['Audit and Inspection Management', 'Add Audit', 'Add Inspection']
     },
     {
       icon: <img src={icon6} alt="Customer Management" className='w-5 h-5' />,
       label: 'Customer Management',
-      submenu: ['Customer Database', 'Feedback', 'Complaints']
+      submenu: ['Add Customer', 'List Customer', 'Add Complaints and Feedback', 'List Complaints and Feedback', 'Customer Satisfaction Survey']
     },
     {
       icon: <img src={icon7} alt="Supplier Management" className='w-5 h-5' />,
       label: 'Supplier Management',
-      submenu: ['Supplier List', 'Evaluations', 'Contracts']
+      submenu: ['Add Supplier', 'Enter Supplier Problems', 'Supplier Problem Log', 'Supplier Performance Evaluation']
     },
     {
       icon: <img src={icon8} alt="Compliance, Sustainability & Management of Change" className='w-5 h-5' />,
-      label: 'Compliance, Sustainability & Management of Change'
+      label: 'Compliance, Sustainability & Management of Change',
+      submenu: ['Compliance', 'Legal and Other Requirements', 'Evaluation of Compliance', 'Management of Change', 'Management of Change Log', 'Risk Management', 'Process Risks and Assessments', 'Sustainability', 'Compliance Obligations', 'Sustainability Indicators & Programs']
     },
     {
       icon: <img src={icon9} alt="Risk, Opportunities & Incident Management" className='w-5 h-5' />,
-      label: 'Risk, Opportunities & Incident Management'
+      label: 'Risk, Opportunities & Incident Management',
+      submenu: ['Environmantal Aspect', 'Environmetal Impact Assessments', 'Environmental Incidents', 'Environmental Waste Management', 'Health and Safety Hazards', 'Health and Safety Risk Assessments', 'Health and Safety Incidents',
+      'Process Risks Assessments', 'Process Opportunities Assessments', 'Accident and Incident Investigations', 'Environmental Hazards', 'Significant Environmental Aspects', 'Emergency Response and Preparedness', 'Health and Safety Risk Assessments',
+      'Health and Safety Incidents', 'Business Risks', 'Occupational Health and Safety Hazards', 'Occupational Health and Safety Risk Assessments']
     },
     {
       icon: <img src={icon10} alt="Energy Management" className='w-5 h-5' />,
-      label: 'Energy Management'
+      label: 'Energy Management',
+      submenu: ['Energy Review', 'Energy Baselines', 'Significant Energy Use and Consumption', 'Energy Involvement Opportunities', 'Energy Action Plans', 'Energy Management Performance Score', 'Structural Management Score', 'Operation Management Score', 'Target Achievement Score', 'Energy Performance Improvement Actions', 'Energy Performance Indicator']
+    },
+    {
+      icon: <img src={icon16} alt="Business Continuity Management" className='w-5 h-5' />,
+      label: 'Business Continuity Management',
+      submenu: ['Business Impact Analysis and Risk Assessment', 'Business Continuity Strategies and Solutions', 'Business Continuity Plans and Procedures', 'Business Continuity Exercise and Programme', 'Evaluation of Business Continuity Capabilities']
     },
     {
       icon: <img src={icon11} alt="Correction Corrective Actions & Preventive Actions" className='w-5 h-5' />,
-      label: 'Correction Corrective Actions & Preventive Actions'
+      label: 'Correction Corrective Actions & Preventive Actions',
+      submenu: ['Correction / Corrective Actions', 'Preventive Actions']
     },
     {
       icon: <img src={icon12} alt="Objectives & Targets" className='w-5 h-5' />,
-      label: 'Objectives & Targets'
+      label: 'Objectives & Targets',
+      submenu: ['Objectives and KPIs', 'Targets and Programs']
     },
     {
       icon: <img src={icon13} alt="User Management" className='w-5 h-5' />,
-      label: 'User Management'
+      label: 'User Management',
+      submenu: ['Add User', 'List User']
     },
     {
       icon: <img src={icon14} alt="Reports & Analysis" className='w-5 h-5' />,
-      label: 'Reports & Analysis'
+      label: 'Reports & Analysis',
+      submenu: ['All']
     },
     {
       icon: <img src={icon15} alt="Non Conformity Report Management" className='w-5 h-5' />,
-      label: 'Non Conformity Report Management'
+      label: 'Non Conformity Report Management',
+      submenu: ['Non-Conformity Reports']
     },
-    {
-      icon: <img src={icon16} alt="Analysis Graph" className='w-5 h-5' />,
-      label: 'Analysis Graph'
-    },
+    // {
+    //   icon: <img src={icon16} alt="Analysis Graph" className='w-5 h-5' />,
+    //   label: 'Analysis Graph'
+    // },
     {
       icon: <img src={icon17} alt="Backup" className='w-5 h-5' />,
       label: 'Backup'
