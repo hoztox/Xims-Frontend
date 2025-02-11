@@ -31,6 +31,7 @@ const CompanySidebar = () => {
   const [activeMenu, setActiveMenu] = useState("Dashboard");
   const [expandedMenu, setExpandedMenu] = useState(null);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
+  const [activeSecondSidebar, setActiveSecondSidebar] = useState(null);
 
   const navigate = useNavigate();
 
@@ -262,14 +263,188 @@ const CompanySidebar = () => {
     },
   ];
 
+  const qmsMenuItems = [
+    {
+      icon: <img src={icon1} alt="dashboard" className="w-5 h-5" />,
+      label: "Dashboard",
+      hasSubmenu: false,
+    },
+    {
+      icon: <img src={icon2} alt="documentation" className="w-5 h-5" />,
+      label: "Documentation",
+      submenu: [
+        "Policy",
+        "Manual",
+        "Procedure",
+        "Record Format",
+        "Interested Parties",
+        "Processes",
+        "Scope statements",
+      ],
+    },
+    {
+      icon: <img src={icon3} alt="Employee Training & Performance" className="w-5 h-5" />,
+      label: "Employee Training & Performance",
+      submenu: [
+        "Add Training",
+        "List Training",
+        "List User Training",
+        "Training Evaluation",
+        "Employee Performance Evaluation",
+        "Employee Satisfaction Survey",
+        "Awareness Training",
+      ],
+    },
+    {
+      icon: <img src={icon4} alt="Actions, Meeting and Communication Management" className="w-5 h-5" />,
+      label: "Actions, Meeting and Communication Management",
+      submenu: [
+        "List Meeting",
+        "Add Meeting",
+        "System Messaging",
+        "Internal Problems and Observations",
+        "Actions",
+      ],
+    },
+    {
+      icon: <img src={icon5} alt="Audits & Inspections Management" className="w-5 h-5" />,
+      label: "Audits & Inspections Management",
+      submenu: [
+        "Audit and Inspection Management",
+        "Add Audit",
+        "Add Inspection",
+      ],
+    },
+    {
+      icon: <img src={icon6} alt="Customer Management" className="w-5 h-5" />,
+      label: "Customer Management",
+      submenu: [
+        "Add Customer",
+        "List Customer",
+        "Add Complaints and Feedback",
+        "List Complaints and Feedback",
+        "Customer Satisfaction Survey",
+      ],
+    },
+    {
+      icon: <img src={icon7} alt="Supplier Management" className="w-5 h-5" />,
+      label: "Supplier Management",
+      submenu: [
+        "Add Supplier",
+        "Enter Supplier Problems",
+        "Supplier Problem Log",
+        "Supplier Performance Evaluation",
+      ],
+    },
+    {
+      icon: <img src={icon8} alt="Compliance Management" className="w-5 h-5" />,
+      label: "Compliance, Sustainability & Management of Change",
+      submenu: [
+        "Compliance",
+        "Legal and Other Requirements",
+        "Evaluation of Compliance",
+        "Management of Change",
+        "Management of Change Log",
+        "Risk Management",
+        "Process Risks and Assessments",
+        "Sustainability",
+      ],
+    },
+    {
+      icon: <img src={icon9} alt="Risk Management" className="w-5 h-5" />,
+      label: "Risk and Opportunities Management",
+      submenu: [
+        "Environmental Aspect",
+        "Environmental Impact Assessments",
+        "Environmental Incidents",
+        "Environmental Waste Management",
+        "Health and Safety Hazards",
+        "Health and Safety Risk Assessments",
+        "Health and Safety Incidents",
+        "Process Risks Assessments",
+        "Process Opportunities Assessment",
+        "Accident and Incident Investigations",
+      ],
+    },
+    {
+      icon: <img src={icon10} alt="Energy Management" className="w-5 h-5" />,
+      label: "Energy Management",
+      submenu: [
+        "Energy Review",
+        "Energy Baselines",
+        "Significant Energy Use and Consumption",
+        "Energy Involvement Opportunities",
+        "Energy Action Plans",
+      ],
+    },
+    {
+      icon: <img src={icon11} alt="Correction Actions" className="w-5 h-5" />,
+      label: "Correction Corrective Actions & Preventive Actions",
+      submenu: [
+        "Correction / Corrective Actions",
+        "Preventive Actions",
+      ],
+    },
+    {
+      icon: <img src={icon12} alt="Objectives & Targets" className="w-5 h-5" />,
+      label: "Objectives & Targets",
+      submenu: [
+        "Objectives and KPIs",
+        "Targets and Programs",
+      ],
+    },
+    {
+      icon: <img src={icon13} alt="User Management" className="w-5 h-5" />,
+      label: "User Management",
+      submenu: [
+        "Add User",
+        "List User",
+      ],
+    },
+    {
+      icon: <img src={icon14} alt="Reports & Analysis" className="w-5 h-5" />,
+      label: "Reports & Analysis",
+      submenu: ["All"],
+    },
+    {
+      icon: <img src={icon15} alt="Non Conformity" className="w-5 h-5" />,
+      label: "Non Conformity Report Management",
+      submenu: ["Non-Conformity Reports"],
+    },
+    {
+      icon: <img src={icon17} alt="Backup" className="w-5 h-5" />,
+      label: "Backup",
+      hasSubmenu: false,
+    },
+    {
+      icon: <img src={icon18} alt="Log Out" className="w-5 h-5" />,
+      label: "Log Out",
+      hasSubmenu: false,
+    },
+  ];
+
+  const emsMenuItems = [
+    {
+      icon: <img src={icon1} alt="dashboard" className="w-5 h-5" />,
+      label: "Dashboard",
+      hasSubmenu: false,
+    },
+  ]
+
+  const menuMapping = {
+    quality: qmsMenuItems,
+    environment: emsMenuItems,
+    default: [] // Default empty menu list
+  };
+
   const subMenuItems = [
-    { full: "Quality", short: "QMS", bg: "#858585" },
-    { full: "Environment", short: "EMS", bg: "#38E76C" },
-    { full: "Health & Safety", short: "HMS", bg: "#F9291F" },
-    { full: "Energy", short: "EMS", bg: "#10B8FF" },
-    { full: "BCMS", short: "BMS", bg: "#F310FF" },
-    { full: "AMS", short: "AMS", bg: "#DD6B06" },
-    { full: "IMS", short: "IMS", bg: "#CBA301" },
+    { full: "Quality", short: "QMS", bg: "#858585", id: "quality" },
+    { full: "Environment", short: "EMS", bg: "#38E76C", id: "environment" },
+    { full: "Health & Safety", short: "HMS", bg: "#F9291F", id: "health" },
+    { full: "Energy", short: "EMS", bg: "#10B8FF", id: "energy" },
+    { full: "BCMS", short: "BMS", bg: "#F310FF", id: "bcms" },
+    { full: "AMS", short: "AMS", bg: "#DD6B06", id: "ams" },
+    { full: "IMS", short: "IMS", bg: "#CBA301", id: "ims" },
   ];
 
   const toggleSidebar = (clickedBar) => {
@@ -285,7 +460,7 @@ const CompanySidebar = () => {
     if (activeBar === 'none' && item.label !== 'Log Out') {
       setActiveBar('first');
     }
-    
+
     // Close any open submenu when clicking a menu without a submenu
     if (!item.submenu) {
       setExpandedMenu(null);
@@ -340,6 +515,23 @@ const CompanySidebar = () => {
     },
   };
 
+  const handleSecondSidebarClick = (itemId) => {
+    setActiveSecondSidebar(itemId);
+    setExpandedMenu(null); // Close any open submenus
+    setActiveMenu("Dashboard"); // Reset active menu
+  };
+
+  // const getCurrentMenuItems = () => {
+  //   if (!activeSecondSidebar) return menuMapping.default;
+  //   return menuMapping[activeSecondSidebar] || menuItems;
+  // };
+
+  const getCurrentMenuItems = () => {
+    if (!activeSecondSidebar) return menuItems; // Ensure default menu is set
+    return menuMapping[activeSecondSidebar] || menuItems;
+  };
+  
+
   return (
     <div className="sidebar-main bg-[#1C1C24]" style={{ width: "371px" }}>
       <div className="h-[88px] flex justify-center items-center border-b border-[#383840]">
@@ -380,7 +572,7 @@ const CompanySidebar = () => {
             [&::-webkit-scrollbar-thumb]:bg-clip-padding
             hover:[&::-webkit-scrollbar-thumb]:bg-[#1C1C24]"
           >
-            {menuItems.map((item, index) => (
+             {getCurrentMenuItems().map((item, index) => (
               <div key={index}>
                 <div
                   className={`flex items-center px-4 pb-3 cursor-pointer menu-item
@@ -470,30 +662,39 @@ const CompanySidebar = () => {
                     ? "text-white justify-end flex"
                     : "text-white justify-center flex"
                 }`}
+                onClick={() => handleSecondSidebarClick(item.id)}
               >
                 {activeBar === "first" ? (
-                  <div
-                    style={{ backgroundColor: item.bg }}
-                    className="w-[55px] h-[40px] flex justify-center items-center rounded-l-md second-sidebar-short-text mb-3"
-                  >
-                    {item.short}
+                <div
+                  style={{
+                    backgroundColor: item.bg,
+                    opacity: activeSecondSidebar && activeSecondSidebar !== item.id ? 0.5 : 1,
+                    transition: 'opacity 0.3s ease'
+                  }}
+                  className="w-[55px] h-[40px] flex justify-center items-center rounded-l-md second-sidebar-short-text mb-3"
+                >
+                  {item.short}
+                </div>
+              ) : (
+                <div
+                  style={{
+                    backgroundColor: item.bg,
+                    opacity: activeSecondSidebar && activeSecondSidebar !== item.id ? 0.5 : 1,
+                    transition: 'opacity 0.3s ease'
+                  }}
+                  className="w-[227px] px-4 py-2 rounded-full mb-3 flex justify-between items-center second-sidebar-tabs"
+                >
+                  <div className="flex items-center gap-2">
+                    <img src={ximsletter} alt="" className="w-[14px]" />
+                    <p className="second-sidebar-full-text">{item.full}</p>
                   </div>
-                ) : (
-                  <div
-                    style={{ backgroundColor: item.bg }}
-                    className="w-[227px] px-4 py-2 rounded-full mb-3 flex justify-between items-center second-sidebar-tabs"
-                  >
-                    <div className="flex items-center gap-2">
-                      <img src={ximsletter} alt="" className="w-[14px]" />
-                      <p className="second-sidebar-full-text">{item.full}</p>
-                    </div>
-                    <img
-                      src={rightarrow}
-                      alt=""
-                      className="h-[12px] rightarrow"
-                    />
-                  </div>
-                )}
+                  <img
+                    src={rightarrow}
+                    alt=""
+                    className="h-[12px] rightarrow"
+                  />
+                </div>
+              )}
               </div>
             ))}
           </div>
