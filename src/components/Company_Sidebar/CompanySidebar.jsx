@@ -281,6 +281,11 @@ const CompanySidebar = () => {
   };
 
   const handleMenuClick = (item) => {
+
+    if (activeBar === 'none' && item.label !== 'Log Out') {
+      setActiveBar('first');
+    }
+    
     // Close any open submenu when clicking a menu without a submenu
     if (!item.submenu) {
       setExpandedMenu(null);
