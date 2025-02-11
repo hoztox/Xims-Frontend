@@ -23,8 +23,8 @@ import ximsletter from "../../assets/images/Company-Sidebar/xims-letter.svg";
 import rightarrow from "../../assets/images/Company-Sidebar/rightarrow.svg";
 import downarrow from "../../assets/images/Company-Sidebar/down-arrow.svg";
 import "./companysidebar.css"
-import { motion } from "framer-motion";
-import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate  } from 'react-router-dom';
 
 const CompanySidebar = () => {
   const [activeBar, setActiveBar] = useState('none');
@@ -136,12 +136,17 @@ const CompanySidebar = () => {
   };
 
   const handleMenuClick = (item) => {
-    if (!item.hasSubmenu && item.submenu) {
-      // If clicking the same menu, close it. If clicking a different menu, open it and close others
+    // Close any open submenu when clicking a menu without a submenu
+    if (!item.submenu) {
+      setExpandedMenu(null);
+      setActiveSubmenu(null); // Reset active submenu when switching to a menu without submenu
+    } else {
+      // Toggle the clicked submenu
       setExpandedMenu(expandedMenu === item.label ? null : item.label);
     }
+  
     setActiveMenu(item.label);
-
+  
     if (item.label === "Dashboard") {
       navigate("/company/company-dashboard");
     }
@@ -153,14 +158,38 @@ const CompanySidebar = () => {
       navigate("/company-login");
     }
   };
+  
+  
 
   const handleSubmenuClick = (subItem) => {
     setActiveSubmenu(subItem);
   };
 
   const submenuVariants = {
-    hidden: { opacity: 0, height: 0 },
-    visible: { opacity: 1, height: "auto", transition: { duration: 0.3, ease: "easeInOut" } }
+    initial: { 
+      height: 0,
+      opacity: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut"
+      }
+    },
+    animate: { 
+      height: "auto",
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut"
+      }
+    },
+    exit: {
+      height: 0,
+      opacity: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut"
+      }
+    }
   };
 
 
@@ -177,7 +206,7 @@ const CompanySidebar = () => {
             }`}
         // style={{minWidth:'105px', maxWidth:'301px'}}
         >
-          <div className="flex items-center justify-center p-4 absolute right-[-30px] z-30">
+          <div className="flex items-center justify-center p-4 absolute right-[-30px] z-40">
             <button
               onClick={() => toggleSidebar('first')}
               className="p-1 rounded-full border border-[#383840] h-[28px] w-[28px] flex justify-center items-center bg-[#1C1C24]"
@@ -194,7 +223,7 @@ const CompanySidebar = () => {
 
 
           <div
-            className="flex-1 overflow-y-auto pb-24 [scrollbar-width:thin] [scrollbar-color:rgb(28_28_36)_transparent] 
+            className="flex-1 overflow-y-auto pb-24 pt-[10px] [scrollbar-width:thin] [scrollbar-color:rgb(28_28_36)_transparent] 
             [&::-webkit-scrollbar]:w-0
             [&::-webkit-scrollbar-track]:bg-transparent
             [&::-webkit-scrollbar-thumb]:bg-[#1C1C24]
@@ -208,7 +237,7 @@ const CompanySidebar = () => {
             {menuItems.map((item, index) => (
               <div key={index}>
                 <div
-                  className={`flex items-center px-4 py-3 cursor-pointer menu-item
+                  className={`flex items-center px-4 pb-3 cursor-pointer menu-item
                  ${activeMenu === item.label ? 'active' : ''}
                  ${activeBar === 'none' ? 'none-active' : ''}`}
                   onClick={() => handleMenuClick(item)}
@@ -233,35 +262,35 @@ const CompanySidebar = () => {
                   </div>
                 </div>
                 {/* Submenu */}
-                {activeBar === 'first' && item.submenu && expandedMenu === item.label && (
-                  <motion.div
-                    initial="hidden"
-                    animate="visible"
-                    exit="hidden"
-                    variants={submenuVariants}
-                    className="relative"
-                  >
-                    {item.submenu.map((subItem, subIndex, array) => (
-                      <div
-                        key={subIndex}
-                        className={`pl-6 pr-4 pb-4 pt-1 cursor-pointer submenu-text relative flex items-center group
-                        ${activeSubmenu === subItem ? 'active' : ''}`}
-                        onClick={() => handleSubmenuClick(subItem)}
-                      >
-                        {/* Vertical line */}
-                        {subIndex !== array.length - 1 && (
-                          <div className='absolute left-[1.7rem] top-[18px] w-[2px] h-[calc(100%)] bg-[#363538]'></div>
-                        )}
-                        {/* Dot */}
-                        <div className={`relative z-10 w-2 h-2 rounded-full bg-[#363538] mr-7 dots
-                       group-hover:bg-[#b8b8b8]
-                        ${activeSubmenu === subItem ? 'active' : ''}`}
-                        ></div>
-                        {subItem}
-                      </div>
-                    ))}
-                  </motion.div>
-                )}
+                <AnimatePresence>
+                  {activeBar === 'first' && item.submenu && expandedMenu === item.label && (
+                    <motion.div
+                      initial="initial"
+                      animate="animate"
+                      exit="exit"
+                      variants={submenuVariants}
+                      className="overflow-hidden"
+                    >
+                      {item.submenu.map((subItem, subIndex, array) => (
+                        <div
+                          key={subIndex}
+                          className={`pl-6 pr-4 pb-4 pt-1 cursor-pointer submenu-text relative flex items-center group
+                            ${activeSubmenu === subItem ? 'active' : ''}`}
+                          onClick={() => handleSubmenuClick(subItem)}
+                        >
+                          {subIndex !== array.length - 1 && (
+                            <div className='absolute left-[1.7rem] top-[18px] w-[2px] h-[calc(100%)] bg-[#363538]'></div>
+                          )}
+                          <div className={`relative z-10 w-2 h-2 rounded-full bg-[#363538] mr-7 dots
+                            group-hover:bg-[#b8b8b8]
+                            ${activeSubmenu === subItem ? 'active' : ''}`}
+                          ></div>
+                          {subItem}
+                        </div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             ))}
           </div>
@@ -278,7 +307,7 @@ const CompanySidebar = () => {
                   }`}
               >
                 {activeBar === 'first' ? (
-                  <div style={{ backgroundColor: item.bg }} className='w-[55px] h-[47px] flex justify-center items-center rounded-l-md second-sidebar-short-text'>
+                  <div style={{ backgroundColor: item.bg }} className='w-[55px] h-[40px] flex justify-center items-center rounded-l-md second-sidebar-short-text mb-3'>
                     {item.short}
                   </div>
                 ) : (
