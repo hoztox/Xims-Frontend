@@ -31,7 +31,7 @@ const CompanySidebar = () => {
   const [activeMenu, setActiveMenu] = useState("Dashboard");
   const [expandedMenu, setExpandedMenu] = useState(null);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
-  const [activeSecondSidebar, setActiveSecondSidebar] = useState(null);
+  const [activeSecondSidebar, setActiveSecondSidebar] = useState("quality");
 
   const navigate = useNavigate();
 
@@ -51,7 +51,7 @@ const CompanySidebar = () => {
         "Record Format",
         "Interested Parties",
         "Processes",
-        "Scope statements",
+        "Scope Statements",
       ],
     },
     {
@@ -158,8 +158,8 @@ const CompanySidebar = () => {
       ),
       label: "Risk, Opportunities & Incident Management",
       submenu: [
-        "Environmantal Aspect",
-        "Environmetal Impact Assessments",
+        "Environmental Aspects",
+        "Environmental Impact Assessments",
         "Environmental Incidents",
         "Environmental Waste Management",
         "Health and Safety Hazards",
@@ -184,7 +184,7 @@ const CompanySidebar = () => {
       submenu: [
         "Energy Review",
         "Energy Baselines",
-        "Significant Energy Use and Consumption",
+        "Significant Energy Use and Consumptions",
         "Energy Involvement Opportunities",
         "Energy Action Plans",
         "Energy Management Performance Score",
@@ -263,6 +263,9 @@ const CompanySidebar = () => {
     },
   ];
 
+
+
+
   const qmsMenuItems = [
     {
       icon: <img src={icon1} alt="dashboard" className="w-5 h-5" />,
@@ -279,7 +282,7 @@ const CompanySidebar = () => {
         "Record Format",
         "Interested Parties",
         "Processes",
-        "Scope statements",
+        "Scope Statements",
       ],
     },
     {
@@ -354,7 +357,7 @@ const CompanySidebar = () => {
       icon: <img src={icon9} alt="Risk Management" className="w-5 h-5" />,
       label: "Risk and Opportunities Management",
       submenu: [
-        "Environmental Aspect",
+        "Environmental Aspects",
         "Environmental Impact Assessments",
         "Environmental Incidents",
         "Environmental Waste Management",
@@ -372,7 +375,7 @@ const CompanySidebar = () => {
       submenu: [
         "Energy Review",
         "Energy Baselines",
-        "Significant Energy Use and Consumption",
+        "Significant Energy Use and Consumptions",
         "Energy Involvement Opportunities",
         "Energy Action Plans",
       ],
@@ -402,14 +405,14 @@ const CompanySidebar = () => {
       ],
     },
     {
-      icon: <img src={icon14} alt="Reports & Analysis" className="w-5 h-5" />,
-      label: "Reports & Analysis",
-      submenu: ["All"],
-    },
-    {
       icon: <img src={icon15} alt="Non Conformity" className="w-5 h-5" />,
       label: "Non Conformity Report Management",
       submenu: ["Non-Conformity Reports"],
+    },
+    {
+      icon: <img src={icon14} alt="Reports & Analysis" className="w-5 h-5" />,
+      label: "Reports & Analysis",
+      submenu: ["All"],
     },
     {
       icon: <img src={icon17} alt="Backup" className="w-5 h-5" />,
@@ -429,11 +432,1003 @@ const CompanySidebar = () => {
       label: "Dashboard",
       hasSubmenu: false,
     },
+    {
+      icon: <img src={icon2} alt="documentation" className="w-5 h-5" />,
+      label: "Documentation",
+      submenu: [
+        "Policy",
+        "Manual",
+        "Procedure",
+        "Record Format",
+        "Interested Parties",
+        "Processes",
+        "Scope Statements",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon3}
+          alt="Employee Training & Performance"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Employee Training & Performance",
+      submenu: [
+        "Add Training",
+        "List Training",
+        "List User Training",
+        "Training Evaluation",
+        "Employee Performance Evaluation",
+        "Employee Satisfaction Survey",
+        "Awareness Training",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon4}
+          alt="Actions, Meeting and Communication Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Actions, Meeting and Communication Management",
+      submenu: [
+        "List Meeting",
+        "Add Meeting",
+        "System Messaging",
+        "Internal Problems and Observations",
+        "Actions",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon5}
+          alt="Audits & Inspections Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Audits & Inspections Management",
+      submenu: [
+        "Audit and Inspection Management",
+        "Add Audit",
+        "Add Inspection",
+      ],
+    },
+    {
+      icon: <img src={icon6} alt="Customer Management" className="w-5 h-5" />,
+      label: "Customer Management",
+      submenu: [
+        "Add Customer",
+        "List Customer",
+        "Add Complaints and Feedback",
+        "List Complaints and Feedback",
+        "Customer Satisfaction Survey",
+      ],
+    },
+    {
+      icon: <img src={icon7} alt="Supplier Management" className="w-5 h-5" />,
+      label: "Supplier Management",
+      submenu: [
+        "Add Supplier",
+        "Enter Supplier Problems",
+        "Supplier Problem Log",
+        "Supplier Performance Evaluation",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon8}
+          alt="Compliance, Sustainability & Management of Change"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Compliance, Sustainability & Management of Change",
+      submenu: [
+        "Compliance Obligations",
+        "Legal and Other Requirements",
+        "Evaluation of Compliance",
+        "Management of Change",
+        "Management of Change Log",
+        "Sustainability Indicators & Programs",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon9}
+          alt="Risk, Opportunities & Incident Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Risk, Opportunities & Incident Management",
+      submenu: [
+        "Environmental Aspects",
+        "Environmental Hazards",
+        "Environmetal Impact Assessments",
+        "Significant Environmental Aspects",
+        "Environmental Incidents",
+        "Environmental Waste Management",
+        "Accident and Incident Investigations",
+        "Process Risks Assessments",
+        "Process Opportunities Assessments",
+        "Emergency Response and Preparedness",
+        "Health and Safety Risk Assessments",
+        "Health and Safety Incidents",
+        "Business Risks",
+      ],
+    },
+    {
+      icon: <img src={icon10} alt="Energy Management" className="w-5 h-5" />,
+      label: "Energy Management",
+      submenu: [
+        "Energy Review",
+        "Energy Baselines",
+        "Significant Energy Use and Consumptions",
+        "Energy Involvement Opportunities",
+        "Energy Action Plans",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon11}
+          alt="Correction Corrective Actions & Preventive Actions"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Correction Corrective Actions & Preventive Actions",
+      submenu: [
+        "Correction / Corrective Actions",
+        "Preventive Actions"
+      ],
+    },
+    {
+      icon: <img src={icon12} alt="Objectives & Targets" className="w-5 h-5" />,
+      label: "Objectives & Targets",
+      submenu: [
+        "Objectives and KPIs",
+        "Targets and Programs"
+      ],
+    },
+    {
+      icon: <img src={icon13} alt="User Management" className="w-5 h-5" />,
+      label: "User Management",
+      submenu: [
+        "Add User",
+        "List User"
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon15}
+          alt="Non Conformity Report Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Non Conformity Report Management",
+      submenu: [
+        "Non-Conformity Reports"],
+    },
+    {
+      icon: <img src={icon14} alt="Reports & Analysis" className="w-5 h-5" />,
+      label: "Reports & Analysis",
+      submenu: ["All"],
+    },
+    {
+      icon: <img src={icon17} alt="Backup" className="w-5 h-5" />,
+      label: "Backup",
+    },
+    {
+      icon: <img src={icon18} alt="Log Out" className="w-5 h-5" />,
+      label: "Log Out",
+    },
   ]
+
+  const hmsMenuItems = [
+    {
+      icon: <img src={icon1} alt="dashboard" className="w-5 h-5" />,
+      label: "Dashboard",
+      hasSubmenu: false,
+    },
+    {
+      icon: <img src={icon2} alt="documentation" className="w-5 h-5" />,
+      label: "Documentation",
+      submenu: [
+        "Policy",
+        "Manual",
+        "Procedure",
+        "Record Format",
+        "Interested Parties",
+        "Processes",
+        "Scope Statements",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon3}
+          alt="Employee Training & Performance"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Employee Training & Performance",
+      submenu: [
+        "Add Training",
+        "List Training",
+        "List User Training",
+        "Training Evaluation",
+        "Employee Performance Evaluation",
+        "Employee Satisfaction Survey",
+        "Awareness Training",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon4}
+          alt="Actions, Meeting and Communication Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Actions, Meeting and Communication Management",
+      submenu: [
+        "List Meeting",
+        "Add Meeting",
+        "System Messaging",
+        "Internal Problems and Observations",
+        "Actions",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon5}
+          alt="Audits & Inspections Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Audits & Inspections Management",
+      submenu: [
+        "Audit and Inspection Management",
+        "Add Audit",
+        "Add Inspection",
+      ],
+    },
+    {
+      icon: <img src={icon6} alt="Customer Management" className="w-5 h-5" />,
+      label: "Customer Management",
+      submenu: [
+        "Add Customer",
+        "List Customer",
+        "Add Complaints and Feedback",
+        "List Complaints and Feedback",
+        "Customer Satisfaction Survey",
+      ],
+    },
+    {
+      icon: <img src={icon7} alt="Supplier Management" className="w-5 h-5" />,
+      label: "Supplier Management",
+      submenu: [
+        "Add Supplier",
+        "Enter Supplier Problems",
+        "Supplier Problem Log",
+        "Supplier Performance Evaluation",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon8}
+          alt="Compliance, Sustainability & Management of Change"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Compliance, Sustainability & Management of Change",
+      submenu: [
+        "Compliance",
+        "Legal and Other Requirements",
+        "Evaluation of Compliance",
+        "Management of Change",
+        "Management of Change Log",
+        "Sustainability Indicators & Programs",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon9}
+          alt="Risk, Opportunities & Incident Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Risk, Opportunities & Incident Management",
+      submenu: [
+        "Environmental Aspects",
+        "Environmental Impact Assessments",
+        "Environmental Incidents",
+        "Environmental Waste Management",
+        "Occupational Health and Safety Hazards",
+        "Occupational Health and Safety Risk Assessments",
+        "Health and Safety Incidents",
+        "Accident and Incident Investigations",
+        "Process Risks Assessments",
+        "Process Opportunities Assessments",
+        "Emergency Response and Preparedness",
+      ],
+    },
+    {
+      icon: <img src={icon10} alt="Energy Management" className="w-5 h-5" />,
+      label: "Energy Management",
+      submenu: [
+        "Energy Review",
+        "Energy Baselines",
+        "Significant Energy Use and Consumptions",
+        "Energy Involvement Opportunities",
+        "Energy Action Plans",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon11}
+          alt="Correction Corrective Actions & Preventive Actions"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Correction Corrective Actions & Preventive Actions",
+      submenu: [
+        "Correction / Corrective Actions",
+        "Preventive Actions"
+      ],
+    },
+    {
+      icon: <img src={icon12} alt="Objectives & Targets" className="w-5 h-5" />,
+      label: "Objectives & Targets",
+      submenu: [
+        "Objectives and KPIs",
+        "Targets and Programs"
+      ],
+    },
+    {
+      icon: <img src={icon13} alt="User Management" className="w-5 h-5" />,
+      label: "User Management",
+      submenu: [
+        "Add User",
+        "List User"
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon15}
+          alt="Non Conformity Report Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Non Conformity Report Management",
+      submenu: ["Non-Conformity Reports"],
+    },
+    {
+      icon: <img src={icon14} alt="Reports & Analysis" className="w-5 h-5" />,
+      label: "Reports & Analysis",
+      submenu: ["All"],
+    },
+    {
+      icon: <img src={icon17} alt="Backup" className="w-5 h-5" />,
+      label: "Backup",
+    },
+    {
+      icon: <img src={icon18} alt="Log Out" className="w-5 h-5" />,
+      label: "Log Out",
+    },
+  ]
+
+  const energyMenuItems = [
+    {
+      icon: <img src={icon1} alt="dashboard" className="w-5 h-5" />,
+      label: "Dashboard",
+      hasSubmenu: false,
+    },
+    {
+      icon: <img src={icon2} alt="documentation" className="w-5 h-5" />,
+      label: "Documentation",
+      submenu: [
+        "Policy",
+        "Manual",
+        "Procedure",
+        "Record Format",
+        "Interested Parties",
+        "Processes",
+        "Scope Statements",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon3}
+          alt="Employee Training & Performance"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Employee Training & Performance",
+      submenu: [
+        "Add Training",
+        "List Training",
+        "List User Training",
+        "Training Evaluation",
+        "Employee Performance Evaluation",
+        "Employee Satisfaction Survey",
+        "Awareness Training",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon4}
+          alt="Actions, Meeting and Communication Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Actions, Meeting and Communication Management",
+      submenu: [
+        "List Meeting",
+        "Add Meeting",
+        "System Messaging",
+        "Internal Problems and Observations",
+        "Actions",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon5}
+          alt="Audits & Inspections Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Audits & Inspections Management",
+      submenu: [
+        "Audit and Inspection Management",
+        "Add Audit",
+        "Add Inspection",
+      ],
+    },
+    {
+      icon: <img src={icon6} alt="Customer Management" className="w-5 h-5" />,
+      label: "Customer Management",
+      submenu: [
+        "Add Customer",
+        "List Customer",
+        "Add Complaints and Feedback",
+        "List Complaints and Feedback",
+        "Customer Satisfaction Survey",
+      ],
+    },
+    {
+      icon: <img src={icon7} alt="Supplier Management" className="w-5 h-5" />,
+      label: "Supplier Management",
+      submenu: [
+        "Add Supplier",
+        "Enter Supplier Problems",
+        "Supplier Problem Log",
+        "Supplier Performance Evaluation",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon8}
+          alt="Compliance, Sustainability & Management of Change"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Compliance, Sustainability & Management of Change",
+      submenu: [
+        "Compliance",
+        "Legal and Other Requirements",
+        "Evaluation of Compliance",
+        "Management of Change",
+        "Management of Change Log",
+        "Sustainability Indicators & Programs",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon9}
+          alt="Risk, Opportunities & Incident Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Risk, Opportunities & Incident Management",
+      submenu: [
+        "Environmental Aspects",
+        "Environmental Impact Assessments",
+        "Environmental Incidents",
+        "Environmental Waste Management",
+        "Health and Safety Hazards",
+        "Health and Safety Risk Assessments",
+        "Health and Safety Incidents",
+        "Business Risks",
+        "Process Risks Assessments",
+        "Process Opportunities Assessments",
+        "Accident and Incident Investigations",
+      ],
+    },
+    {
+      icon: <img src={icon10} alt="Energy Management" className="w-5 h-5" />,
+      label: "Energy Management",
+      submenu: [
+        "Energy Review",
+        "Energy Baselines",
+        "Energy Management Performance Score",
+        "Structural Management Score",
+        "Operation Management Score",
+        "Target Achievement Score",
+        "Energy Performance Improvement Actions",
+        "Energy Performance Indicator",
+        "Significant Energy Use and Consumptions",
+        "Energy Involvement Opportunities",
+        "Energy Action Plans",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon11}
+          alt="Correction Corrective Actions & Preventive Actions"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Correction Corrective Actions & Preventive Actions",
+      submenu: [
+        "Correction / Corrective Actions",
+        "Preventive Actions"
+      ],
+    },
+    {
+      icon: <img src={icon12} alt="Objectives & Targets" className="w-5 h-5" />,
+      label: "Objectives & Targets",
+      submenu: [
+        "Objectives and KPIs",
+        "Targets and Programs"
+      ],
+    },
+    {
+      icon: <img src={icon13} alt="User Management" className="w-5 h-5" />,
+      label: "User Management",
+      submenu: [
+        "Add User",
+        "List User"
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon15}
+          alt="Non Conformity Report Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Non Conformity Report Management",
+      submenu: ["Non-Conformity Reports"],
+    },
+    {
+      icon: <img src={icon14} alt="Reports & Analysis" className="w-5 h-5" />,
+      label: "Reports & Analysis",
+      submenu: ["All"],
+    },
+    {
+      icon: <img src={icon17} alt="Backup" className="w-5 h-5" />,
+      label: "Backup",
+    },
+    {
+      icon: <img src={icon18} alt="Log Out" className="w-5 h-5" />,
+      label: "Log Out",
+    },
+  ]
+
+  const bcmsMenuItems = [
+    {
+      icon: <img src={icon1} alt="dashboard" className="w-5 h-5" />,
+      label: "Dashboard",
+      hasSubmenu: false,
+    },
+    {
+      icon: <img src={icon2} alt="documentation" className="w-5 h-5" />,
+      label: "Documentation",
+      submenu: [
+        "Policy",
+        "Manual",
+        "Procedure",
+        "Record Format",
+        "Interested Parties",
+        "Processes",
+        "Scope Statements",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon3}
+          alt="Employee Training & Performance"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Employee Training & Performance",
+      submenu: [
+        "Add Training",
+        "List Training",
+        "List User Training",
+        "Training Evaluation",
+        "Employee Performance Evaluation",
+        "Employee Satisfaction Survey",
+        "Awareness Training",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon4}
+          alt="Actions, Meeting and Communication Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Actions, Meeting and Communication Management",
+      submenu: [
+        "List Meeting",
+        "Add Meeting",
+        "System Messaging",
+        "Internal Problems and Observations",
+        "Actions",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon5}
+          alt="Audits & Inspections Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Audits & Inspections Management",
+      submenu: [
+        "Audit and Inspection Management",
+        "Add Audit",
+        "Add Inspection",
+      ],
+    },
+    {
+      icon: <img src={icon6} alt="Customer Management" className="w-5 h-5" />,
+      label: "Customer Management",
+      submenu: [
+        "Add Customer",
+        "List Customer",
+        "Add Complaints and Feedback",
+        "List Complaints and Feedback",
+        "Customer Satisfaction Survey",
+      ],
+    },
+    {
+      icon: <img src={icon7} alt="Supplier Management" className="w-5 h-5" />,
+      label: "Supplier Management",
+      submenu: [
+        "Add Supplier",
+        "Enter Supplier Problems",
+        "Supplier Problem Log",
+        "Supplier Performance Evaluation",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon8}
+          alt="Compliance, Sustainability & Management of Change"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Compliance, Sustainability & Management of Change",
+      submenu: [
+        "Compliance",
+        "Legal and Other Requirements",
+        "Evaluation of Compliance",
+        "Management of Change",
+        "Management of Change Log",
+        "Sustainability Indicators & Programs",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon9}
+          alt="Risk, Opportunities & Incident Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Risk, Opportunities & Incident Management",
+      submenu: [
+        "Environmental Aspects",
+        "Environmental Impact Assessments",
+        "Environmental Incidents",
+        "Environmental Waste Management",
+        "Occupational Health and Safety Hazards",
+        "Occupational Health and Safety Risk Assessments",
+        "Health and Safety Incidents",
+        "Accident and Incident Investigations",
+        "Process Risks Assessments",
+        "Process Opportunities Assessments",
+        "Emergency Response and Preparedness",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon16}
+          alt="Business Continuity Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Business Continuity Management",
+      submenu: [
+        "Business Impact Analysis and Risk Assessment",
+        "Business Continuity Strategies and Solutions",
+        "Business Continuity Plans and Procedures",
+        "Business Continuity Exercise and Programme",
+        "Evaluation of Business Continuity Capabilities",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon11}
+          alt="Correction Corrective Actions & Preventive Actions"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Correction Corrective Actions & Preventive Actions",
+      submenu: ["Correction / Corrective Actions", "Preventive Actions"],
+    },
+    {
+      icon: <img src={icon12} alt="Objectives & Targets" className="w-5 h-5" />,
+      label: "Objectives & Targets",
+      submenu: ["Objectives and KPIs", "Targets and Programs"],
+    },
+    {
+      icon: <img src={icon13} alt="User Management" className="w-5 h-5" />,
+      label: "User Management",
+      submenu: ["Add User", "List User"],
+    },
+    {
+      icon: (
+        <img
+          src={icon15}
+          alt="Non Conformity Report Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Non Conformity Report Management",
+      submenu: ["Non-Conformity Reports"],
+    },
+    {
+      icon: <img src={icon14} alt="Reports & Analysis" className="w-5 h-5" />,
+      label: "Reports & Analysis",
+      submenu: ["All"],
+    },
+    {
+      icon: <img src={icon17} alt="Backup" className="w-5 h-5" />,
+      label: "Backup",
+    },
+    {
+      icon: <img src={icon18} alt="Log Out" className="w-5 h-5" />,
+      label: "Log Out",
+    },
+  ]
+
+  const amsMenuItems = [
+    {
+      icon: <img src={icon1} alt="dashboard" className="w-5 h-5" />,
+      label: "Dashboard",
+      hasSubmenu: false,
+    },
+    {
+      icon: <img src={icon2} alt="documentation" className="w-5 h-5" />,
+      label: "Documentation",
+      submenu: [
+        "Policy",
+        "Manual",
+        "Procedure",
+        "Record Format",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon3}
+          alt="Employee Training & Performance"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Employee Training & Performance",
+      submenu: [
+        "Add Training",
+        "List Training",
+        "List User Training",
+        "Training Evaluation",
+        "Employee Performance Evaluation",
+        "Employee Satisfaction Survey",
+        "Awareness Training",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon4}
+          alt="Meeting and Communication Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Meeting and Communication Management",
+      submenu: [
+        "List Meeting",
+        "Add Meeting",
+        "System Messaging",
+        "Internal Problems and Observations",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon5}
+          alt="Audits & Inspections Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Audits & Inspections Management",
+      submenu: [
+        "Audit and Inspection Management",
+        "Add Audit",
+        "Add Inspection",
+      ],
+    },
+    {
+      icon: <img src={icon6} alt="Customer Management" className="w-5 h-5" />,
+      label: "Customer Management",
+      submenu: [
+        "Add Customer",
+        "List Customer",
+        "Add Complaints and Feedback",
+        "List Complaints and Feedback",
+        "Customer Satisfaction Survey",
+      ],
+    },
+    {
+      icon: <img src={icon7} alt="Supplier Management" className="w-5 h-5" />,
+      label: "Supplier Management",
+      submenu: [
+        "Add Supplier",
+        "Enter Supplier Problems",
+        "Supplier Problem Log",
+        "Supplier Evaluation",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon8}
+          alt="Compliance, Sustainability & Management of Change"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Compliance, Sustainability & Management of Change",
+      submenu: [
+        "Compliance",
+        "Legal and Other Requirements",
+        "Evaluation of Compliance",
+        "Management of Change",
+        "Sustainability",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon9}
+          alt="Risk and Incident Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Risk and Incident Management",
+      submenu: [
+        "Environmental Aspects",
+        "Environmental Impact Assessments",
+        "Environmental Incidents",
+        "Environmental Waste Management",
+        "Health and Safety Hazards",
+        "Health and Safety Risk Assessments",
+        "Health and Safety Incidents",
+        "Business Risks",
+        "Accident and Incident Investigations",
+      ],
+    },
+    {
+      icon: <img src={icon10} alt="Energy Management" className="w-5 h-5" />,
+      label: "Energy Management",
+      submenu: [
+        "Energy Review",
+        "Energy Baselines",
+        "Significant Energy Use and Consumptions",
+        "Energy Involvement Opportunities",
+        "Energy Action Plans",
+      ],
+    },
+    {
+      icon: (
+        <img
+          src={icon11}
+          alt="Correction Corrective Actions & Preventive Actions"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Correction Corrective Actions & Preventive Actions",
+      submenu: ["Correction / Corrective Actions", "Preventive Actions"],
+    },
+    {
+      icon: <img src={icon12} alt="Objectives & Targets" className="w-5 h-5" />,
+      label: "Objectives & Targets",
+      submenu: ["Objectives and KPIs", "Targets and Programs"],
+    },
+    {
+      icon: <img src={icon13} alt="User Management" className="w-5 h-5" />,
+      label: "User Management",
+      submenu: ["Add User", "List User"],
+    },
+    {
+      icon: (
+        <img
+          src={icon15}
+          alt="Non Conformity Report Management"
+          className="w-5 h-5"
+        />
+      ),
+      label: "Non Conformity Report Management",
+      submenu: ["Non-Conformity Reports"],
+    },
+    {
+      icon: <img src={icon14} alt="Reports & Analysis" className="w-5 h-5" />,
+      label: "Reports & Analysis",
+      submenu: ["All"],
+    },
+    {
+      icon: <img src={icon17} alt="Backup" className="w-5 h-5" />,
+      label: "Backup",
+    },
+    {
+      icon: <img src={icon18} alt="Log Out" className="w-5 h-5" />,
+      label: "Log Out",
+    },
+  ]
+
+  const imsMenuItems = [
+    {
+      icon: <img src={icon1} alt="dashboard" className="w-5 h-5" />,
+      label: "Dashboard",
+      hasSubmenu: false,
+    },
+  ]
+
+
 
   const menuMapping = {
     quality: qmsMenuItems,
     environment: emsMenuItems,
+    health: hmsMenuItems,
+    energy: energyMenuItems,
+    bcms: bcmsMenuItems,
+    ams: amsMenuItems,
+    ims: imsMenuItems,
     default: [] // Default empty menu list
   };
 
@@ -527,8 +1522,8 @@ const CompanySidebar = () => {
   // };
 
   const getCurrentMenuItems = () => {
-    if (!activeSecondSidebar) return menuItems; // Ensure default menu is set
-    return menuMapping[activeSecondSidebar] || menuItems;
+    if (!activeSecondSidebar) return qmsMenuItems; // Ensure default menu is set
+    return menuMapping[activeSecondSidebar] || qmsMenuItems;
   };
   
 
@@ -629,7 +1624,7 @@ const CompanySidebar = () => {
                             )}
                             <div
                               className={`relative z-10 w-2 h-2 rounded-full bg-[#363538] mr-7 dots mt-[6px]
-                  group-hover:bg-[#b8b8b8]
+                  group-hover:bg-[#b8b8b8] duration-200
                   ${activeSubmenu === subItem ? "active" : ""}`}
                             ></div>
                             <span className="flex-1">{subItem}</span>

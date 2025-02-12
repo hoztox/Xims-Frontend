@@ -40,6 +40,7 @@
 }
 .main-sidebar-menu:hover .icons, .main-sidebar-menu:hover .main-sidebar-label  {
   filter: brightness(0) saturate(100%) invert(91%) sepia(0%) saturate(0%) hue-rotate(202deg) brightness(83%) contrast(86%);
+  transition-duration: 200ms;
 }
 
 .menu-item.active .icons,.menu-item.active .main-sidebar-label, .active-dropdown, .dots.active  {
@@ -58,6 +59,7 @@
 
 .submenu-text:hover {
   color: rgb(184, 184, 184);
+  transition-duration: 200ms;
 }
 .submenu-text.active {
   color: white;
