@@ -7,12 +7,12 @@ import { BASE_URL } from "../../Utils/Config";
 import "./companylogin.css";
 import logo from "../../assets/images/logo.svg";
 
-import img1 from "../../assets/images/Company-Login/cmy1.svg"
-import img2 from "../../assets/images/Company-Login/cmy2.svg"
-import img3 from "../../assets/images/Company-Login/cmy3.svg"
-import img4 from "../../assets/images/Company-Login/cmy4.svg"
-import img5 from "../../assets/images/Company-Login/cmy5.svg"
-import img6 from "../../assets/images/Company-Login/cmy6.svg";
+import img1 from "../../assets/images/Company-Login/cmy1.png"
+import img2 from "../../assets/images/Company-Login/cmy2.png"
+import img3 from "../../assets/images/Company-Login/cmy3.png"
+import img4 from "../../assets/images/Company-Login/cmy4.png"
+import img5 from "../../assets/images/Company-Login/cmy5.png"
+import img6 from "../../assets/images/Company-Login/cmy6.png"
 
 const AdminLogin = () => {
     const [email, setEmail] = useState("");
