@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./companysidebar.css";
 import { useTheme } from "../../ThemeContext";
 
-const CompanySidebar = () => {
+const CompanySidebar = ({ setSelectedMenuItem }) => {
   const [activeItem, setActiveItem] = useState("QMS");
   const [hoveredItem, setHoveredItem] = useState(null);
   const { theme } = useTheme();
@@ -17,8 +17,9 @@ const CompanySidebar = () => {
     { id: "IMS", label: "Integrated Management System", shortLabel: "IMS", borderColor: "#CBA301", activeColor: "#CBA301" },
   ];
 
-  const handleItemClick = (itemId) => {
-    setActiveItem(itemId);
+  const handleItemClick = (item) => {
+    setActiveItem(item.id);
+    setSelectedMenuItem({ id: item.id, label: item.label, borderColor: item.borderColor });
   };
 
   return (
@@ -33,13 +34,13 @@ const CompanySidebar = () => {
             onMouseLeave={() => setHoveredItem(null)}
           >
             <button
-              className={`w-[73px] h-[47px] company-main-menus border-l-2 flex justify-center items-center transition-all duration-300 ease-in-out`}
+              className="w-[73px] h-[47px] company-main-menus border-l-2 flex justify-center items-center transition-all duration-300 ease-in-out"
               style={{
                 borderColor: item.borderColor,
                 backgroundColor: isActive ? item.activeColor : "#1C1C24",
                 color: "#FFFFFF",
               }}
-              onClick={() => handleItemClick(item.id)}
+              onClick={() => handleItemClick(item)}
             >
               {item.shortLabel}
             </button>
@@ -52,9 +53,9 @@ const CompanySidebar = () => {
                   textAlign: "center",
                   animation: "expandIn 0.3s ease forwards",
                   borderLeft: `2px solid ${item.borderColor}`,
-                  backgroundColor:  item.activeColor,
+                  backgroundColor: item.activeColor,
                 }}
-                onClick={() => handleItemClick(item.id)} // Allow selection from tooltip
+                onClick={() => handleItemClick(item)}
               >
                 {item.label}
               </div>

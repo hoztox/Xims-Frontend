@@ -1,20 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import CompanySidebar from '../components/Company_Sidebar/CompanySidebar';
 import CompanyNavbar from '../components/Company_Navbar/CompanyNavbar';
 
 const CompanyLayout = () => {
+    const [selectedMenuItem, setSelectedMenuItem] = useState({
+        id: "QMS",
+        label: "Quality Management System",
+        borderColor: "#858585",
+    });
+
     return (
         <div className="flex flex-col h-screen overflow-hidden">
-            {/* Full-width Navbar */}
-            <CompanyNavbar />
+            {/* Navbar with Dynamic Menu Heading */}
+            <CompanyNavbar selectedMenuItem={selectedMenuItem} />
             
-            {/* Main Content Area with Sidebar Below Navbar */}
+            {/* Sidebar and Main Content */}
             <div className="flex flex-1 overflow-hidden">
-                {/* Sidebar on the Left */}
-                <CompanySidebar />
+                <CompanySidebar setSelectedMenuItem={setSelectedMenuItem} />
                 
-                {/* Main Content */}
                 <div className="flex-1 overflow-y-auto p-4 bg-[#13131A]">
                     <Outlet />
                 </div>

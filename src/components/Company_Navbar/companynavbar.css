@@ -50,3 +50,43 @@
 .company-navbar.light {
     background-color: white;
 }
+
+/* Default filter (gray) */
+.menu-icon {
+    filter: brightness(0) saturate(100%) invert(59%) sepia(9%) saturate(0%) hue-rotate(137deg) brightness(86%) contrast(90%);
+}
+
+/* QMS (Gray) */
+.menu-icon.QMS {
+    filter: brightness(0) saturate(100%) invert(59%) sepia(9%) saturate(0%) hue-rotate(137deg) brightness(86%) contrast(90%);
+}
+
+/* EMS (Green) */
+.menu-icon.EMS {
+    filter: brightness(0) saturate(100%) invert(70%) sepia(76%) saturate(456%) hue-rotate(78deg) brightness(96%) contrast(89%);
+}
+
+/* OHS (Red) */
+.menu-icon.OHS {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(52%) saturate(5510%) hue-rotate(349deg) brightness(112%) contrast(109%);
+}
+
+/* EnMS (Blue) */
+.menu-icon.EnMS {
+    filter: brightness(0) saturate(100%) invert(65%) sepia(38%) saturate(6181%) hue-rotate(169deg) brightness(104%) contrast(101%);
+}
+
+/* BMS (Purple) */
+.menu-icon.BMS {
+    filter: brightness(0) saturate(100%) invert(26%) sepia(52%) saturate(5996%) hue-rotate(282deg) brightness(105%) contrast(127%);
+}
+
+/* AMS (Orange) */
+.menu-icon.AMS {
+    filter: brightness(0) saturate(100%) invert(41%) sepia(93%) saturate(738%) hue-rotate(356deg) brightness(94%) contrast(100%);
+}
+
+/* IMS (Yellow) */
+.menu-icon.IMS {
+    filter: brightness(0) saturate(100%) invert(50%) sepia(87%) saturate(963%) hue-rotate(20deg) brightness(103%) contrast(99%);
+}
