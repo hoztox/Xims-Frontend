@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Search } from "lucide-react";
 import logo from "../../assets/images/Company-Navbar/xims-logo.svg";
 import menu from "../../assets/images/Company-Navbar/close-icon.svg";
@@ -7,7 +7,15 @@ import settings from "../../assets/images/Company-Navbar/settings.svg";
 import profile from "../../assets/images/Company-Navbar/profile.svg";
 import "./companynavbar.css"; // Import external CSS
 
-const CompanyNavbar = ({ selectedMenuItem }) => {
+const CompanyNavbar = ({ selectedMenuItem, toggleSidebar }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  // Handle the toggle with state update
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+    toggleSidebar();
+  };
+
   return (
     <nav className="flex items-center bg-[#13131A] h-[88px] company-navbar">
       {/* Left Section */}
@@ -17,12 +25,15 @@ const CompanyNavbar = ({ selectedMenuItem }) => {
             <img src={logo} alt="Ximspro Logo" />
           </button>
 
-          {/* Close Menu Icon with Dynamic Color */}
-          <button className="close-menu h-[57px] w-[46px] mr-[14px] flex items-center justify-center">
+          {/* Close Menu Icon - With rotation animation */}
+          <button
+            className="close-menu h-[57px] w-[46px] mr-[14px] flex items-center justify-center"
+            onClick={handleToggle}
+          >
             <img
               src={menu}
-              alt="Close Icon"
-              className={`w-[18px] h-[18px] menu-icon ${selectedMenuItem?.id || "default"}`}
+              alt="Menu Icon"
+              className={`w-[18px] h-[18px] menu-icon ${selectedMenuItem?.id || "default"} transition-transform duration-300 ease-in-out ${isOpen ? 'rotate-180' : ''}`}
             />
           </button>
 

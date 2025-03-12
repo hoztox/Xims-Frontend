@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import CompanySidebar from '../components/Company_Sidebar/CompanySidebar';
 import CompanyNavbar from '../components/Company_Navbar/CompanyNavbar';
+import SecondarySidebar from '../components/Company_Sidebar/SecondarySidebar';
 
 const CompanyLayout = () => {
     const [selectedMenuItem, setSelectedMenuItem] = useState({
@@ -10,15 +11,29 @@ const CompanyLayout = () => {
         borderColor: "#858585",
     });
 
+    const [secondarySidebarCollapsed, setSecondarySidebarCollapsed] = useState(true);
+
+    const toggleSecondarySidebar = () => {
+        setSecondarySidebarCollapsed(prev => !prev);
+    };
+
     return (
         <div className="flex flex-col h-screen overflow-hidden">
-            {/* Navbar with Dynamic Menu Heading */}
-            <CompanyNavbar selectedMenuItem={selectedMenuItem} />
-            
-            {/* Sidebar and Main Content */}
+            {/* Pass the toggle function and collapsed state to Navbar */}
+            <CompanyNavbar 
+                selectedMenuItem={selectedMenuItem} 
+                toggleSidebar={toggleSecondarySidebar} 
+            />
+
             <div className="flex flex-1 overflow-hidden">
                 <CompanySidebar setSelectedMenuItem={setSelectedMenuItem} />
-                
+
+                {/* Pass collapsed state to SecondarySidebar */}
+                <SecondarySidebar 
+                    selectedMenuItem={selectedMenuItem}
+                    collapsed={secondarySidebarCollapsed}
+                />
+
                 <div className="flex-1 overflow-y-auto p-4 bg-[#13131A]">
                     <Outlet />
                 </div>

@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import "./companysidebar.css";
-import { useTheme } from "../../ThemeContext";
 
 const CompanySidebar = ({ setSelectedMenuItem }) => {
   const [activeItem, setActiveItem] = useState("QMS");
   const [hoveredItem, setHoveredItem] = useState(null);
-  const { theme } = useTheme();
 
   const menuItems = [
     { id: "QMS", label: "Quality Management System", shortLabel: "QMS", borderColor: "#858585", activeColor: "#858585" },
@@ -23,7 +21,7 @@ const CompanySidebar = ({ setSelectedMenuItem }) => {
   };
 
   return (
-    <div className={`w-[93px] bg-[#13131A] text-white h-screen flex flex-col gap-[2px] relative ${theme === "dark" ? "dark" : "light"}`}>
+    <div className='w-[93px] bg-[#13131A] text-white h-screen flex flex-col gap-[2px] relative'>
       {menuItems.map((item) => {
         const isActive = activeItem === item.id;
         const isHovered = hoveredItem === item.id;
