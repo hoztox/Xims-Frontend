@@ -46,8 +46,8 @@ const ThemedApp = () => {
         </Route>
 
         <Route path="/company" element={<CompanyLayout/>}>
-          <Route path="company-dashboard" element={<CompanyDashboard/>} />
-          <Route path="company-backup" element={<CompanyBackup/>} />
+          <Route path="dashboard" element={<CompanyDashboard/>} />
+          <Route path="backup" element={<CompanyBackup/>} />
         </Route>
 
         {/* Admin Routes with Layout */}

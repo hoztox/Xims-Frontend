@@ -1,156 +1,43 @@
-.custom-scrollbar::-webkit-scrollbar {
-  width: 8px; /* Width of scrollbar */
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: #1C1C24; /* Track color */
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #1C1C24; /* Scrollbar color */
-  border-radius: 4px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #1C1C24; /* Scrollbar hover color */
-}
-
-/* Firefox scrollbar */
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: #1C1C24 #1C1C24;
-}
-
-.main-sidebar-label {
-  font-family: 'Switzer Light';
-  font-size: 16px;
-  color: #5B5B5B;
-}
-
-.second-sidebar-short-text {
-  font-family: 'Switzer Regular';
-  font-size: 15px;
-  color: white;
-}
-
-.second-sidebar-full-text {
-  font-family: 'Switzer Light';
-  font-size: 16px;
-  color: white;
-}
-.main-sidebar-menu:hover .icons, .main-sidebar-menu:hover .main-sidebar-label  {
-  filter: brightness(0) saturate(100%) invert(91%) sepia(0%) saturate(0%) hue-rotate(202deg) brightness(83%) contrast(86%);
-  transition-duration: 200ms;
-}
-
-.menu-item.active .icons,.menu-item.active .main-sidebar-label, .active-dropdown, .dots.active  {
-  filter: brightness(0) saturate(100%) invert(98%) sepia(9%) saturate(2%) hue-rotate(70deg) brightness(115%) contrast(100%);
-}
-
-.menu-item.active .main-sidebar-label {
-  font-family: 'Switzer Regular';
-}
-
-.submenu-text {
-  color: #5B5B5B;
-  font-family: 'Switzer Light';
-  font-size: 15px;
-}
-
-.submenu-text:hover {
-  color: rgb(184, 184, 184);
-  transition-duration: 200ms;
-}
-.submenu-text.active {
-  color: white;
+.company-main-menus {
+    font-family: 'Switzer Regular';
+    font-size: 15px;
+    font-style: normal;
+    line-height: normal;
 }
 
 
+.sidebar-container {
+    overflow: visible;
+    position: relative;
+  }
+  
+  .menu-button {
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  
+  .expanded-menu {
+    position: absolute;
+    left: 0;
+    width: auto;
+    padding-right: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
 
-.menu-item {
-  position: relative;
-}
-
-/* Add transition properties to animate all changes */
-.menu-item::before,
-.menu-item::after,
-.menu-item .pseudo-class {
-  opacity: 0;
-  transition: all 0.3s ease-in-out;
-}
-
-.menu-item.active::before,
-.menu-item.active::after,
-.menu-item.active .pseudo-class {
-  opacity: 1;
-}
-
-.menu-item .pseudo-class {
-  position: absolute;
-  content: "";
-  top: 39px;
-  left: 0px;
-  background: transparent;
-  width: 20px;
-  height: 20px;
-  border-bottom-right-radius: 100%;
-  box-shadow: 7px 7px 0 7px #1E84AF;
-  transform: rotate(-90deg) scaleY(-1) translateX(-20px);
-  border-color: transparent;
-}
-
-.menu-item.active .pseudo-class {
-  transform: rotate(-92deg) scaleY(-1) translateX(0);
-}
-
-.menu-item::after {
-  position: absolute;
-  content: "";
-  top: -12px;
-  left: 0px;
-  background: transparent;
-  width: 17px;
-  height: 20px;
-  border-bottom-right-radius: 100%;
-  box-shadow: 7px 7px 0 7px #1E84AF;
-  transform: rotate(100deg) translateX(-20px);
-  border-color: transparent;
-}
-
-.menu-item.active::after {
-  transform: rotate(102deg) translateX(0);
-}
-
-.menu-item::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 40%;
-  transform: translateY(-50%) translateX(-45px);
-  width: 45px;
-  height: 31px;
-  background-color: #1E84AF;
-  border-radius: 0 50px 50px 0;
-  border-color: transparent;
-}
-
-.menu-item.active::before {
-  transform: translateY(-50%) translateX(0);
-}
-
-.menu-item.active.none-active::before {
-  width: 75px;
-}
+  .full-form {
+    
+  }
 
 
-/* Make sure the icon and text stay above the background */
-.main-sidebar-menu {
-  position: relative;
-  z-index: 1;
-}
-
-
-.second-sidebar-tabs:hover .rightarrow {
-  transform: translateX(10px); /* Moves the arrow 5px to the right */
-  transition: transform 0.3s ease-in-out; /* Smooth animation */
-}
+  @keyframes expandIn {
+    from {
+      opacity: 0;
+      transform: translateX(-10px); /* Move from left */
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
