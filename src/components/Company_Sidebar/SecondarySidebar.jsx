@@ -37,6 +37,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
   const [submenuPosition, setSubmenuPosition] = useState(0);
   const [hoveredMenuItem, setHoveredMenuItem] = useState(null);
   const [manuallyActivated, setManuallyActivated] = useState(false);
+  const [activeSubmenuParent, setActiveSubmenuParent] = useState(null); // Track the parent of active submenu
 
   const timeoutRef = useRef(null);
   const submenuRef = useRef(null);
@@ -271,11 +272,13 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     if (!item.hasSubMenu) {
       setShowSubmenu(false);
       setCurrentSubmenu(null);
+      setActiveSubmenuParent(null);
       return;
     }
 
     // Open submenu if the item has one
     setCurrentSubmenu(item.submenuType);
+    setActiveSubmenuParent(item.id); // Set the active submenu parent
     setShowSubmenu(true);
     updateSubmenuPosition();
   };
@@ -288,6 +291,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     timeoutRef.current = setTimeout(() => {
       setHoveredMenuItem(null);
       setShowSubmenu(false);
+      setActiveSubmenuParent(null); // Clear active submenu parent
     }, 300);
   };
 
@@ -295,6 +299,8 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
+    // Keep the submenu and parent menu highlighted
+    // No need to change hoveredMenuItem as we're using activeSubmenuParent now
   };
 
   const handleSubmenuMouseLeave = () => {
@@ -305,16 +311,18 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     timeoutRef.current = setTimeout(() => {
       setHoveredMenuItem(null);
       setShowSubmenu(false);
+      setActiveSubmenuParent(null); // Clear active submenu parent
     }, 300);
   };
 
   const handleMenuItemClick = (item) => {
     if (item.hasSubMenu) {
       setManuallyActivated(true);
-      setShowSubmenu((prev) =>
-        currentSubmenu === item.submenuType ? !prev : true
-      );
-      setCurrentSubmenu(item.submenuType);
+      const isTogglingCurrent = currentSubmenu === item.submenuType;
+      
+      setShowSubmenu((prev) => isTogglingCurrent ? !prev : true);
+      setCurrentSubmenu(isTogglingCurrent && !showSubmenu ? null : item.submenuType);
+      setActiveSubmenuParent(isTogglingCurrent && !showSubmenu ? null : item.id);
       return;
     }
 
@@ -323,6 +331,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     setActiveSubItem(null);
     setCurrentSubmenu(null);
     setShowSubmenu(false);
+    setActiveSubmenuParent(null); // Clear active submenu parent
     setManuallyActivated(true);
 
     // Save active state to localStorage
@@ -338,6 +347,8 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     setActiveMainItem("qmsdocumentation");
     setActiveSubItem(subItemId);
     setManuallyActivated(true);
+    setActiveSubmenuParent(null); // Clear active submenu parent when a submenu item is selected
+    setShowSubmenu(false);
 
     // Save active submenu state to localStorage
     localStorage.setItem("activeMainItem", "qmsdocumentation");
@@ -354,6 +365,11 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     }
 
     return !item.hasSubMenu && activeMainItem === item.id;
+  };
+
+  // New function to determine hover state including when submenu is active
+  const isMenuItemHovered = (item) => {
+    return hoveredMenuItem === item.id || activeSubmenuParent === item.id;
   };
 
   const renderSubmenu = () => {
@@ -426,8 +442,8 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                     : "none",
                   backgroundColor: isMenuItemActive(item)
                     ? `${selectedMenuItem?.borderColor || "#30AD71"}15`
-                    : "transparent",
-                  color: isMenuItemActive(item) ? "#FFFFFF" : "#5B5B5B",
+                    : "transparent", // Removed the hover background
+                  color: isMenuItemActive(item) || isMenuItemHovered(item) ? "#FFFFFF" : "#5B5B5B",
                 }}
               >
                 <div className="flex items-center">
@@ -435,7 +451,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                     src={item.icon}
                     alt={item.label}
                     className={`w-5 h-5 second-sidebar-icons ${
-                      isMenuItemActive(item) ? "filter brightness-0 invert" : ""
+                      isMenuItemActive(item) || isMenuItemHovered(item) ? "filter brightness-0 invert" : ""
                     }`}
                   />
                   {!collapsed && (
@@ -455,4 +471,4 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
   );
 };
 
-export default SecondarySidebar;
+export default SecondarySidebar;  
