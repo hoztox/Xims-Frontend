@@ -58,7 +58,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
         icon: DocumentationIcon,
         hasSubMenu: true,
         submenuType: "qmsdocumentation",
-        pathPrefix: "/company/documentation",
+        pathPrefix: "/company/qmsdocumentation",
       },
       {
         id: "training",
@@ -165,7 +165,6 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
 
     // Legacy fallback checks
     if (
-      path.includes("/company/documentation") ||
       path.includes("/company/qmsdocumentation")
     ) {
       return "qmsdocumentation";

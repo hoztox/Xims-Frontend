@@ -2,7 +2,7 @@ import React from 'react'
 
 const QmsPolicy = () => {
   return (
-    <div>
+    <div className='text-center text-white'>
       QMS Policy
     </div>
   )
