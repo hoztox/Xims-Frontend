@@ -9,7 +9,6 @@ import scope from "../../../../assets/images/Company-Sidebar/record-format.svg";
 import "./documentationsubmenu.css";
 import { useNavigate } from "react-router-dom";
 
-// Correctly receive props as a parameter
 const DocumentationSubmenu = (props) => {
   const navigate = useNavigate();
   
@@ -24,7 +23,7 @@ const DocumentationSubmenu = (props) => {
       id: "manual",
       label: "Manual",
       icon: <img src={manual} alt="Manual" className="w-[15px] h-[15px]" />,
-    //   path: "/company/qms/manual",
+      path: "/company/qms/manual",
     },
     {
       id: "procedure",
@@ -32,7 +31,7 @@ const DocumentationSubmenu = (props) => {
       icon: (
         <img src={procedure} alt="Procedure" className="w-[15px] h-[15px]" />
       ),
-    //   path: "/company/qms/procedure",
+      path: "/company/qms/procedure",
     },
     {
       id: "record-format",
@@ -40,7 +39,7 @@ const DocumentationSubmenu = (props) => {
       icon: (
         <img src={record} alt="Record Format" className="w-[15px] h-[15px]" />
       ),
-    //   path: "/company/qms/record-format",
+      path: "/company/qms/record-format",
     },
     {
       id: "interested-parties",
@@ -52,13 +51,13 @@ const DocumentationSubmenu = (props) => {
           className="w-[15px] h-[15px]"
         />
       ),
-    //   path: "/company/qms/interested-parties",
+      path: "/company/qms/interested-parties",
     },
     {
       id: "processes",
       label: "Processes",
       icon: <img src={process} alt="Processes" className="w-[15px] h-[15px]" />,
-    //   path: "/company/qms/processes",
+      path: "/company/qms/processes",
     },
     {
       id: "scope-statements",
@@ -66,17 +65,18 @@ const DocumentationSubmenu = (props) => {
       icon: (
         <img src={scope} alt="Scope Statements" className="w-[15px] h-[15px]" />
       ),
-    //   path: "/company/qms/scope-statements",
+      path: "/company/qms/scope-statements",
     },
   ];
 
   // Handle clicking on a submenu item
   const handleCategoryClick = (category) => {
     if (props && props.handleItemClick) {
-      // If parent component provided a click handler, use it
-      props.handleItemClick(category.id, category.path);
+      // The key change: always pass "qmsdocumentation" as the active item
+      // This ensures the main Documentation menu gets the active state
+      props.handleItemClick("qmsdocumentation", category.path);
     } else {
-      // Otherwise use direct navigation
+      // Fallback direct navigation
       navigate(category.path);
     }
   };
@@ -86,7 +86,7 @@ const DocumentationSubmenu = (props) => {
       {categories.map((category) => (
         <div
           key={category.id}
-          className='flex flex-col items-center justify-center py-[10px] rounded-md bg-[#24242D] transition-colors duration-200 cursor-pointer h-[100px] gap-[10px] documentation-submenu-cards'
+          className='flex flex-col items-center justify-center py-[10px] rounded-md bg-[#85858515] transition-colors duration-200 cursor-pointer h-[100px] gap-[10px] documentation-submenu-cards'
           onClick={() => handleCategoryClick(category)}
         >
           <div className='bg-[#5B5B5B] rounded-full p-[5px] w-[26px] h-[26px] flex justify-center items-center'>
