@@ -189,11 +189,11 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
             onMouseEnter={() => setHoveredItem(item.id)}
             onMouseLeave={() => setHoveredItem(null)}
           >
-            <div className="w-6 h-6 flex items-center justify-center">
+            <div className="w-6 h-6 flex items-center justify-center min-w-6 min-h-6">
               <img
                 src={item.icon}
                 alt={item.label}
-                className="w-5 h-5 object-contain second-sidebar-icons"
+                className="w-5 h-5 second-sidebar-icons"
                 style={{
                   filter:
                     activeSubItem === item.id || hoveredItem === item.id
@@ -204,7 +204,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
               />
             </div>
             {!collapsed && (
-              <span className="ml-3 text-sm second-sidebar-spans">
+              <span className="ml-3 second-sidebar-spans">
                 {item.label}
               </span>
             )}
