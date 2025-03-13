@@ -32,15 +32,6 @@
   scrollbar-color: #1c1c24 #1c1c24;
 }
 
-.second-sidebar {
-  transition: all 0.2s ease-in-out;
-}
-
-.second-sidebar:hover .second-sidebar-icons {
-  filter: brightness(0) saturate(100%) invert(99%) sepia(1%) 
-          saturate(131%) hue-rotate(18deg) brightness(116%) contrast(100%);
-  transition: filter 0.2s ease-in-out;
-}
 
 .second-sidebar .second-sidebar-spans {
   font-family: 'Switzer Regular';
@@ -50,8 +41,23 @@
 }
 .second-sidebar:hover .second-sidebar-spans {
   color: white;
-  transition: color 0.2s ease-in-out;
+ 
 }
+/* Hover Effect: Turn White */
+.second-sidebar:hover img,
+.active-icon {
+    filter: brightness(0) invert(1);
+}
+
+/* Ensure Active State is Also White */
+.active-icon {
+    filter: brightness(0) invert(1);
+}
+
+
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./secondarysidebar.css";
 import DashboardIcon from "../../assets/images/Company-Sidebar/icon1.svg";
@@ -26,8 +26,11 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     const [activeMainItem, setActiveMainItem] = useState(null);
     const [activeSubItem, setActiveSubItem] = useState(null);
     const [hoveredItem, setHoveredItem] = useState(null);
-    const [expandedMenu, setExpandedMenu] = useState(null);
-     
+
+    // Create a ref to track if we're hovering over the submenu
+    const submenuRef = useRef(null);
+    const timeoutRef = useRef(null);
+
     const systemMenus = {
         QMS: [
             {
@@ -52,7 +55,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                 id: "training",
                 label: "Employee Training & Performance",
                 icon: TrainingIcon,
-                
+
             },
             {
                 id: "actions",
@@ -126,7 +129,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                 icon: ReportsIcon,
 
             },
-             
+
             {
                 id: "backup",
                 label: "Backup",
@@ -137,7 +140,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
         ],
     };
 
-    
+
     const currentMenuItems = systemMenus[selectedMenuItem?.id] || systemMenus.QMS;
 
     useEffect(() => {
@@ -145,18 +148,18 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
 
         // Check if the current path matches any main menu path
         const mainMenuItem = currentMenuItems.find(item => item.path && currentPath.includes(item.path));
-        
+
         if (mainMenuItem) {
             setActiveMainItem(mainMenuItem.id);
             setActiveSubItem(null);
             return;
         }
 
-        // Check if the current path matches any submenu path
+
         for (const item of currentMenuItems) {
             if (item.hasSubMenu && item.subMenus) {
                 const subMenuItem = item.subMenus.find(subItem => subItem.path && currentPath.includes(subItem.path));
-                
+
                 if (subMenuItem) {
                     setActiveMainItem(item.id); // Mark "Documentation" active
                     setActiveSubItem(subMenuItem.id);
@@ -171,55 +174,52 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
         }
     }, [location.pathname, currentMenuItems, selectedMenuItem, activeMainItem]);
 
-    // Toggle submenu expansion
-    const toggleSubMenu = (itemId) => {
-        setExpandedMenu(expandedMenu === itemId ? null : itemId);
-    };
+    // Clean up any timeouts when component unmounts
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+        };
+    }, []);
 
     // Handle menu item click
     const handleMenuItemClick = (item) => {
         setActiveMainItem(item.id);
-        if (item.hasSubMenu) {
-            toggleSubMenu(item.id);
-        } else {
+        if (!item.hasSubMenu) {
             setActiveSubItem(null);
-            setExpandedMenu(null);
         }
     };
 
-    // Handle submenu item click
     const handleSubMenuItemClick = (mainItemId, subItemId, event) => {
         event.stopPropagation();
         setActiveMainItem(mainItemId);
         setActiveSubItem(subItemId);
-        setExpandedMenu(null);
     };
 
-    // Helper function to determine if a menu item should be displayed as active
     const isMenuItemActive = (item) => {
         if (item.hasSubMenu) {
-            return activeMainItem === item.id || expandedMenu === item.id || (item.subMenus && item.subMenus.some(sub => sub.id === activeSubItem));
+            return activeMainItem === item.id || (item.subMenus && item.subMenus.some(sub => sub.id === activeSubItem));
         } else {
             return activeMainItem === item.id;
         }
     };
 
-    // Get current expanded menu
-    const getExpandedMenuDetails = () => {
-        if (!expandedMenu) return null;
-        
-        const menuItem = currentMenuItems.find(item => item.id === expandedMenu);
+    const getHoveredMenuDetails = () => {
+        if (!hoveredItem) return null;
+
+        const menuItem = currentMenuItems.find(item => item.id === hoveredItem);
         if (!menuItem || !menuItem.hasSubMenu) return null;
-        
+
         return menuItem;
     };
 
-    const expandedMenuDetails = getExpandedMenuDetails();
+    const hoveredMenuDetails = getHoveredMenuDetails();
 
     return (
         <div className="relative">
-           <div
-                className="secondary-sidebar bg-[#1C1C24] text-[#5B5B5B] h-full overflow-y-auto transition-all duration-300 border-l border-r border-[#383840]"
+            <div
+                className="secondary-sidebar bg-[#1C1C24] text-[#5B5B5B] h-full overflow-y-auto transition-all border-l border-r border-[#383840]"
                 style={{ width: collapsed ? "73px" : "292px" }}
             >
                 <div className="py-5">
@@ -227,73 +227,102 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                         <div key={item.id}>
                             {item.hasSubMenu ? (
                                 <div
-                                    className={`flex items-center justify-between pl-5 pr-2 py-3 cursor-pointer transition-all duration-300 second-sidebar ${expandedMenu === item.id ? 'submenu-active' : ''}`}
+                                    className={`flex items-center justify-between pl-5 pr-2 py-3 cursor-pointer second-sidebar ${hoveredItem === item.id ? 'submenu-active' : ''}`}
                                     style={{
                                         borderLeft: isMenuItemActive(item) ? `2px solid ${selectedMenuItem?.borderColor}` : "none",
                                         backgroundColor: isMenuItemActive(item) ? `${selectedMenuItem?.borderColor}15` : "transparent",
                                         color: isMenuItemActive(item) || hoveredItem === item.id ? "#FFFFFF" : "#5B5B5B",
                                     }}
                                     onClick={() => handleMenuItemClick(item)}
-                                    onMouseEnter={() => setHoveredItem(item.id)}
-                                    onMouseLeave={() => setHoveredItem(null)}
+                                    onMouseEnter={() => {
+                                        if (timeoutRef.current) {
+                                            clearTimeout(timeoutRef.current);
+                                        }
+                                        setHoveredItem(item.id);
+                                    }}
+                                    onMouseLeave={() => {
+
+                                        timeoutRef.current = setTimeout(() => {
+
+                                            if (!submenuRef.current?.matches(':hover')) {
+                                                setHoveredItem(null);
+                                            }
+                                        }, 100);
+                                    }}
                                 >
                                     <div className="flex items-center">
-                                        <img src={item.icon} alt={item.label} className="w-5 h-5" />
-                                        {!collapsed && <span className="ml-3">{item.label}</span>}
+                                        <img src={item.icon} alt={item.label} className="w-5 h-5 second-sidebar-icons" />
+                                        {!collapsed && <span className="ml-3 second-sidebar-spans">{item.label}</span>}
                                     </div>
                                 </div>
                             ) : (
                                 <Link
-                                    to={item.path || "#"}
-                                    className="flex items-center justify-between pl-5 pr-2 py-3 cursor-pointer transition-all duration-300 second-sidebar"
-                                    style={{
-                                        borderLeft: isMenuItemActive(item) ? `2px solid ${selectedMenuItem?.borderColor}` : "none",
-                                        backgroundColor: isMenuItemActive(item) ? `${selectedMenuItem?.borderColor}15` : "transparent",
-                                        color: isMenuItemActive(item) || hoveredItem === item.id ? "#FFFFFF" : "#5B5B5B",
-                                    }}
-                                    onClick={() => handleMenuItemClick(item)}
-                                    onMouseEnter={() => setHoveredItem(item.id)}
-                                    onMouseLeave={() => setHoveredItem(null)}
-                                >
-                                    <div className="flex items-center">
-                                        <img src={item.icon} alt={item.label} className="w-5 h-5" />
-                                        {!collapsed && <span className="ml-3">{item.label}</span>}
-                                    </div>
-                                </Link>
+                                to={item.path || "#"}
+                                className="flex items-center justify-between pl-5 pr-2 py-3 cursor-pointer transition-all second-sidebar"
+                                style={{
+                                    borderLeft: isMenuItemActive(item) ? `2px solid ${selectedMenuItem?.borderColor}` : "none",
+                                    backgroundColor: isMenuItemActive(item) ? `${selectedMenuItem?.borderColor}15` : "transparent",
+                                    color: isMenuItemActive(item) || hoveredItem === item.id ? "#FFFFFF" : "#5B5B5B",
+                                }}
+                                onClick={() => handleMenuItemClick(item)}
+                                onMouseEnter={() => setHoveredItem(item.id)}
+                                onMouseLeave={() => setHoveredItem(null)}
+                            >
+                                <div className="flex items-center">
+                                    <img
+                                        src={item.icon}
+                                        alt={item.label}
+                                        className={`w-5 h-5 second-sidebar-icons ${isMenuItemActive(item) ? "active-icon" : ""}`}
+                                    />
+                                    {!collapsed && <span className="ml-3 second-sidebar-spans">{item.label}</span>}
+                                </div>
+                            </Link>
+                            
+
+
                             )}
                         </div>
                     ))}
                 </div>
             </div>
 
-            {/* Floating submenu panel */}
-            {!collapsed && expandedMenuDetails && (
-                <div 
-                    className="absolute top-[10%] left-[100%] z-10 bg-[#26262F]  min-w-[220px] py-2 px-1"
+            {/* Floating submenu panel - now appears on hover */}
+            {!collapsed && hoveredMenuDetails && (
+                <div
+                    ref={submenuRef}
+                    className="absolute top-[10%] left-[100%] z-10 bg-[#26262F] min-w-[220px] py-2 px-1"
+                    onMouseEnter={() => {
+                        if (timeoutRef.current) {
+                            clearTimeout(timeoutRef.current);
+                        }
+                    }}
+                    onMouseLeave={() => {
+                        setHoveredItem(null);
+                    }}
                 >
                     <div className="p-2 mb-2 border-b border-[#383840] text-white">
-                        {expandedMenuDetails.label}
+                        {hoveredMenuDetails.label}
                     </div>
-                    {expandedMenuDetails.subMenus.map((subItem) => (
+                    {hoveredMenuDetails.subMenus.map((subItem) => (
                         <Link
                             key={subItem.id}
                             to={subItem.path}
                             className="flex items-center py-2 px-3 my-1 rounded-md transition-all duration-300 hover:bg-[#383840]"
                             style={{
                                 backgroundColor:
-                                    activeMainItem === expandedMenuDetails.id && activeSubItem === subItem.id
+                                    activeMainItem === hoveredMenuDetails.id && activeSubItem === subItem.id
                                         ? `${selectedMenuItem?.borderColor}25`
                                         : "transparent",
-                                color: activeMainItem === expandedMenuDetails.id && activeSubItem === subItem.id
+                                color: activeMainItem === hoveredMenuDetails.id && activeSubItem === subItem.id
                                     ? "#FFFFFF"
                                     : "#8A8A8F",
                             }}
-                            onClick={(e) => handleSubMenuItemClick(expandedMenuDetails.id, subItem.id, e)}
+                            onClick={(e) => handleSubMenuItemClick(hoveredMenuDetails.id, subItem.id, e)}
                         >
-                            <div 
-                                className="w-2 h-2 rounded-full mr-2" 
+                            <div
+                                className="w-2 h-2 rounded-full mr-2"
                                 style={{
-                                    backgroundColor: activeMainItem === expandedMenuDetails.id && activeSubItem === subItem.id
+                                    backgroundColor: activeMainItem === hoveredMenuDetails.id && activeSubItem === subItem.id
                                         ? selectedMenuItem?.borderColor
                                         : "#8A8A8F",
                                 }}
