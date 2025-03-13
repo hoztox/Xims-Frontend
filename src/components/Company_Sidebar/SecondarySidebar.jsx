@@ -173,7 +173,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
           <Link
             key={item.id}
             to={item.path || "#"}
-            className={`flex items-center justify-start pl-6 py-3 cursor-pointer transition-all duration-300 second-sidebar`}
+            className={`flex items-center justify-start px-5 py-3 cursor-pointer transition-all duration-300 second-sidebar`}
             style={{
               borderLeft:
                 activeSubItem === item.id
