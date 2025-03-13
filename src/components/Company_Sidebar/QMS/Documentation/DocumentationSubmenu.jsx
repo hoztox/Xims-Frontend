@@ -72,11 +72,8 @@ const DocumentationSubmenu = (props) => {
   // Handle clicking on a submenu item
   const handleCategoryClick = (category) => {
     if (props && props.handleItemClick) {
-      // The key change: always pass "qmsdocumentation" as the active item
-      // This ensures the main Documentation menu gets the active state
       props.handleItemClick("qmsdocumentation", category.path);
     } else {
-      // Fallback direct navigation
       navigate(category.path);
     }
   };

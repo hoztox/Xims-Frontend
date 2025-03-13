@@ -232,15 +232,16 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     ) {
       const menuItemElement = menuItemRefs.current[hoveredMenuItem];
       const sidebarElement = sidebarRef.current;
-
+  
       const menuItemRect = menuItemElement.getBoundingClientRect();
       const sidebarRect = sidebarElement.getBoundingClientRect();
-
-      const topPosition = menuItemRect.top - sidebarRect.top - 65;
-
+  
+      let topPosition = menuItemRect.top - sidebarRect.top -65;
+  
       setSubmenuPosition(topPosition);
     }
   };
+  
 
   const handleMenuItemMouseEnter = (item) => {
     if (collapsed) return;
@@ -249,20 +250,21 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
       clearTimeout(timeoutRef.current);
     }
   
-    // Set only the hover effect (color change)
     setHoveredMenuItem(item.id);
   
-    // Show submenu if available
-    if (item.hasSubMenu) {
-      setCurrentSubmenu(item.submenuType);
-      setShowSubmenu(true);
-      updateSubmenuPosition();
+    // If the new item doesn't have a submenu, close the existing submenu immediately
+    if (!item.hasSubMenu) {
+      setShowSubmenu(false);
+      setCurrentSubmenu(null);
+      return;
     }
+  
+    // Open submenu if the item has one
+    setCurrentSubmenu(item.submenuType);
+    setShowSubmenu(true);
+    updateSubmenuPosition();
   };
   
-  
-  
-
   const handleMenuAreaMouseLeave = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
