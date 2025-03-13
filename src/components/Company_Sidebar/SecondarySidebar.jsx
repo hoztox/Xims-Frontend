@@ -23,11 +23,11 @@ import { useLocation } from "react-router-dom";
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     const location = useLocation();
+    const [activeMainItem, setActiveMainItem] = useState(null);
     const [activeSubItem, setActiveSubItem] = useState(null);
-    // Add state to track which item is being hovered
     const [hoveredItem, setHoveredItem] = useState(null);
-
-    // Define menu items for each system
+    const [expandedMenus, setExpandedMenus] = useState({});
+     
     const systemMenus = {
         QMS: [
             {
@@ -35,17 +35,24 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                 label: "Dashboard",
                 icon: DashboardIcon,
                 path: "/company/dashboard",
+                hasSubMenu: false
             },
             {
                 id: "documentation",
                 label: "Documentation",
                 icon: DocumentationIcon,
-
+                hasSubMenu: true,
+                subMenus: [
+                    { id: "doc-templates", label: "Document Templates", path: "/company/documentation/templates" },
+                    { id: "doc-records", label: "Records", path: "/company/documentation/records" },
+                    { id: "doc-policies", label: "Policies", path: "/company/documentation/policies" }
+                ]
             },
             {
                 id: "training",
                 label: "Employee Training & Performance",
                 icon: TrainingIcon,
+                
 
             },
             {
@@ -120,12 +127,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                 icon: ReportsIcon,
 
             },
-            //   {
-            //     id: "analysis",
-            //     label: "Analysis Graph",
-            //     icon: AnalysisIcon,
-
-            //   },
+             
             {
                 id: "backup",
                 label: "Backup",
@@ -134,515 +136,93 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
             },
             { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
         ],
-        // Define menus for other systems
-        EMS: [
-            {
-                id: "dashboard",
-                label: "Dashboard",
-                icon: DashboardIcon,
-                path: "/company/dashboard",
-            },
-            {
-                id: "documentation",
-                label: "Documentation",
-                icon: DocumentationIcon,
-            },
-            {
-                id: "training",
-                label: "Employee Training & Performance",
-                icon: TrainingIcon,
-            },
-            {
-                id: "actions",
-                label: "Actions, Meeting and Communication Management",
-                icon: ActionsIcon,
-
-            },
-            {
-                id: "audits",
-                label: "Audits & Inspections Management",
-                icon: AuditsIcon,
-
-            },
-            {
-                id: "customer",
-                label: "Customer Management",
-                icon: CustomerIcon,
-
-            },
-            {
-                id: "supplier",
-                label: "Supplier Management",
-                icon: SupplierIcon,
-
-            },
-            {
-                id: "compliance",
-                label: "Compliance, Sustainability & Management of Change",
-                icon: ComplianceIcon,
-
-            },
-            {
-                id: "risk",
-                label: "Risk, Opportunities & Incident Management",
-                icon: RiskIcon,
-
-            },
-            {
-                id: "energy",
-                label: "Energy Management",
-                icon: EnergyIcon,
-
-            },
-            {
-                id: "correction",
-                label: "Correction Corrective Actions & Preventive Actions",
-                icon: CorrectionIcon,
-
-            },
-            {
-                id: "objectives",
-                label: "Objectives & Targets",
-                icon: ObjectivesIcon,
-
-            },
-            {
-                id: "user",
-                label: "User Management",
-                icon: UserIcon,
-
-            },
-            {
-                id: "nonconformity",
-                label: "Non Conformity Report Management",
-                icon: NonConformityIcon,
-
-            },
-            {
-                id: "reports",
-                label: "Reports & Analysis",
-                icon: ReportsIcon,
-
-            },
-            {
-                id: "backup",
-                label: "Backup",
-                icon: BackupIcon,
-                path: "/company/backup",
-            },
-            { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
-        ],
-
-        OHS: [
-            {
-                id: "dashboard",
-                label: "Dashboard",
-                icon: DashboardIcon,
-                path: "/company/dashboard",
-            },
-            {
-                id: "documentation",
-                label: "Documentation",
-                icon: DocumentationIcon,
-            },
-            {
-                id: "training",
-                label: "Employee Training & Performance",
-                icon: TrainingIcon,
-            },
-            {
-                id: "actions",
-                label: "Actions, Meeting and Communication Management",
-                icon: ActionsIcon,
-
-            },
-            {
-                id: "audits",
-                label: "Audits & Inspections Management",
-                icon: AuditsIcon,
-
-            },
-            {
-                id: "customer",
-                label: "Customer Management",
-                icon: CustomerIcon,
-
-            },
-            {
-                id: "supplier",
-                label: "Supplier Management",
-                icon: SupplierIcon,
-
-            },
-            {
-                id: "compliance",
-                label: "Compliance, Sustainability & Management of Change",
-                icon: ComplianceIcon,
-
-            },
-            {
-                id: "risk",
-                label: "Risk, Opportunities & Incident Management",
-                icon: RiskIcon,
-
-            },
-            {
-                id: "energy",
-                label: "Energy Management",
-                icon: EnergyIcon,
-
-            },
-            {
-                id: "correction",
-                label: "Correction Corrective Actions & Preventive Actions",
-                icon: CorrectionIcon,
-
-            },
-            {
-                id: "objectives",
-                label: "Objectives & Targets",
-                icon: ObjectivesIcon,
-
-            },
-            {
-                id: "user",
-                label: "User Management",
-                icon: UserIcon,
-
-            },
-            {
-                id: "nonconformity",
-                label: "Non Conformity Report Management",
-                icon: NonConformityIcon,
-
-            },
-            {
-                id: "reports",
-                label: "Reports & Analysis",
-                icon: ReportsIcon,
-
-            },
-            {
-                id: "backup",
-                label: "Backup",
-                icon: BackupIcon,
-                path: "/company/backup",
-            },
-            { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
-        ],
-        EnMS: [
-            {
-                id: "dashboard",
-                label: "Dashboard",
-                icon: DashboardIcon,
-                path: "/company/dashboard",
-            },
-            {
-                id: "documentation",
-                label: "Documentation",
-                icon: DocumentationIcon,
-            },
-            {
-                id: "training",
-                label: "Employee Training & Performance",
-                icon: TrainingIcon,
-            },
-            {
-                id: "actions",
-                label: "Actions, Meeting and Communication Management",
-                icon: ActionsIcon,
-
-            },
-            {
-                id: "audits",
-                label: "Audits & Inspections Management",
-                icon: AuditsIcon,
-
-            },
-            {
-                id: "customer",
-                label: "Customer Management",
-                icon: CustomerIcon,
-
-            },
-            {
-                id: "supplier",
-                label: "Supplier Management",
-                icon: SupplierIcon,
-
-            },
-            {
-                id: "compliance",
-                label: "Compliance, Sustainability & Management of Change",
-                icon: ComplianceIcon,
-
-            },
-            {
-                id: "risk",
-                label: "Risk, Opportunities & Incident Management",
-                icon: RiskIcon,
-
-            },
-            {
-                id: "energy",
-                label: "Energy Management",
-                icon: EnergyIcon,
-
-            },
-            {
-                id: "correction",
-                label: "Correction Corrective Actions & Preventive Actions",
-                icon: CorrectionIcon,
-
-            },
-            {
-                id: "objectives",
-                label: "Objectives & Targets",
-                icon: ObjectivesIcon,
-
-            },
-            {
-                id: "user",
-                label: "User Management",
-                icon: UserIcon,
-
-            },
-            {
-                id: "nonconformity",
-                label: "Non Conformity Report Management",
-                icon: NonConformityIcon,
-
-            },
-            {
-                id: "reports",
-                label: "Reports & Analysis",
-                icon: ReportsIcon,
-
-            },
-            {
-                id: "backup",
-                label: "Backup",
-                icon: BackupIcon,
-                path: "/company/backup",
-            },
-            { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
-        ],
-        BMS: [
-            {
-                id: "dashboard",
-                label: "Dashboard",
-                icon: DashboardIcon,
-                path: "/company/dashboard",
-            },
-            {
-                id: "documentation",
-                label: "Documentation",
-                icon: DocumentationIcon,
-            },
-            {
-                id: "training",
-                label: "Employee Training & Performance",
-                icon: TrainingIcon,
-            },
-            {
-                id: "actions",
-                label: "Actions, Meeting and Communication Management",
-                icon: ActionsIcon,
-
-            },
-            {
-                id: "audits",
-                label: "Audits & Inspections Management",
-                icon: AuditsIcon,
-
-            },
-            {
-                id: "customer",
-                label: "Customer Management",
-                icon: CustomerIcon,
-
-            },
-            {
-                id: "supplier",
-                label: "Supplier Management",
-                icon: SupplierIcon,
-
-            },
-            {
-                id: "compliance",
-                label: "Compliance, Sustainability & Management of Change",
-                icon: ComplianceIcon,
-
-            },
-            {
-                id: "risk",
-                label: "Risk, Opportunities & Incident Management",
-                icon: RiskIcon,
-
-            },
-            {
-                id: "business",
-                label: "Business Continuity Management",
-                icon: AnalysisIcon,
-
-            },
-            {
-                id: "correction",
-                label: "Correction Corrective Actions & Preventive Actions",
-                icon: CorrectionIcon,
-
-            },
-            {
-                id: "objectives",
-                label: "Objectives & Targets",
-                icon: ObjectivesIcon,
-
-            },
-            {
-                id: "user",
-                label: "User Management",
-                icon: UserIcon,
-
-            },
-            {
-                id: "nonconformity",
-                label: "Non Conformity Report Management",
-                icon: NonConformityIcon,
-
-            },
-            {
-                id: "reports",
-                label: "Reports & Analysis",
-                icon: ReportsIcon,
-
-            },
-            {
-                id: "backup",
-                label: "Backup",
-                icon: BackupIcon,
-                path: "/company/backup",
-            },
-            { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
-        ],
-        AMS: [
-            {
-                id: "dashboard",
-                label: "Dashboard",
-                icon: DashboardIcon,
-                path: "/company/dashboard",
-            },
-            {
-                id: "documentation",
-                label: "Documentation",
-                icon: DocumentationIcon,
-            },
-            {
-                id: "training",
-                label: "Employee Training & Performance",
-                icon: TrainingIcon,
-            },
-            {
-                id: "actions",
-                label: "Meeting and Communication Management",
-                icon: ActionsIcon,
-
-            },
-            {
-                id: "audits",
-                label: "Audits & Inspections Management",
-                icon: AuditsIcon,
-
-            },
-            {
-                id: "customer",
-                label: "Customer Management",
-                icon: CustomerIcon,
-
-            },
-            {
-                id: "supplier",
-                label: "Supplier Management",
-                icon: SupplierIcon,
-
-            },
-            {
-                id: "compliance",
-                label: "Compliance, Sustainability & Management of Change",
-                icon: ComplianceIcon,
-
-            },
-            {
-                id: "risk",
-                label: "Risk & Incident Management",
-                icon: RiskIcon,
-
-            },
-            {
-                id: "energy",
-                label: "Energy Management",
-                icon: EnergyIcon,
-
-            },
-            {
-                id: "correction",
-                label: "Correction Corrective Actions & Preventive Actions",
-                icon: CorrectionIcon,
-
-            },
-            {
-                id: "objectives",
-                label: "Objectives & Targets",
-                icon: ObjectivesIcon,
-
-            },
-            {
-                id: "user",
-                label: "User Management",
-                icon: UserIcon,
-
-            },
-            {
-                id: "nonconformity",
-                label: "Non Conformity Report Management",
-                icon: NonConformityIcon,
-
-            },
-            {
-                id: "reports",
-                label: "Reports & Analysis",
-                icon: ReportsIcon,
-
-            },
-            {
-                id: "backup",
-                label: "Backup",
-                icon: BackupIcon,
-                path: "/company/backup",
-            },
-            { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
-        ],
-        IMS: [
-            {
-                id: "dashboard",
-                label: "Dashboard",
-                icon: DashboardIcon,
-                path: "/company/dashboard",
-            },
-        ]
+         
+        
     };
 
-    // Get the current menu based on selected system
+    
     const currentMenuItems = systemMenus[selectedMenuItem?.id] || systemMenus.QMS;
 
     useEffect(() => {
         const currentPath = location.pathname;
-        const activeItem = currentMenuItems.find((item) =>
-            currentPath.includes(item.path)
-        );
-        if (activeItem) {
-            setActiveSubItem(activeItem.id);
+        
+        // Check if the current path matches any main menu path
+        const mainMenuItem = currentMenuItems.find(item => 
+            item.path && currentPath.includes(item.path));
+        
+        if (mainMenuItem) {
+            setActiveMainItem(mainMenuItem.id);
+            setActiveSubItem(null);
+            return;
+        }
+        
+        // Check if the current path matches any submenu path
+        for (const item of currentMenuItems) {
+            if (item.hasSubMenu && item.subMenus) {
+                const subMenuItem = item.subMenus.find(subItem => 
+                    subItem.path && currentPath.includes(subItem.path));
+                
+                if (subMenuItem) {
+                    setActiveMainItem(item.id);
+                    setActiveSubItem(subMenuItem.id);
+                    // Auto-expand parent menu
+                    setExpandedMenus(prev => ({ ...prev, [item.id]: true }));
+                    return;
+                }
+            }
+        }
+        
+        // Default to first item if no match
+        if (!activeMainItem && currentMenuItems.length > 0) {
+            setActiveMainItem(currentMenuItems[0].id);
         }
     }, [location.pathname, currentMenuItems, selectedMenuItem]);
+
+    // Toggle submenu expansion
+    const toggleSubMenu = (itemId) => {
+        // Update expanded menus state
+        setExpandedMenus(prev => ({
+            ...prev,
+            [itemId]: !prev[itemId]
+        }));
+    };
+
+    // Handle menu item click
+    const handleMenuItemClick = (item) => {
+        // Set this item as the active main item
+        setActiveMainItem(item.id);
+        
+        if (item.hasSubMenu) {
+            toggleSubMenu(item.id);
+            // Don't navigate anywhere if the item has submenus
+            return false;
+        } else {
+            // Clear active submenu when clicking on item without submenu
+            setActiveSubItem(null);
+            // Clear all expanded submenus when clicking on a regular menu item
+            setExpandedMenus({});
+            return true; // Allow navigation for items without submenus
+        }
+    };
+
+    // Handle submenu item click
+    const handleSubMenuItemClick = (mainItemId, subItemId, event) => {
+        // Stop propagation to prevent parent click handler from firing
+        event.stopPropagation();
+        setActiveMainItem(mainItemId);
+        setActiveSubItem(subItemId);
+    };
+
+    // Helper function to determine if a menu item should be displayed as active
+    const isMenuItemActive = (item) => {
+        if (item.hasSubMenu) {
+            // For items with submenus, they're active if they're the active main item or expanded
+            return activeMainItem === item.id || expandedMenus[item.id];
+        } else {
+            // For regular items, they're only active if they're the active main item AND no submenus are expanded
+            return activeMainItem === item.id && Object.values(expandedMenus).every(value => !value);
+        }
+    };
 
     return (
         <div
@@ -653,46 +233,153 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
         >
             <div className="py-5">
                 {currentMenuItems.map((item) => (
-                    <Link
-                        key={item.id}
-                        to={item.path || "#"}
-                        className={`flex items-center justify-start pl-5 pr-2 py-3 cursor-pointer transition-all duration-300 second-sidebar`}
-                        style={{
-                            borderLeft:
-                                activeSubItem === item.id
-                                    ? `2px solid ${selectedMenuItem?.borderColor}`
-                                    : "none",
-                            backgroundColor:
-                                activeSubItem === item.id
-                                    ? `${selectedMenuItem?.borderColor}15`
-                                    : "transparent",
-                            color:
-                                activeSubItem === item.id || hoveredItem === item.id
-                                    ? "#FFFFFF"
-                                    : "#5B5B5B",
-                        }}
-                        onClick={() => setActiveSubItem(item.id)}
-                        onMouseEnter={() => setHoveredItem(item.id)}
-                        onMouseLeave={() => setHoveredItem(null)}
-                    >
-                        <div className="w-6 h-6 flex items-center justify-center min-w-6 min-h-6">
-                            <img
-                                src={item.icon}
-                                alt={item.label}
-                                className="w-5 h-5 second-sidebar-icons"
+                    <div key={item.id}>
+                        {/* Main menu item */}
+                        {item.hasSubMenu ? (
+                            // Clickable div for items with submenus
+                            <div
+                                className={`flex items-center justify-between pl-5 pr-2 py-3 cursor-pointer transition-all duration-300 second-sidebar`}
                                 style={{
-                                    filter:
-                                        activeSubItem === item.id || hoveredItem === item.id
-                                            ? "brightness(0) invert(1)"
+                                    borderLeft:
+                                        isMenuItemActive(item)
+                                            ? `2px solid ${selectedMenuItem?.borderColor}`
                                             : "none",
-                                    transition: "filter 0.2s ease-in-out",
+                                    backgroundColor:
+                                        isMenuItemActive(item)
+                                            ? `${selectedMenuItem?.borderColor}15`
+                                            : "transparent",
+                                    color:
+                                        isMenuItemActive(item) || hoveredItem === item.id
+                                            ? "#FFFFFF"
+                                            : "#5B5B5B",
                                 }}
-                            />
-                        </div>
-                        {!collapsed && (
-                            <span className="ml-3 second-sidebar-spans">{item.label}</span>
+                                onClick={() => handleMenuItemClick(item)}
+                                onMouseEnter={() => setHoveredItem(item.id)}
+                                onMouseLeave={() => setHoveredItem(null)}
+                            >
+                                <div className="flex items-center">
+                                    <div className="w-6 h-6 flex items-center justify-center min-w-6 min-h-6">
+                                        <img
+                                            src={item.icon}
+                                            alt={item.label}
+                                            className="w-5 h-5 second-sidebar-icons"
+                                            style={{
+                                                filter:
+                                                    isMenuItemActive(item) || hoveredItem === item.id
+                                                        ? "brightness(0) invert(1)"
+                                                        : "none",
+                                                transition: "filter 0.2s ease-in-out",
+                                            }}
+                                        />
+                                    </div>
+                                    {!collapsed && (
+                                        <span className="ml-3 second-sidebar-spans">{item.label}</span>
+                                    )}
+                                </div>
+                                {!collapsed && (
+                                    <div className="mr-2">
+                                        <svg
+                                            width="10"
+                                            height="6"
+                                            viewBox="0 0 10 6"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            style={{
+                                                transform: expandedMenus[item.id] ? 'rotate(180deg)' : 'rotate(0deg)',
+                                                transition: 'transform 0.2s ease-in-out',
+                                                filter: isMenuItemActive(item) || hoveredItem === item.id
+                                                    ? "brightness(0) invert(1)"
+                                                    : "none",
+                                            }}
+                                        >
+                                            <path
+                                                d="M1 1L5 5L9 1"
+                                                stroke="currentColor"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
+                                        </svg>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            // Link for items without submenus
+                            <Link
+                                to={item.path || "#"}
+                                className={`flex items-center justify-between pl-5 pr-2 py-3 cursor-pointer transition-all duration-300 second-sidebar`}
+                                style={{
+                                    borderLeft:
+                                        isMenuItemActive(item)
+                                            ? `2px solid ${selectedMenuItem?.borderColor}`
+                                            : "none",
+                                    backgroundColor:
+                                        isMenuItemActive(item)
+                                            ? `${selectedMenuItem?.borderColor}15`
+                                            : "transparent",
+                                    color:
+                                        isMenuItemActive(item) || hoveredItem === item.id
+                                            ? "#FFFFFF"
+                                            : "#5B5B5B",
+                                }}
+                                onClick={() => handleMenuItemClick(item)}
+                                onMouseEnter={() => setHoveredItem(item.id)}
+                                onMouseLeave={() => setHoveredItem(null)}
+                            >
+                                <div className="flex items-center">
+                                    <div className="w-6 h-6 flex items-center justify-center min-w-6 min-h-6">
+                                        <img
+                                            src={item.icon}
+                                            alt={item.label}
+                                            className="w-5 h-5 second-sidebar-icons"
+                                            style={{
+                                                filter:
+                                                    isMenuItemActive(item) || hoveredItem === item.id
+                                                        ? "brightness(0) invert(1)"
+                                                        : "none",
+                                                transition: "filter 0.2s ease-in-out",
+                                            }}
+                                        />
+                                    </div>
+                                    {!collapsed && (
+                                        <span className="ml-3 second-sidebar-spans">{item.label}</span>
+                                    )}
+                                </div>
+                            </Link>
                         )}
-                    </Link>
+
+                        {/* Submenu items */}
+                        {!collapsed && item.hasSubMenu && expandedMenus[item.id] && (
+                            <div className="submenu-container pl-12 bg-[#26262F]">
+                                {item.subMenus.map((subItem) => (
+                                    <Link
+                                        key={subItem.id}
+                                        to={subItem.path}
+                                        className={`flex items-center py-2 px-3 my-1 rounded-md transition-all duration-300`}
+                                        style={{
+                                            backgroundColor:
+                                                activeMainItem === item.id && activeSubItem === subItem.id
+                                                    ? `${selectedMenuItem?.borderColor}25`
+                                                    : "transparent",
+                                            color: activeMainItem === item.id && activeSubItem === subItem.id
+                                                ? "#FFFFFF"
+                                                : "#8A8A8F",
+                                        }}
+                                        onClick={(e) => handleSubMenuItemClick(item.id, subItem.id, e)}
+                                    >
+                                        <div className="w-2 h-2 rounded-full mr-2" 
+                                            style={{
+                                                backgroundColor: activeMainItem === item.id && activeSubItem === subItem.id
+                                                    ? selectedMenuItem?.borderColor
+                                                    : "#8A8A8F",
+                                            }}
+                                        />
+                                        <span className="text-sm">{subItem.label}</span>
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 ))}
             </div>
         </div>
