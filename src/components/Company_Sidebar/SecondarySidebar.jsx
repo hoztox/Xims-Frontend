@@ -236,7 +236,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
       const menuItemRect = menuItemElement.getBoundingClientRect();
       const sidebarRect = sidebarElement.getBoundingClientRect();
 
-      const topPosition = menuItemRect.top - sidebarRect.top;
+      const topPosition = menuItemRect.top - sidebarRect.top - 65;
 
       setSubmenuPosition(topPosition);
     }
