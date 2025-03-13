@@ -45,7 +45,7 @@ const CompanySidebar = ({ setSelectedMenuItem }) => {
 
             {isHovered && (
               <div
-                className="absolute left-[0px] top-0 h-[47px] py-0 px-4 bg-[#1C1C24] text-white whitespace-nowrap z-10 flex items-center shadow-md cursor-pointer full-form"
+                className="absolute left-[0px] top-0 h-[47px] py-0 px-4 bg-[#1C1C24] text-white whitespace-nowrap flex items-center shadow-md cursor-pointer full-form z-50"
                 style={{
                   minWidth: "150px",
                   textAlign: "center",
