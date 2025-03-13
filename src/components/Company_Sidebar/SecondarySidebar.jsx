@@ -178,10 +178,24 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     return null;
   };
 
+  useEffect(() => {
+    // Retrieve stored active state from localStorage on mount
+    const storedMainItem = localStorage.getItem("activeMainItem") || "dashboard";
+    const storedSubItem = localStorage.getItem("activeSubItem") || null;
+
+    if (storedMainItem) {
+      setActiveMainItem(storedMainItem);
+    }
+
+    if (storedSubItem) {
+      setActiveSubItem(storedSubItem);
+    }
+  }, []);
+
   // Update active states based on current URL path
   useEffect(() => {
     if (manuallyActivated) {
-      // Skip this effect if we've just manually set the active state
+      // Prevent resetting active state when manually changed
       setManuallyActivated(false);
       return;
     }
@@ -191,15 +205,18 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
 
     if (parentMenuItem) {
       setActiveMainItem(parentMenuItem);
+      localStorage.setItem("activeMainItem", parentMenuItem); // Save to localStorage
 
       const pathSegments = currentPath.split("/");
       const lastSegment = pathSegments[pathSegments.length - 1];
 
       // Only set active sub-item if it's not the same as parent menu
-      setActiveSubItem(lastSegment !== parentMenuItem ? lastSegment : null);
+      const newSubItem = lastSegment !== parentMenuItem ? lastSegment : null;
+      setActiveSubItem(newSubItem);
+      localStorage.setItem("activeSubItem", newSubItem); // Save to localStorage
     } else {
-      // If no parent menu is found, reset active submenu
       setActiveSubItem(null);
+      localStorage.removeItem("activeSubItem"); // Clear if no submenu
     }
   }, [location.pathname]);
 
@@ -232,39 +249,38 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     ) {
       const menuItemElement = menuItemRefs.current[hoveredMenuItem];
       const sidebarElement = sidebarRef.current;
-  
+
       const menuItemRect = menuItemElement.getBoundingClientRect();
       const sidebarRect = sidebarElement.getBoundingClientRect();
-  
-      let topPosition = menuItemRect.top - sidebarRect.top -65;
-  
+
+      let topPosition = menuItemRect.top - sidebarRect.top - 65;
+
       setSubmenuPosition(topPosition);
     }
   };
-  
 
   const handleMenuItemMouseEnter = (item) => {
     if (collapsed) return;
-  
+
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
-  
+
     setHoveredMenuItem(item.id);
-  
+
     // If the new item doesn't have a submenu, close the existing submenu immediately
     if (!item.hasSubMenu) {
       setShowSubmenu(false);
       setCurrentSubmenu(null);
       return;
     }
-  
+
     // Open submenu if the item has one
     setCurrentSubmenu(item.submenuType);
     setShowSubmenu(true);
     updateSubmenuPosition();
   };
-  
+
   const handleMenuAreaMouseLeave = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -295,40 +311,49 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
 
   const handleMenuItemClick = (item) => {
     if (item.hasSubMenu) {
-      // Keep parent active only if a submenu is clicked later
       setManuallyActivated(true);
-      setShowSubmenu((prev) => (currentSubmenu === item.submenuType ? !prev : true));
+      setShowSubmenu((prev) =>
+        currentSubmenu === item.submenuType ? !prev : true
+      );
       setCurrentSubmenu(item.submenuType);
       return;
     }
-  
+
     // If clicking a main menu without a submenu, deactivate any active submenu
     setActiveMainItem(item.id);
-    setActiveSubItem(null); 
+    setActiveSubItem(null);
     setCurrentSubmenu(null);
     setShowSubmenu(false);
     setManuallyActivated(true);
-  
+
+    // Save active state to localStorage
+    localStorage.setItem("activeMainItem", item.id);
+    localStorage.removeItem("activeSubItem"); // Clear submenu state
+
     if (item.path) {
       navigate(item.path);
     }
   };
-  
 
   const handleSubMenuItemClick = (subItemId, path) => {
-    setActiveMainItem("qmsdocumentation"); // Always keep 'Documentation' active
-    setActiveSubItem(subItemId); // Highlight the clicked submenu item
-    setManuallyActivated(true); // Prevent unwanted resets
+    setActiveMainItem("qmsdocumentation");
+    setActiveSubItem(subItemId);
+    setManuallyActivated(true);
+
+    // Save active submenu state to localStorage
+    localStorage.setItem("activeMainItem", "qmsdocumentation");
+    localStorage.setItem("activeSubItem", subItemId);
+
     if (path) {
       navigate(path);
     }
   };
-  
+
   const isMenuItemActive = (item) => {
     if (item.hasSubMenu && item.id === activeMainItem) {
       return true; // Keep parent menu active when a submenu is active
     }
-  
+
     return !item.hasSubMenu && activeMainItem === item.id;
   };
 
