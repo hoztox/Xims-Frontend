@@ -126,7 +126,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
         icon: AnalysisIcon,
         path: "/qms/analysis",
       },
-      { id: "backup", label: "Backup", icon: BackupIcon, path: "/qms/backup" },
+      {
+        id: "backup",
+        label: "Backup",
+        icon: BackupIcon,
+        path: "/company/backup",
+      },
       { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
     ],
     // Define menus for other systems
@@ -183,7 +188,10 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                 activeSubItem === item.id
                   ? `${selectedMenuItem?.borderColor}15`
                   : "transparent",
-              color: activeSubItem === item.id || hoveredItem === item.id ? "#FFFFFF" : "#5B5B5B",
+              color:
+                activeSubItem === item.id || hoveredItem === item.id
+                  ? "#FFFFFF"
+                  : "#5B5B5B",
             }}
             onClick={() => setActiveSubItem(item.id)}
             onMouseEnter={() => setHoveredItem(item.id)}
@@ -204,9 +212,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
               />
             </div>
             {!collapsed && (
-              <span className="ml-3 second-sidebar-spans">
-                {item.label}
-              </span>
+              <span className="ml-3 second-sidebar-spans">{item.label}</span>
             )}
           </Link>
         ))}
