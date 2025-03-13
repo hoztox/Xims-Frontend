@@ -30,7 +30,7 @@ import DocumentationSubmenu from "../Company_Sidebar/QMS/Documentation/Documenta
 const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [activeMainItem, setActiveMainItem] = useState(null);
+  const [activeMainItem, setActiveMainItem] = useState("dashboard");
   const [activeSubItem, setActiveSubItem] = useState(null);
   const [showSubmenu, setShowSubmenu] = useState(false);
   const [currentSubmenu, setCurrentSubmenu] = useState(null);
@@ -168,17 +168,22 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
   useEffect(() => {
     const currentPath = location.pathname;
     const parentMenuItem = findParentMenuItem(currentPath);
-
+  
     if (parentMenuItem) {
-      setActiveMainItem(parentMenuItem); // Keep the parent menu active
-
+      setActiveMainItem(parentMenuItem); // Keep only the correct parent menu active
+  
       const pathSegments = currentPath.split("/");
       const lastSegment = pathSegments[pathSegments.length - 1];
-
-      // Set the sub-menu as active without affecting the main menu
+  
       setActiveSubItem(lastSegment !== parentMenuItem ? lastSegment : null);
+    } else {
+      // If no submenu is selected, reset active submenu
+      setActiveSubItem(null);
     }
   }, [location.pathname]);
+  
+  
+  
 
   useEffect(() => {
     return () => {
@@ -278,17 +283,17 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
   };
   
   const handleSubMenuItemClick = (subItemId, path, parentMenuId) => {
-    if (parentMenuId) {
-      setActiveMainItem(parentMenuId); // Set parent menu as active
-    }
-  
-    setActiveSubItem(subItemId); // Set submenu item as active
+    setActiveMainItem(parentMenuId); // Ensure the correct parent menu stays active
+    setActiveSubItem(subItemId); // Set the submenu item as active
+    
     setShowSubmenu(false); // Close submenu after selection
   
     if (path) {
       navigate(path);
     }
   };
+  
+  
   
 
   const isMenuItemActive = (item) => {
