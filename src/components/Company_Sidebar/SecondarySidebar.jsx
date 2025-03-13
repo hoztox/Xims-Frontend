@@ -227,7 +227,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                         <div key={item.id}>
                             {item.hasSubMenu ? (
                                 <div
-                                    className={`flex items-center justify-between pl-5 pr-2 py-3 cursor-pointer second-sidebar ${hoveredItem === item.id ? 'text-white' : ''
+                                    className={`flex items-center justify-between pl-[25px] pr-2 py-3 cursor-pointer second-sidebar ${hoveredItem === item.id ? 'text-white' : ''
                                         }`}
                                     onMouseEnter={() => {
                                         if (timeoutRef.current) {
@@ -257,7 +257,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                             ) : (
                                 <Link
                                     to={item.path || "#"}
-                                    className="flex items-center justify-between pl-5 pr-2 py-3 cursor-pointer second-sidebar"
+                                    className="flex items-center justify-between pl-[23px] pr-2 py-3 cursor-pointer second-sidebar"
                                     style={{
                                         borderLeft: isMenuItemActive(item) ? `2px solid ${selectedMenuItem?.borderColor}` : "none",
                                         backgroundColor: isMenuItemActive(item) ? `${selectedMenuItem?.borderColor}15` : "transparent",
