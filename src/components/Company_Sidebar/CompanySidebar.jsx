@@ -8,7 +8,7 @@ const CompanySidebar = ({ setSelectedMenuItem }) => {
   const menuItems = [
     { id: "QMS", label: "Quality Management System", shortLabel: "QMS", borderColor: "#858585", activeColor: "#858585" },
     { id: "EMS", label: "Environmental Management System", shortLabel: "EMS", borderColor: "#38E76C", activeColor: "#38E76C" },
-    { id: "OHS", label: "Occupational Health and Safety", shortLabel: "OHS", borderColor: "#F9291F", activeColor: "#F9291F" },
+    { id: "OHS", label: "Occupational Health and Safety Management System", shortLabel: "OHS", borderColor: "#F9291F", activeColor: "#F9291F" },
     { id: "EnMS", label: "Energy Management System", shortLabel: "EnMS", borderColor: "#10B8FF", activeColor: "#10B8FF" },
     { id: "BMS", label: "Business Continuity Management System", shortLabel: "BMS", borderColor: "#F310FF", activeColor: "#F310FF" },
     { id: "AMS", label: "Asset Management System", shortLabel: "AMS", borderColor: "#DD6B06", activeColor: "#DD6B06" },

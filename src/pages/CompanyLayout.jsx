@@ -11,7 +11,7 @@ const CompanyLayout = () => {
         borderColor: "#858585",
     });
 
-    const [secondarySidebarCollapsed, setSecondarySidebarCollapsed] = useState(true);
+    const [secondarySidebarCollapsed, setSecondarySidebarCollapsed] = useState(false);
 
     const toggleSecondarySidebar = () => {
         setSecondarySidebarCollapsed(prev => !prev);

@@ -1,33 +1,54 @@
 /* SecondarySidebar.css */
 .secondary-sidebar {
-    transition: width 0.3s ease;
-  }
-  
-  .secondary-sidebar a {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  /* Custom scrollbar for the sidebar */
-  .secondary-sidebar::-webkit-scrollbar {
-    width: 1px;
-  }
-  
-  .secondary-sidebar::-webkit-scrollbar-track {
-    background: #13131A;
-  }
-  
-  .secondary-sidebar::-webkit-scrollbar-thumb {
-    background: #1C1C24;
-    border-radius: 4px;
-  }
-  
-  .secondary-sidebar::-webkit-scrollbar-thumb:hover {
-    background: #1C1C24;
-  }
-  
-  /* For Firefox scrollbar */
-  .secondary-sidebar {
-    scrollbar-width: thin;
-    scrollbar-color: #1C1C24 #1C1C24;
-  }
+  transition: width 0.3s ease;
+}
+
+.secondary-sidebar a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Custom scrollbar for the sidebar */
+.secondary-sidebar::-webkit-scrollbar {
+  width: 1px;
+}
+
+.secondary-sidebar::-webkit-scrollbar-track {
+  background: #13131a;
+}
+
+.secondary-sidebar::-webkit-scrollbar-thumb {
+  background: #1c1c24;
+  border-radius: 4px;
+}
+
+.secondary-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #1c1c24;
+}
+
+/* For Firefox scrollbar */
+.secondary-sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: #1c1c24 #1c1c24;
+}
+
+.second-sidebar {
+  transition: all 0.2s ease-in-out;
+}
+
+.second-sidebar:hover .second-sidebar-icons {
+  filter: brightness(0) saturate(100%) invert(99%) sepia(1%) 
+          saturate(131%) hue-rotate(18deg) brightness(116%) contrast(100%);
+  transition: filter 0.2s ease-in-out;
+}
+
+.second-sidebar .second-sidebar-spans {
+  font-family: 'Switzer Regular';
+  font-size: 16px;
+  font-style: normal;
+  line-height: normal;
+}
+.second-sidebar:hover .second-sidebar-spans {
+  color: white;
+  transition: color 0.2s ease-in-out;
+}

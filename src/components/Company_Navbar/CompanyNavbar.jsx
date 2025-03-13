@@ -6,9 +6,11 @@ import bell from "../../assets/images/Company-Navbar/bell.svg";
 import settings from "../../assets/images/Company-Navbar/settings.svg";
 import profile from "../../assets/images/Company-Navbar/profile.svg";
 import "./companynavbar.css"; // Import external CSS
+import { useNavigate } from 'react-router-dom';
 
 const CompanyNavbar = ({ selectedMenuItem, toggleSidebar }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
   
   // Handle the toggle with state update
   const handleToggle = () => {
@@ -16,12 +18,18 @@ const CompanyNavbar = ({ selectedMenuItem, toggleSidebar }) => {
     toggleSidebar();
   };
 
+  const handleLogoClick = () => {
+    navigate('/company/dashboard')
+  }
+
   return (
     <nav className="flex items-center bg-[#13131A] h-[88px] company-navbar">
       {/* Left Section */}
       <div className="flex justify-between w-full border-b border-[#383840] h-[88px] px-5">
         <div className="flex items-center">
-          <button className="mr-[41px]">
+          <button 
+          className="mr-[41px]"
+          onClick={handleLogoClick}>
             <img src={logo} alt="Ximspro Logo" />
           </button>
 

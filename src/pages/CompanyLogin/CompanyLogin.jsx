@@ -60,7 +60,7 @@ const AdminLogin = () => {
 
                 toast.success("Successfully Logged In");
                 setTimeout(() => {
-                    navigate("/company/company-dashboard");
+                    navigate("/company/dashboard");
                 }, 500);
 
             } else {
@@ -93,7 +93,7 @@ const AdminLogin = () => {
                 localStorage.removeItem("logoutTime");
                 navigate("/company-login");
             } else {
-                navigate("/company/company-dashboard");
+                navigate("/company/dashboard");
             }
         }
     }, [navigate]);
