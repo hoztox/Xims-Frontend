@@ -36,6 +36,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
   const [currentSubmenu, setCurrentSubmenu] = useState(null);
   const [submenuPosition, setSubmenuPosition] = useState(0);
   const [hoveredMenuItem, setHoveredMenuItem] = useState(null);
+  const [manuallyActivated, setManuallyActivated] = useState(false);
 
   const timeoutRef = useRef(null);
   const submenuRef = useRef(null);
@@ -57,6 +58,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
         icon: DocumentationIcon,
         hasSubMenu: true,
         submenuType: "qmsdocumentation",
+        pathPrefix: "/company/documentation",
       },
       {
         id: "training",
@@ -64,6 +66,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
         icon: TrainingIcon,
         hasSubMenu: true,
         submenuType: "training",
+        pathPrefix: "/company/training",
       },
       {
         id: "actions",
@@ -145,12 +148,22 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
 
   const currentMenuItems = systemMenus[selectedMenuItem?.id] || systemMenus.QMS;
 
+  // Improved function to find parent menu item based on path
   const findParentMenuItem = (path) => {
+    // First check for exact path matches
     const exactMatch = currentMenuItems.find(
       (item) => item.path && path === item.path
     );
     if (exactMatch) return exactMatch.id;
 
+    // Then check for path prefixes
+    for (const item of currentMenuItems) {
+      if (item.pathPrefix && path.startsWith(item.pathPrefix)) {
+        return item.id;
+      }
+    }
+
+    // Legacy fallback checks
     if (
       path.includes("/company/documentation") ||
       path.includes("/company/qmsdocumentation")
@@ -165,25 +178,30 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     return null;
   };
 
+  // Update active states based on current URL path
   useEffect(() => {
+    if (manuallyActivated) {
+      // Skip this effect if we've just manually set the active state
+      setManuallyActivated(false);
+      return;
+    }
+
     const currentPath = location.pathname;
     const parentMenuItem = findParentMenuItem(currentPath);
-  
+
     if (parentMenuItem) {
-      setActiveMainItem(parentMenuItem); // Keep only the correct parent menu active
-  
+      setActiveMainItem(parentMenuItem);
+
       const pathSegments = currentPath.split("/");
       const lastSegment = pathSegments[pathSegments.length - 1];
-  
+
+      // Only set active sub-item if it's not the same as parent menu
       setActiveSubItem(lastSegment !== parentMenuItem ? lastSegment : null);
     } else {
-      // If no submenu is selected, reset active submenu
+      // If no parent menu is found, reset active submenu
       setActiveSubItem(null);
     }
   }, [location.pathname]);
-  
-  
-  
 
   useEffect(() => {
     return () => {
@@ -216,7 +234,6 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
       const sidebarElement = sidebarRef.current;
 
       const menuItemRect = menuItemElement.getBoundingClientRect();
-
       const sidebarRect = sidebarElement.getBoundingClientRect();
 
       const topPosition = menuItemRect.top - sidebarRect.top;
@@ -227,22 +244,24 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
 
   const handleMenuItemMouseEnter = (item) => {
     if (collapsed) return;
-
+  
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
-
+  
+    // Set only the hover effect (color change)
     setHoveredMenuItem(item.id);
-
+  
+    // Show submenu if available
     if (item.hasSubMenu) {
       setCurrentSubmenu(item.submenuType);
       setShowSubmenu(true);
       updateSubmenuPosition();
-    } else {
-      setShowSubmenu(false);
-      setCurrentSubmenu(null);
     }
   };
+  
+  
+  
 
   const handleMenuAreaMouseLeave = () => {
     if (timeoutRef.current) {
@@ -273,21 +292,31 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
   };
 
   const handleMenuItemClick = (item) => {
-    if (!item.hasSubMenu) {
-      setActiveMainItem(item.id);
-      setActiveSubItem(null); // Reset any active submenu
-      if (item.path) {
-        navigate(item.path);
-      }
+    if (item.hasSubMenu) {
+      // Keep parent active only if a submenu is clicked later
+      setManuallyActivated(true);
+      setShowSubmenu((prev) => (currentSubmenu === item.submenuType ? !prev : true));
+      setCurrentSubmenu(item.submenuType);
+      return;
+    }
+  
+    // If clicking a main menu without a submenu, deactivate any active submenu
+    setActiveMainItem(item.id);
+    setActiveSubItem(null); 
+    setCurrentSubmenu(null);
+    setShowSubmenu(false);
+    setManuallyActivated(true);
+  
+    if (item.path) {
+      navigate(item.path);
     }
   };
   
-  const handleSubMenuItemClick = (subItemId, path, parentMenuId) => {
-    setActiveMainItem(parentMenuId); // Ensure the correct parent menu stays active
-    setActiveSubItem(subItemId); // Set the submenu item as active
-    
-    setShowSubmenu(false); // Close submenu after selection
-  
+
+  const handleSubMenuItemClick = (subItemId, path) => {
+    setActiveMainItem("qmsdocumentation"); // Always keep 'Documentation' active
+    setActiveSubItem(subItemId); // Highlight the clicked submenu item
+    setManuallyActivated(true); // Prevent unwanted resets
     if (path) {
       navigate(path);
     }
@@ -295,14 +324,18 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
   
   
   
-
+  
   const isMenuItemActive = (item) => {
-    return activeMainItem === item.id || activeSubItem === item.id;
+    if (item.hasSubMenu && item.id === activeMainItem) {
+      return true; // Keep parent menu active when a submenu is active
+    }
+  
+    return !item.hasSubMenu && activeMainItem === item.id;
   };
-
-  // const isSubMenuItemActive = (subItemId) => {
-  //   return activeSubItem === subItemId;
-  // };
+  
+  
+  
+  
 
   const isMenuItemHovered = (item) => {
     return hoveredMenuItem === item.id;
@@ -379,10 +412,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                   backgroundColor: isMenuItemActive(item)
                     ? `${selectedMenuItem?.borderColor || "#30AD71"}15`
                     : "transparent",
-                  color:
-                    isMenuItemActive(item) || isMenuItemHovered(item)
-                      ? "#FFFFFF"
-                      : "#5B5B5B",
+                  color: isMenuItemActive(item) ? "#FFFFFF" : "#5B5B5B",
                 }}
               >
                 <div className="flex items-center">
@@ -390,9 +420,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                     src={item.icon}
                     alt={item.label}
                     className={`w-5 h-5 second-sidebar-icons ${
-                      isMenuItemActive(item) || isMenuItemHovered(item)
-                        ? "filter brightness-0 invert"
-                        : ""
+                      isMenuItemActive(item) ? "filter brightness-0 invert" : ""
                     }`}
                   />
                   {!collapsed && (
