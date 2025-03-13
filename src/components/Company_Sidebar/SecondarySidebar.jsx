@@ -296,7 +296,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                     onMouseLeave={() => {
                         timeoutRef.current = setTimeout(() => {
                             setHoveredItem(null);
-                        }, 300);
+                        },);
                     }}
                 >
 
