@@ -322,23 +322,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     }
   };
   
-  
-  
-  
   const isMenuItemActive = (item) => {
     if (item.hasSubMenu && item.id === activeMainItem) {
       return true; // Keep parent menu active when a submenu is active
     }
   
     return !item.hasSubMenu && activeMainItem === item.id;
-  };
-  
-  
-  
-  
-
-  const isMenuItemHovered = (item) => {
-    return hoveredMenuItem === item.id;
   };
 
   const renderSubmenu = () => {
