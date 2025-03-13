@@ -46,7 +46,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                 icon: DocumentationIcon,
                 hasSubMenu: true,
                 subMenus: [
-                    { id: "doc-templates", label: "Document Templates", path: "/company/documentation/templates" },
+                    { id: "policy", label: "Policy", path: "" },
                     { id: "doc-records", label: "Records", path: "/company/documentation/records" },
                     { id: "doc-policies", label: "Policies", path: "/company/documentation/policies" }
                 ]
@@ -227,59 +227,55 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                         <div key={item.id}>
                             {item.hasSubMenu ? (
                                 <div
-                                    className={`flex items-center justify-between pl-5 pr-2 py-3 cursor-pointer second-sidebar ${hoveredItem === item.id ? 'submenu-active' : ''}`}
+                                    className={`flex items-center justify-between pl-5 pr-2 py-3 cursor-pointer second-sidebar ${hoveredItem === item.id ? 'text-white' : ''
+                                        }`}
+                                    onMouseEnter={() => {
+                                        if (timeoutRef.current) {
+                                            clearTimeout(timeoutRef.current);
+                                        }
+                                        setHoveredItem(item.id); // Keep hover active
+                                    }}
+                                    onMouseLeave={() => {
+                                        if (!submenuRef.current || !submenuRef.current.matches(":hover")) {
+                                            timeoutRef.current = setTimeout(() => {
+                                                setHoveredItem(null);
+                                            }, 300);
+                                        }
+                                    }}
+                                >
+                                    <div className="flex items-center">
+                                        <img
+                                            src={item.icon}
+                                            alt={item.label}
+                                            className={`w-5 h-5 second-sidebar-icons ${hoveredItem === item.id ? 'filter brightness-0 invert' : ''
+                                                }`}
+                                        />
+                                        {!collapsed && <span className="ml-3 second-sidebar-spans">{item.label}</span>}
+                                    </div>
+                                </div>
+
+                            ) : (
+                                <Link
+                                    to={item.path || "#"}
+                                    className="flex items-center justify-between pl-5 pr-2 py-3 cursor-pointer second-sidebar"
                                     style={{
                                         borderLeft: isMenuItemActive(item) ? `2px solid ${selectedMenuItem?.borderColor}` : "none",
                                         backgroundColor: isMenuItemActive(item) ? `${selectedMenuItem?.borderColor}15` : "transparent",
                                         color: isMenuItemActive(item) || hoveredItem === item.id ? "#FFFFFF" : "#5B5B5B",
                                     }}
                                     onClick={() => handleMenuItemClick(item)}
-                                    onMouseEnter={() => {
-                                        if (timeoutRef.current) {
-                                            clearTimeout(timeoutRef.current);
-                                        }
-                                        setHoveredItem(item.id);
-                                    }}
-                                    onMouseLeave={() => {
-
-                                        timeoutRef.current = setTimeout(() => {
-
-                                            if (!submenuRef.current?.matches(':hover')) {
-                                                setHoveredItem(null);
-                                            }
-                                        }, 100);
-                                    }}
+                                    onMouseEnter={() => setHoveredItem(item.id)}
+                                    onMouseLeave={() => setHoveredItem(null)}
                                 >
                                     <div className="flex items-center">
-                                        <img src={item.icon} alt={item.label} className="w-5 h-5 second-sidebar-icons" />
+                                        <img
+                                            src={item.icon}
+                                            alt={item.label}
+                                            className={`w-5 h-5 second-sidebar-icons ${isMenuItemActive(item) ? "active-icon" : ""}`}
+                                        />
                                         {!collapsed && <span className="ml-3 second-sidebar-spans">{item.label}</span>}
                                     </div>
-                                </div>
-                            ) : (
-                                <Link
-                                to={item.path || "#"}
-                                className="flex items-center justify-between pl-5 pr-2 py-3 cursor-pointer transition-all second-sidebar"
-                                style={{
-                                    borderLeft: isMenuItemActive(item) ? `2px solid ${selectedMenuItem?.borderColor}` : "none",
-                                    backgroundColor: isMenuItemActive(item) ? `${selectedMenuItem?.borderColor}15` : "transparent",
-                                    color: isMenuItemActive(item) || hoveredItem === item.id ? "#FFFFFF" : "#5B5B5B",
-                                }}
-                                onClick={() => handleMenuItemClick(item)}
-                                onMouseEnter={() => setHoveredItem(item.id)}
-                                onMouseLeave={() => setHoveredItem(null)}
-                            >
-                                <div className="flex items-center">
-                                    <img
-                                        src={item.icon}
-                                        alt={item.label}
-                                        className={`w-5 h-5 second-sidebar-icons ${isMenuItemActive(item) ? "active-icon" : ""}`}
-                                    />
-                                    {!collapsed && <span className="ml-3 second-sidebar-spans">{item.label}</span>}
-                                </div>
-                            </Link>
-                            
-
-
+                                </Link>
                             )}
                         </div>
                     ))}
@@ -290,16 +286,20 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
             {!collapsed && hoveredMenuDetails && (
                 <div
                     ref={submenuRef}
-                    className="absolute top-[10%] left-[100%] z-10 bg-[#26262F] min-w-[220px] py-2 px-1"
+                    className="absolute top-[8%] left-[100%] z-10 bg-[#26262F] min-w-[220px] py-2 px-1"
                     onMouseEnter={() => {
                         if (timeoutRef.current) {
                             clearTimeout(timeoutRef.current);
                         }
+                        setHoveredItem("documentation"); // Keep hover active
                     }}
                     onMouseLeave={() => {
-                        setHoveredItem(null);
+                        timeoutRef.current = setTimeout(() => {
+                            setHoveredItem(null);
+                        }, 300);
                     }}
                 >
+
                     <div className="p-2 mb-2 border-b border-[#383840] text-white">
                         {hoveredMenuDetails.label}
                     </div>
