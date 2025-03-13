@@ -20,6 +20,7 @@ import AnalysisIcon from "../../assets/images/Company-Sidebar/icon16.svg";
 import BackupIcon from "../../assets/images/Company-Sidebar/icon17.svg";
 import LogoutIcon from "../../assets/images/Company-Sidebar/icon18.svg";
 import { useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     const location = useLocation();
@@ -55,6 +56,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                 id: "training",
                 label: "Employee Training & Performance",
                 icon: TrainingIcon,
+                hasSubMenu: true,
+                subMenus: [
+                    { id: "policy", label: "Policy", path: "" },
+                    { id: "doc-records", label: "Records", path: "/company/documentation/records" },
+                    { id: "doc-policies", label: "Policies", path: "/company/documentation/policies" }
+                ]
 
             },
             {
@@ -282,11 +289,15 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                 </div>
             </div>
 
-            {/* Floating submenu panel - now appears on hover */}
+
             {!collapsed && hoveredMenuDetails && (
-                <div
+                <motion.div
+                    initial={{ opacity: 0, x: -5 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -10 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
                     ref={submenuRef}
-                    className="absolute top-[8%] left-[100%] z-10 bg-[#26262F] min-w-[220px] py-2 px-1"
+                    className="absolute top-[8%] left-[100%]  bg-[#26262F] min-w-[220px] py-2 px-1"
                     onMouseEnter={() => {
                         if (timeoutRef.current) {
                             clearTimeout(timeoutRef.current);
@@ -330,7 +341,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
                             <span className="text-sm">{subItem.label}</span>
                         </Link>
                     ))}
-                </div>
+                </motion.div>
             )}
         </div>
     );
