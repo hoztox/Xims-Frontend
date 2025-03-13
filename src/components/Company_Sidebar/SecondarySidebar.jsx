@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./secondarysidebar.css";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -24,11 +24,12 @@ import BackupIcon from "../../assets/images/Company-Sidebar/icon17.svg";
 import LogoutIcon from "../../assets/images/Company-Sidebar/icon18.svg";
 
 // Import submenu components
-import DocumentationSubmenu from "../Company_Sidebar/EMS/Documentation/DocumentationSubmenu";
+import DocumentationSubmenu from "../Company_Sidebar/QMS/Documentation/DocumentationSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [activeMainItem, setActiveMainItem] = useState(null);
   const [activeSubItem, setActiveSubItem] = useState(null);
   const [showSubmenu, setShowSubmenu] = useState(false);
@@ -50,11 +51,11 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
         hasSubMenu: false
       },
       {
-        id: "documentation",
+        id: "qmsdocumentation",
         label: "Documentation",
         icon: DocumentationIcon,
         hasSubMenu: true,
-        submenuType: "documentation"
+        submenuType: "qmsdocumentation"
       },
       {
         id: "training",
@@ -131,40 +132,64 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
       },
       { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
     ],
+    EMS: [
+      {
+          id: "dashboard",
+          label: "Dashboard",
+          icon: DashboardIcon,
+          path: "/company/dashboard",
+      },
+    ]
   };
 
   const currentMenuItems = systemMenus[selectedMenuItem?.id] || systemMenus.QMS;
 
+  // Find the parent menu item for a given path
+  const findParentMenuItem = (path) => {
+    // First check exact path matches
+    const exactMatch = currentMenuItems.find(item => item.path && path.includes(item.path));
+    if (exactMatch) return exactMatch.id;
+    
+    // Then check for submenu parent items
+    if (path.includes('/company/documentation') || path.includes('/company/qmsdocumentation')) {
+      return 'qmsdocumentation';
+    }
+    
+    if (path.includes('/company/training')) {
+      return 'training';
+    }
+    
+    // Add more mappings for other submenus as needed
+    
+    return null;
+  };
+
   useEffect(() => {
     const currentPath = location.pathname;
-
-    // Check if the current path matches any main menu path
-    const mainMenuItem = currentMenuItems.find(item => item.path && currentPath.includes(item.path));
-
-    if (mainMenuItem) {
-      setActiveMainItem(mainMenuItem.id);
-      setActiveSubItem(null);
-      return;
-    }
-
-   
-    for (const item of currentMenuItems) {
-      if (item.hasSubMenu) {
-         
-        if (currentPath.includes(`/company/${item.id}`)) {
-          setActiveMainItem(item.id);
-          
-          const pathSegments = currentPath.split('/');
-          const lastSegment = pathSegments[pathSegments.length - 1];
-          setActiveSubItem(lastSegment);
-          return;
+    const parentMenuItem = findParentMenuItem(currentPath);
+    
+    if (parentMenuItem) {
+      setActiveMainItem(parentMenuItem);
+      
+      // Find the active submenu item if applicable
+      const pathSegments = currentPath.split('/');
+      const lastSegment = pathSegments[pathSegments.length - 1];
+      
+      if (lastSegment && lastSegment !== 'dashboard' && lastSegment !== parentMenuItem) {
+        setActiveSubItem(lastSegment);
+        
+        // If we have a submenu item active, ensure we're showing the right submenu
+        const menuItem = currentMenuItems.find(item => item.id === parentMenuItem);
+        if (menuItem?.hasSubMenu) {
+          setCurrentSubmenu(menuItem.submenuType);
         }
+      } else {
+        setActiveSubItem(null);
       }
-    }
-
-    // Default to first item if no match
-    if (!activeMainItem && currentMenuItems.length > 0) {
+    } else if (currentMenuItems.length > 0) {
+      // Default to first item if no match
       setActiveMainItem(currentMenuItems[0].id);
+      setActiveSubItem(null);
     }
   }, [location.pathname, currentMenuItems, selectedMenuItem]);
 
@@ -221,7 +246,6 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     if (item.hasSubMenu) {
       setCurrentSubmenu(item.submenuType);
       setShowSubmenu(true);
-      setActiveMainItem(item.id);
       updateSubmenuPosition(); // Update position when hovering
     } else {
       // Close the submenu if hovering over a menu item without submenu
@@ -270,17 +294,41 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
   const handleMenuItemClick = (item) => {
     setActiveMainItem(item.id);
     
-    if (!item.hasSubMenu) {
+    if (!item.hasSubMenu && item.path) {
+      navigate(item.path); // Navigate to the path when clicked
       setShowSubmenu(false);
       setCurrentSubmenu(null);
       setActiveSubItem(null);
-    } else {
+    } else if (item.hasSubMenu) {
+      // If it has a submenu, keep it open and update position
+      setCurrentSubmenu(item.submenuType);
+      setShowSubmenu(true);
       updateSubmenuPosition();
     }
   };
 
-  const handleSubMenuItemClick = (subItemId) => {
+  // Updated to set parent menu item active when submenu item is clicked
+  const handleSubMenuItemClick = (subItemId, path) => {
+    // Find which main menu item this submenu belongs to
+    let parentMenuId = null;
+    
+    if (currentSubmenu === "qmsdocumentation") {
+      parentMenuId = "qmsdocumentation";
+    } else if (currentSubmenu === "training") {
+      parentMenuId = "training";
+    }
+    // Add more mappings for other submenus
+    
+    // Update active states
+    if (parentMenuId) {
+      setActiveMainItem(parentMenuId);
+    }
+    
     setActiveSubItem(subItemId);
+    
+    if (path) {
+      navigate(path); // Navigate to submenu path
+    }
   };
 
   const isMenuItemActive = (item) => {
@@ -300,7 +348,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     let submenuContent = null;
     
     switch(currentSubmenu) {
-      case "documentation":
+      case "qmsdocumentation":
         submenuContent = (
           <DocumentationSubmenu
             activeSubItem={activeSubItem}
