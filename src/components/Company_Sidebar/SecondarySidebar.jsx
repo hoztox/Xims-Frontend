@@ -28,6 +28,7 @@ import DocumentationSubmenu from "../Company_Sidebar/QMS/Documentation/Documenta
 import UserManagementSubmenu from "./QMS/User Management/UserManagementSubmenu";
 import EmployeeTrainingSubmenu from "./QMS/Employee Training/EmployeeTrainingSubmenu";
 import ActionsMeetingSubmenu from "./QMS/Actions Meeting Management/ActionsMeetingSubmenu";
+import AuditInspectionSubmenu from "./QMS/Audit Inspection Management/AuditInspectionSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -81,11 +82,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/qmsactions",
       },
       {
-        id: "audits",
+        id: "qmsauditinspection",
         label: "Audits & Inspections Management",
         icon: AuditsIcon,
-        hasSubMenu: false,
-        path: "/company/audits",
+        hasSubMenu: true,
+        submenuType: "qmsauditinspection",
+        pathPrefix: "/company/qmsauditinspection",
       },
       {
         id: "customer",
@@ -645,6 +647,10 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       return "qmsactions";
     }
 
+    if (path.includes("/company/qmsauditinspection")) {
+      return "qmsauditinspection";
+    }
+
     if (path.includes("/company/qmsuser")) {
       return "qmsuser";
     }
@@ -888,38 +894,46 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-      case "qmsuser":
-        submenuContent = (
-          <UserManagementSubmenu
+        case "qmsemployeetraining":
+          submenuContent = (
+            <EmployeeTrainingSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
-          />
-        );
-        break;
-      case "qmsemployeetraining":
-        submenuContent = (
-          <EmployeeTrainingSubmenu
-            activeSubItem={activeSubItem}
-            handleItemClick={handleSubMenuItemClick}
-          />
-        );
-        break;
-      case "qmsactions":
-        submenuContent = (
-          <ActionsMeetingSubmenu
-            activeSubItem={activeSubItem}
-            handleItemClick={handleSubMenuItemClick}
-          />
-        );
-        break;
-      default:
-        submenuContent = null;
-    }
-
-    if (!submenuContent) return null;
-
-    return (
-      <motion.div
+            />
+          );
+          break;
+          case "qmsactions":
+            submenuContent = (
+              <ActionsMeetingSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+              />
+            );
+            break;
+          case "qmsauditinspection":
+            submenuContent = (
+              <AuditInspectionSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+              />
+            );
+            break;
+            case "qmsuser":
+              submenuContent = (
+                <UserManagementSubmenu
+                  activeSubItem={activeSubItem}
+                  handleItemClick={handleSubMenuItemClick}
+                />
+              );
+              break;
+            default:
+              submenuContent = null;
+            }
+            
+            if (!submenuContent) return null;
+            
+            return (
+              <motion.div
         ref={submenuRef}
         className="absolute left-full bg-[#2A2A36] border border-[#383840] rounded-r-md shadow-lg -z-10"
         style={{ top: `${submenuPosition}px` }}

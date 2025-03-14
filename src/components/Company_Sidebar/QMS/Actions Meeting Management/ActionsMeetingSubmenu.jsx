@@ -38,6 +38,14 @@ const ActionsMeetingSubmenu = (props) => {
             ),
             // path: "/company/qms/record-format",
         },
+        {
+            id: "actions",
+            label: "Actions",
+            icon: (
+                <img src={procedure} alt="Record Format" className="w-[15px] h-[15px]" />
+            ),
+            // path: "/company/qms/record-format",
+        },
     ]
 
     const isActive = (category) => {
