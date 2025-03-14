@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "./companysidebar.css";
+import { useNavigate } from "react-router-dom";
 
 const CompanySidebar = ({ setSelectedMenuItem }) => {
   const [activeItem, setActiveItem] = useState("QMS");
   const [hoveredItem, setHoveredItem] = useState(null);
+  const navigate = useNavigate();
 
   const menuItems = [
     { id: "QMS", label: "Quality Management System", shortLabel: "QMS", borderColor: "#858585", activeColor: "#858585" },
@@ -16,8 +18,25 @@ const CompanySidebar = ({ setSelectedMenuItem }) => {
   ];
 
   const handleItemClick = (item) => {
-    setActiveItem(item.id);
-    setSelectedMenuItem({ id: item.id, label: item.label, borderColor: item.borderColor });
+    // Check if this is a different menu item than the currently active one
+    if (activeItem !== item.id) {
+      // Reset the active state in localStorage to "dashboard"
+      localStorage.setItem("activeMainItem", "dashboard");
+      localStorage.removeItem("activeSubItem");
+      
+      // Set the new active item
+      setActiveItem(item.id);
+      
+      // Update the selected menu item in the parent component
+      setSelectedMenuItem({ id: item.id, label: item.label, borderColor: item.borderColor });
+      
+      // Navigate to the dashboard page
+      navigate("/company/dashboard");
+    } else {
+      // If clicking the same item, just set it as active without resetting
+      setActiveItem(item.id);
+      setSelectedMenuItem({ id: item.id, label: item.label, borderColor: item.borderColor });
+    }
   };
 
   return (
