@@ -24,6 +24,12 @@ import CompanyBackup from "./pages/Company Backup/CompanyBackup";
 import QmsPolicy from "./pages/QMS/Documentation/Policy/QmsPolicy";
 import AddUser from "./pages/QMS/User Management/Add User/AddUser";
 import ListUser from "./pages/QMS/User Management/List User/ListUser";
+import QmsManual from "./pages/QMS/Documentation/Manual/QmsManual";
+import QmsProcedure from "./pages/QMS/Documentation/Procedure/QmsProcedure";
+import QmsRecordFormat from "./pages/QMS/Documentation/Record Format/QmsRecordFormat";
+import QmsInterestedParties from "./pages/QMS/Documentation/Interested Parties/QmsInterestedParties";
+import QmsProcesses from "./pages/QMS/Documentation/Processes/QmsProcesses";
+import QmsScopeStatements from "./pages/QMS/Documentation/Scope Statements/QmsScopeStatements";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -53,6 +59,12 @@ const ThemedApp = () => {
           <Route path="qms/policy" element={<QmsPolicy/>} />
           <Route path="qms/adduser" element={<AddUser/>} />
           <Route path="qms/listuser" element={<ListUser/>} />
+          <Route path="qms/manual" element={<QmsManual/>} />
+          <Route path="qms/procedure" element={<QmsProcedure/>} />
+          <Route path="qms/record-format" element={<QmsRecordFormat/>} />
+          <Route path="qms/interested-parties" element={<QmsInterestedParties/>} />
+          <Route path="qms/processes" element={<QmsProcesses/>} />
+          <Route path="qms/scope-statements" element={<QmsScopeStatements/>} />
           <Route path="backup" element={<CompanyBackup/>} />
         </Route>
 
