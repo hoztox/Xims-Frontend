@@ -175,7 +175,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         id: "logout",
         label: "Log Out",
         icon: LogoutIcon,
-        path: "/logout",
+        path: "/company-login",
         hasSubMenu: false,
       },
     ],
