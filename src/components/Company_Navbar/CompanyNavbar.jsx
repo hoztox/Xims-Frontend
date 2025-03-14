@@ -8,19 +8,20 @@ import profile from "../../assets/images/Company-Navbar/profile.svg";
 import "./companynavbar.css"; // Import external CSS
 import { useNavigate } from 'react-router-dom';
 
-const CompanyNavbar = ({ selectedMenuItem, toggleSidebar }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const CompanyNavbar = ({ selectedMenuItem, toggleSidebar, collapsed, setCollapsed }) => {
   const navigate = useNavigate();
   
   // Handle the toggle with state update
   const handleToggle = () => {
-    setIsOpen(!isOpen);
-    toggleSidebar();
+    setCollapsed(!collapsed);
+    if (toggleSidebar) {
+      toggleSidebar();
+    }
   };
 
   const handleLogoClick = () => {
-    navigate('/company/dashboard')
-  }
+    navigate('/company/dashboard');
+  };
 
   return (
     <nav className="flex items-center bg-[#13131A] h-[88px] company-navbar">
@@ -41,7 +42,7 @@ const CompanyNavbar = ({ selectedMenuItem, toggleSidebar }) => {
             <img
               src={menu}
               alt="Menu Icon"
-              className={`w-[18px] h-[18px] menu-icon ${selectedMenuItem?.id || "default"} transition-transform duration-300 ease-in-out ${isOpen ? 'rotate-180' : ''}`}
+              className={`w-[18px] h-[18px] menu-icon ${selectedMenuItem?.id || "default"} transition-transform duration-300 ease-in-out ${!collapsed ? 'rotate-180' : ''}`}
             />
           </button>
 

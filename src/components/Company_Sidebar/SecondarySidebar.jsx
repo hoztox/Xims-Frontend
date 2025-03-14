@@ -27,7 +27,7 @@ import LogoutIcon from "../../assets/images/Company-Sidebar/icon18.svg";
 import DocumentationSubmenu from "../Company_Sidebar/QMS/Documentation/DocumentationSubmenu";
 // Other submenu components would be imported here
 
-const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
+const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [activeMainItem, setActiveMainItem] = useState("dashboard");
@@ -73,69 +73,100 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
         id: "actions",
         label: "Actions, Meeting and Communication Management",
         icon: ActionsIcon,
+        hasSubMenu: false,
+        path: "/company/actions",
       },
       {
         id: "audits",
         label: "Audits & Inspections Management",
         icon: AuditsIcon,
+        hasSubMenu: false,
+        path: "/company/audits",
       },
       {
         id: "customer",
         label: "Customer Management",
         icon: CustomerIcon,
+        hasSubMenu: false,
+        path: "/company/customer",
       },
       {
         id: "supplier",
         label: "Supplier Management",
         icon: SupplierIcon,
+        hasSubMenu: false,
+        path: "/company/supplier",
       },
       {
         id: "compliance",
         label: "Compliance, Sustainability & Management of Change",
         icon: ComplianceIcon,
+        hasSubMenu: false,
+        path: "/company/compliance",
       },
       {
         id: "risk",
         label: "Risk & Opportunities Management",
         icon: RiskIcon,
+        hasSubMenu: false,
+        path: "/company/risk",
       },
       {
         id: "energy",
         label: "Energy Management",
         icon: EnergyIcon,
+        hasSubMenu: false,
+        path: "/company/energy",
       },
       {
         id: "correction",
         label: "Correction Corrective Actions & Preventive Actions",
         icon: CorrectionIcon,
+        hasSubMenu: false,
+        path: "/company/correction",
       },
       {
         id: "objectives",
         label: "Objectives & Targets",
         icon: ObjectivesIcon,
+        hasSubMenu: false,
+        path: "/company/objectives",
       },
       {
         id: "user",
         label: "User Management",
         icon: UserIcon,
+        hasSubMenu: false,
+        path: "/company/user",
       },
       {
         id: "nonconformity",
         label: "Non Conformity Report Management",
         icon: NonConformityIcon,
+        hasSubMenu: false,
+        path: "/company/nonconformity",
       },
       {
         id: "reports",
         label: "Reports & Analysis",
         icon: ReportsIcon,
+        hasSubMenu: false,
+        path: "/company/reports",
       },
       {
         id: "backup",
         label: "Backup",
         icon: BackupIcon,
         path: "/company/backup",
+        hasSubMenu: false,
       },
-      { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
+      { 
+        id: "logout", 
+        label: "Log Out", 
+        icon: LogoutIcon, 
+        path: "/logout",
+        hasSubMenu: false,
+      },
     ],
     EMS: [
       {
@@ -143,6 +174,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
         label: "Dashboard",
         icon: DashboardIcon,
         path: "/company/dashboard",
+        hasSubMenu: false,
       },
     ],
   };
@@ -165,9 +197,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     }
 
     // Legacy fallback checks
-    if (
-      path.includes("/company/qmsdocumentation")
-    ) {
+    if (path.includes("/company/qms")) {
       return "qmsdocumentation";
     }
 
@@ -315,7 +345,9 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
     }, 300);
   };
 
+  // Handle click on a main menu item
   const handleMenuItemClick = (item) => {
+    // If the item has a submenu, toggle it
     if (item.hasSubMenu) {
       setManuallyActivated(true);
       const isTogglingCurrent = currentSubmenu === item.submenuType;
@@ -326,36 +358,49 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
       return;
     }
 
-    // If clicking a main menu without a submenu, deactivate any active submenu
+    // For items without submenu, update state and navigate
     setActiveMainItem(item.id);
     setActiveSubItem(null);
     setCurrentSubmenu(null);
     setShowSubmenu(false);
-    setActiveSubmenuParent(null); // Clear active submenu parent
+    setActiveSubmenuParent(null);
     setManuallyActivated(true);
 
     // Save active state to localStorage
     localStorage.setItem("activeMainItem", item.id);
-    localStorage.removeItem("activeSubItem"); // Clear submenu state
+    localStorage.removeItem("activeSubItem");
 
+    // Navigate to the item's path
     if (item.path) {
       navigate(item.path);
     }
+
+    // Auto-collapse sidebar
+    if (setCollapsed && typeof setCollapsed === 'function') {
+      setCollapsed(true);
+    }
   };
 
+  // Handle click on a submenu item
   const handleSubMenuItemClick = (subItemId, path) => {
     setActiveMainItem("qmsdocumentation");
     setActiveSubItem(subItemId);
     setManuallyActivated(true);
-    setActiveSubmenuParent(null); // Clear active submenu parent when a submenu item is selected
+    setActiveSubmenuParent(null);
     setShowSubmenu(false);
 
     // Save active submenu state to localStorage
     localStorage.setItem("activeMainItem", "qmsdocumentation");
     localStorage.setItem("activeSubItem", subItemId);
 
+    // Navigate to the selected path
     if (path) {
       navigate(path);
+    }
+
+    // Auto-collapse sidebar
+    if (setCollapsed && typeof setCollapsed === 'function') {
+      setCollapsed(true);
     }
   };
 
@@ -471,4 +516,4 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed }) => {
   );
 };
 
-export default SecondarySidebar;  
+export default SecondarySidebar;

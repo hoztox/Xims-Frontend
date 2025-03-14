@@ -14,7 +14,7 @@ const CompanyLayout = () => {
     const [secondarySidebarCollapsed, setSecondarySidebarCollapsed] = useState(false);
 
     const toggleSecondarySidebar = () => {
-        setSecondarySidebarCollapsed(prev => !prev);
+        setSecondarySidebarCollapsed(!secondarySidebarCollapsed);
     };
 
     return (
@@ -23,6 +23,8 @@ const CompanyLayout = () => {
             <CompanyNavbar 
                 selectedMenuItem={selectedMenuItem} 
                 toggleSidebar={toggleSecondarySidebar} 
+                collapsed={secondarySidebarCollapsed}
+                setCollapsed={setSecondarySidebarCollapsed}
             />
 
             <div className="flex flex-1 overflow-hidden">
@@ -32,6 +34,7 @@ const CompanyLayout = () => {
                 <SecondarySidebar 
                     selectedMenuItem={selectedMenuItem}
                     collapsed={secondarySidebarCollapsed}
+                    setCollapsed={setSecondarySidebarCollapsed}
                 />
 
                 <div className="flex-1 overflow-y-auto p-4 bg-[#13131A]">
