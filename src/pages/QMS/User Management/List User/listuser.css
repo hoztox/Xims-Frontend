@@ -1,0 +1,19 @@
+.list-users-main {
+    border-radius: 8px;
+}
+
+.list-users-head {
+    font-family: 'Switzer Medium';
+    font-size: 26px;
+    font-style: normal;
+    color: white;
+    line-height: normal;
+}
+
+.serach-input {
+    width: 332px;
+    height: 42px;
+    padding-left: 10px;
+    border: 1px solid #383840;
+    border-radius: 6px;
+}

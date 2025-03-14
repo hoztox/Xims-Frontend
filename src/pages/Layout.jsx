@@ -18,7 +18,7 @@ const Layout = () => {
         <Navbar />
 
         {/* Main Content */}
-        <div className={`flex-1 overflow-y-auto p-4 outlets ${theme === "dark" ? "dark" : "light"}`}>
+        <div className={`flex-1 overflow-y-auto p-5 outlets ${theme === "dark" ? "dark" : "light"}`}>
           <Outlet />
         </div>
       </div>
