@@ -162,14 +162,15 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         path: "/company/backup",
         hasSubMenu: false,
       },
-      { 
-        id: "logout", 
-        label: "Log Out", 
-        icon: LogoutIcon, 
+      {
+        id: "logout",
+        label: "Log Out",
+        icon: LogoutIcon,
         path: "/logout",
         hasSubMenu: false,
       },
     ],
+
     EMS: [
       {
         id: "dashboard",
@@ -177,6 +178,436 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         icon: DashboardIcon,
         path: "/company/dashboard",
         hasSubMenu: false,
+      },
+      {
+        id: "documentation",
+        label: "Documentation",
+        icon: DocumentationIcon,
+      },
+      {
+        id: "training",
+        label: "Employee Training & Performance",
+        icon: TrainingIcon,
+      },
+      {
+        id: "actions",
+        label: "Actions, Meeting and Communication Management",
+        icon: ActionsIcon,
+      },
+      {
+        id: "audits",
+        label: "Audits & Inspections Management",
+        icon: AuditsIcon,
+      },
+      {
+        id: "customer",
+        label: "Customer Management",
+        icon: CustomerIcon,
+      },
+      {
+        id: "supplier",
+        label: "Supplier Management",
+        icon: SupplierIcon,
+      },
+      {
+        id: "compliance",
+        label: "Compliance, Sustainability & Management of Change",
+        icon: ComplianceIcon,
+      },
+      {
+        id: "risk",
+        label: "Risk, Opportunities & Incident Management",
+        icon: RiskIcon,
+      },
+      {
+        id: "energy",
+        label: "Energy Management",
+        icon: EnergyIcon,
+      },
+      {
+        id: "correction",
+        label: "Correction Corrective Actions & Preventive Actions",
+        icon: CorrectionIcon,
+      },
+      {
+        id: "objectives",
+        label: "Objectives & Targets",
+        icon: ObjectivesIcon,
+      },
+      {
+        id: "user",
+        label: "User Management",
+        icon: UserIcon,
+      },
+      {
+        id: "nonconformity",
+        label: "Non Conformity Report Management",
+        icon: NonConformityIcon,
+      },
+      {
+        id: "reports",
+        label: "Reports & Analysis",
+        icon: ReportsIcon,
+      },
+      {
+        id: "backup",
+        label: "Backup",
+        icon: BackupIcon,
+        path: "/company/backup",
+      },
+      { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
+    ],
+
+    OHS: [
+      {
+        id: "dashboard",
+        label: "Dashboard",
+        icon: DashboardIcon,
+        path: "/company/dashboard",
+      },
+      {
+        id: "documentation",
+        label: "Documentation",
+        icon: DocumentationIcon,
+      },
+      {
+        id: "training",
+        label: "Employee Training & Performance",
+        icon: TrainingIcon,
+      },
+      {
+        id: "actions",
+        label: "Actions, Meeting and Communication Management",
+        icon: ActionsIcon,
+      },
+      {
+        id: "audits",
+        label: "Audits & Inspections Management",
+        icon: AuditsIcon,
+      },
+      {
+        id: "customer",
+        label: "Customer Management",
+        icon: CustomerIcon,
+      },
+      {
+        id: "supplier",
+        label: "Supplier Management",
+        icon: SupplierIcon,
+      },
+      {
+        id: "compliance",
+        label: "Compliance, Sustainability & Management of Change",
+        icon: ComplianceIcon,
+      },
+      {
+        id: "risk",
+        label: "Risk, Opportunities & Incident Management",
+        icon: RiskIcon,
+      },
+      {
+        id: "energy",
+        label: "Energy Management",
+        icon: EnergyIcon,
+      },
+      {
+        id: "correction",
+        label: "Correction Corrective Actions & Preventive Actions",
+        icon: CorrectionIcon,
+      },
+      {
+        id: "objectives",
+        label: "Objectives & Targets",
+        icon: ObjectivesIcon,
+      },
+      {
+        id: "user",
+        label: "User Management",
+        icon: UserIcon,
+      },
+      {
+        id: "nonconformity",
+        label: "Non Conformity Report Management",
+        icon: NonConformityIcon,
+      },
+      {
+        id: "reports",
+        label: "Reports & Analysis",
+        icon: ReportsIcon,
+      },
+      {
+        id: "backup",
+        label: "Backup",
+        icon: BackupIcon,
+        path: "/company/backup",
+      },
+      { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
+    ],
+
+    EnMS: [
+      {
+        id: "dashboard",
+        label: "Dashboard",
+        icon: DashboardIcon,
+        path: "/company/dashboard",
+      },
+      {
+        id: "documentation",
+        label: "Documentation",
+        icon: DocumentationIcon,
+      },
+      {
+        id: "training",
+        label: "Employee Training & Performance",
+        icon: TrainingIcon,
+      },
+      {
+        id: "actions",
+        label: "Actions, Meeting and Communication Management",
+        icon: ActionsIcon,
+      },
+      {
+        id: "audits",
+        label: "Audits & Inspections Management",
+        icon: AuditsIcon,
+      },
+      {
+        id: "customer",
+        label: "Customer Management",
+        icon: CustomerIcon,
+      },
+      {
+        id: "supplier",
+        label: "Supplier Management",
+        icon: SupplierIcon,
+      },
+      {
+        id: "compliance",
+        label: "Compliance, Sustainability & Management of Change",
+        icon: ComplianceIcon,
+      },
+      {
+        id: "risk",
+        label: "Risk, Opportunities & Incident Management",
+        icon: RiskIcon,
+      },
+      {
+        id: "energy",
+        label: "Energy Management",
+        icon: EnergyIcon,
+      },
+      {
+        id: "correction",
+        label: "Correction Corrective Actions & Preventive Actions",
+        icon: CorrectionIcon,
+      },
+      {
+        id: "objectives",
+        label: "Objectives & Targets",
+        icon: ObjectivesIcon,
+      },
+      {
+        id: "user",
+        label: "User Management",
+        icon: UserIcon,
+      },
+      {
+        id: "nonconformity",
+        label: "Non Conformity Report Management",
+        icon: NonConformityIcon,
+      },
+      {
+        id: "reports",
+        label: "Reports & Analysis",
+        icon: ReportsIcon,
+      },
+      {
+        id: "backup",
+        label: "Backup",
+        icon: BackupIcon,
+        path: "/company/backup",
+      },
+      { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
+    ],
+
+    BMS: [
+      {
+        id: "dashboard",
+        label: "Dashboard",
+        icon: DashboardIcon,
+        path: "/company/dashboard",
+      },
+      {
+        id: "documentation",
+        label: "Documentation",
+        icon: DocumentationIcon,
+      },
+      {
+        id: "training",
+        label: "Employee Training & Performance",
+        icon: TrainingIcon,
+      },
+      {
+        id: "actions",
+        label: "Actions, Meeting and Communication Management",
+        icon: ActionsIcon,
+      },
+      {
+        id: "audits",
+        label: "Audits & Inspections Management",
+        icon: AuditsIcon,
+      },
+      {
+        id: "customer",
+        label: "Customer Management",
+        icon: CustomerIcon,
+      },
+      {
+        id: "supplier",
+        label: "Supplier Management",
+        icon: SupplierIcon,
+      },
+      {
+        id: "compliance",
+        label: "Compliance, Sustainability & Management of Change",
+        icon: ComplianceIcon,
+      },
+      {
+        id: "risk",
+        label: "Risk, Opportunities & Incident Management",
+        icon: RiskIcon,
+      },
+      {
+        id: "business",
+        label: "Business Continuity Management",
+        icon: AnalysisIcon,
+      },
+      {
+        id: "correction",
+        label: "Correction Corrective Actions & Preventive Actions",
+        icon: CorrectionIcon,
+      },
+      {
+        id: "objectives",
+        label: "Objectives & Targets",
+        icon: ObjectivesIcon,
+      },
+      {
+        id: "user",
+        label: "User Management",
+        icon: UserIcon,
+      },
+      {
+        id: "nonconformity",
+        label: "Non Conformity Report Management",
+        icon: NonConformityIcon,
+      },
+      {
+        id: "reports",
+        label: "Reports & Analysis",
+        icon: ReportsIcon,
+      },
+      {
+        id: "backup",
+        label: "Backup",
+        icon: BackupIcon,
+        path: "/company/backup",
+      },
+      { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
+    ],
+
+    AMS: [
+      {
+        id: "dashboard",
+        label: "Dashboard",
+        icon: DashboardIcon,
+        path: "/company/dashboard",
+      },
+      {
+        id: "documentation",
+        label: "Documentation",
+        icon: DocumentationIcon,
+      },
+      {
+        id: "training",
+        label: "Employee Training & Performance",
+        icon: TrainingIcon,
+      },
+      {
+        id: "actions",
+        label: "Meeting and Communication Management",
+        icon: ActionsIcon,
+      },
+      {
+        id: "audits",
+        label: "Audits & Inspections Management",
+        icon: AuditsIcon,
+      },
+      {
+        id: "customer",
+        label: "Customer Management",
+        icon: CustomerIcon,
+      },
+      {
+        id: "supplier",
+        label: "Supplier Management",
+        icon: SupplierIcon,
+      },
+      {
+        id: "compliance",
+        label: "Compliance, Sustainability & Management of Change",
+        icon: ComplianceIcon,
+      },
+      {
+        id: "risk",
+        label: "Risk & Incident Management",
+        icon: RiskIcon,
+      },
+      {
+        id: "energy",
+        label: "Energy Management",
+        icon: EnergyIcon,
+      },
+      {
+        id: "correction",
+        label: "Correction Corrective Actions & Preventive Actions",
+        icon: CorrectionIcon,
+      },
+      {
+        id: "objectives",
+        label: "Objectives & Targets",
+        icon: ObjectivesIcon,
+      },
+      {
+        id: "user",
+        label: "User Management",
+        icon: UserIcon,
+      },
+      {
+        id: "nonconformity",
+        label: "Non Conformity Report Management",
+        icon: NonConformityIcon,
+      },
+      {
+        id: "reports",
+        label: "Reports & Analysis",
+        icon: ReportsIcon,
+      },
+      {
+        id: "backup",
+        label: "Backup",
+        icon: BackupIcon,
+        path: "/company/backup",
+      },
+      { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
+    ],
+
+    IMS: [
+      {
+        id: "dashboard",
+        label: "Dashboard",
+        icon: DashboardIcon,
+        path: "/company/dashboard",
       },
     ],
   };
@@ -216,7 +647,8 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
 
   useEffect(() => {
     // Retrieve stored active state from localStorage on mount
-    const storedMainItem = localStorage.getItem("activeMainItem") || "dashboard";
+    const storedMainItem =
+      localStorage.getItem("activeMainItem") || "dashboard";
     const storedSubItem = localStorage.getItem("activeSubItem") || null;
 
     if (storedMainItem) {
@@ -357,10 +789,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
     if (item.hasSubMenu) {
       setManuallyActivated(true);
       const isTogglingCurrent = currentSubmenu === item.submenuType;
-      
-      setShowSubmenu((prev) => isTogglingCurrent ? !prev : true);
-      setCurrentSubmenu(isTogglingCurrent && !showSubmenu ? null : item.submenuType);
-      setActiveSubmenuParent(isTogglingCurrent && !showSubmenu ? null : item.id);
+
+      setShowSubmenu((prev) => (isTogglingCurrent ? !prev : true));
+      setCurrentSubmenu(
+        isTogglingCurrent && !showSubmenu ? null : item.submenuType
+      );
+      setActiveSubmenuParent(
+        isTogglingCurrent && !showSubmenu ? null : item.id
+      );
       return;
     }
 
@@ -382,34 +818,34 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
     }
 
     // Auto-collapse sidebar
-    if (setCollapsed && typeof setCollapsed === 'function') {
+    if (setCollapsed && typeof setCollapsed === "function") {
       setCollapsed(true);
     }
   };
-  
+
   // Handle click on a submenu item
-const handleSubMenuItemClick = (subItemId, path, parentMenuId) => {
-  // Set the correct parent menu as active
-  setActiveMainItem(parentMenuId);
-  setActiveSubItem(subItemId);
-  setManuallyActivated(true);
-  setActiveSubmenuParent(null);
-  setShowSubmenu(false);
+  const handleSubMenuItemClick = (subItemId, path, parentMenuId) => {
+    // Set the correct parent menu as active
+    setActiveMainItem(parentMenuId);
+    setActiveSubItem(subItemId);
+    setManuallyActivated(true);
+    setActiveSubmenuParent(null);
+    setShowSubmenu(false);
 
-  // Save active submenu state to localStorage
-  localStorage.setItem("activeMainItem", parentMenuId);
-  localStorage.setItem("activeSubItem", subItemId);
+    // Save active submenu state to localStorage
+    localStorage.setItem("activeMainItem", parentMenuId);
+    localStorage.setItem("activeSubItem", subItemId);
 
-  // Navigate to the selected path
-  if (path) {
-    navigate(path);
-  }
+    // Navigate to the selected path
+    if (path) {
+      navigate(path);
+    }
 
-  // Auto-collapse sidebar
-  if (setCollapsed && typeof setCollapsed === 'function') {
-    setCollapsed(true);
-  }
-};
+    // Auto-collapse sidebar
+    if (setCollapsed && typeof setCollapsed === "function") {
+      setCollapsed(true);
+    }
+  };
 
   const isMenuItemActive = (item) => {
     if (item.hasSubMenu && item.id === activeMainItem) {
@@ -444,14 +880,14 @@ const handleSubMenuItemClick = (subItemId, path, parentMenuId) => {
           />
         );
         break;
-        case "qmsuser":
-          submenuContent = (
-            <UserManagementSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-            />
-          );
-          break;
+      case "qmsuser":
+        submenuContent = (
+          <UserManagementSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
       default:
         submenuContent = null;
     }
@@ -500,7 +936,10 @@ const handleSubMenuItemClick = (subItemId, path, parentMenuId) => {
                   backgroundColor: isMenuItemActive(item)
                     ? `${selectedMenuItem?.borderColor || "#30AD71"}15`
                     : "transparent", // Removed the hover background
-                  color: isMenuItemActive(item) || isMenuItemHovered(item) ? "#FFFFFF" : "#5B5B5B",
+                  color:
+                    isMenuItemActive(item) || isMenuItemHovered(item)
+                      ? "#FFFFFF"
+                      : "#5B5B5B",
                 }}
               >
                 <div className="flex items-center">
@@ -508,7 +947,9 @@ const handleSubMenuItemClick = (subItemId, path, parentMenuId) => {
                     src={item.icon}
                     alt={item.label}
                     className={`w-5 h-5 second-sidebar-icons ${
-                      isMenuItemActive(item) || isMenuItemHovered(item) ? "filter brightness-0 invert" : ""
+                      isMenuItemActive(item) || isMenuItemHovered(item)
+                        ? "filter brightness-0 invert"
+                        : ""
                     }`}
                   />
                   {!collapsed && (

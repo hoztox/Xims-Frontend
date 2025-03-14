@@ -2,7 +2,7 @@ import React from 'react'
 
 const ListUser = () => {
   return (
-    <div>
+    <div className='text-center text-white'>
       List User
     </div>
   )
