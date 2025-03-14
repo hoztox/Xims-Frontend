@@ -1,4 +1,5 @@
 import React from 'react'
+import "./listuser.css"
 
 const ListUser = () => {
   return (
