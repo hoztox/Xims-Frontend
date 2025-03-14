@@ -22,6 +22,8 @@ import CompanyLayout from "./pages/CompanyLayout";
 import CompanyDashboard from "./pages/Company Dashboard/CompanyDashboard";
 import CompanyBackup from "./pages/Company Backup/CompanyBackup";
 import QmsPolicy from "./pages/QMS/Documentation/Policy/QmsPolicy";
+import AddUser from "./pages/QMS/User Management/Add User/AddUser";
+import ListUser from "./pages/QMS/User Management/List User/ListUser";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -49,6 +51,8 @@ const ThemedApp = () => {
         <Route path="/company" element={<CompanyLayout/>}>
           <Route path="dashboard" element={<CompanyDashboard/>} />
           <Route path="qms/policy" element={<QmsPolicy/>} />
+          <Route path="qms/adduser" element={<AddUser/>} />
+          <Route path="qms/listuser" element={<ListUser/>} />
           <Route path="backup" element={<CompanyBackup/>} />
         </Route>
 

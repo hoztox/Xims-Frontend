@@ -12,7 +12,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 const DocumentationSubmenu = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const categories = [
     {
       id: "policy",
@@ -78,8 +78,7 @@ const DocumentationSubmenu = (props) => {
   // Handle clicking on a submenu item
   const handleCategoryClick = (category) => {
     if (props && props.handleItemClick) {
-      // Call the provided handler with additional param to close sidebar
-      props.handleItemClick(category.id, category.path, true);
+      props.handleItemClick(category.id, category.path, "qmsdocumentation");
     } else {
       navigate(category.path);
     }
@@ -92,15 +91,17 @@ const DocumentationSubmenu = (props) => {
         return (
           <div
             key={category.id}
-            className='flex flex-col items-center justify-center py-[10px] rounded-md bg-[#85858515] transition-colors duration-200 cursor-pointer h-[100px] gap-[10px] documentation-submenu-cards'
+            className="flex flex-col items-center justify-center py-[10px] rounded-md bg-[#85858515] transition-colors duration-200 cursor-pointer h-[100px] gap-[10px] documentation-submenu-cards"
             onClick={() => handleCategoryClick(category)}
           >
-            <div className='bg-[#5B5B5B] rounded-full p-[5px] w-[26px] h-[26px] flex justify-center items-center'>
+            <div className="bg-[#5B5B5B] rounded-full p-[5px] w-[26px] h-[26px] flex justify-center items-center">
               {category.icon}
             </div>
-            <span className={`text-center ${
-              active ? 'text-white' : 'text-[#5B5B5B]'
-            } documentation-submenu-label duration-200`}>
+            <span
+              className={`text-center ${
+                active ? "text-white" : "text-[#5B5B5B]"
+              } documentation-submenu-label duration-200`}
+            >
               {category.label}
             </span>
           </div>

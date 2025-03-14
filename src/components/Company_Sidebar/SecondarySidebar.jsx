@@ -25,6 +25,7 @@ import LogoutIcon from "../../assets/images/Company-Sidebar/icon18.svg";
 
 // Import submenu components
 import DocumentationSubmenu from "../Company_Sidebar/QMS/Documentation/DocumentationSubmenu";
+import UserManagementSubmenu from "./QMS/User Management/UserManagementSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -133,11 +134,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         path: "/company/objectives",
       },
       {
-        id: "user",
+        id: "qmsuser",
         label: "User Management",
         icon: UserIcon,
-        hasSubMenu: false,
-        path: "/company/user",
+        hasSubMenu: true,
+        submenuType: "qmsuser",
+        pathPrefix: "/company/qmsuser",
       },
       {
         id: "nonconformity",
@@ -197,12 +199,16 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
     }
 
     // Legacy fallback checks
-    if (path.includes("/company/qms")) {
+    if (path.includes("/company/qmsdocumentation")) {
       return "qmsdocumentation";
     }
 
-    if (path.includes("/company/training")) {
-      return "training";
+    // if (path.includes("/company/training")) {
+    //   return "training";
+    // }
+
+    if (path.includes("/company/qmsuser")) {
+      return "qmsuser";
     }
 
     return null;
@@ -380,29 +386,30 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       setCollapsed(true);
     }
   };
-
+  
   // Handle click on a submenu item
-  const handleSubMenuItemClick = (subItemId, path) => {
-    setActiveMainItem("qmsdocumentation");
-    setActiveSubItem(subItemId);
-    setManuallyActivated(true);
-    setActiveSubmenuParent(null);
-    setShowSubmenu(false);
+const handleSubMenuItemClick = (subItemId, path, parentMenuId) => {
+  // Set the correct parent menu as active
+  setActiveMainItem(parentMenuId);
+  setActiveSubItem(subItemId);
+  setManuallyActivated(true);
+  setActiveSubmenuParent(null);
+  setShowSubmenu(false);
 
-    // Save active submenu state to localStorage
-    localStorage.setItem("activeMainItem", "qmsdocumentation");
-    localStorage.setItem("activeSubItem", subItemId);
+  // Save active submenu state to localStorage
+  localStorage.setItem("activeMainItem", parentMenuId);
+  localStorage.setItem("activeSubItem", subItemId);
 
-    // Navigate to the selected path
-    if (path) {
-      navigate(path);
-    }
+  // Navigate to the selected path
+  if (path) {
+    navigate(path);
+  }
 
-    // Auto-collapse sidebar
-    if (setCollapsed && typeof setCollapsed === 'function') {
-      setCollapsed(true);
-    }
-  };
+  // Auto-collapse sidebar
+  if (setCollapsed && typeof setCollapsed === 'function') {
+    setCollapsed(true);
+  }
+};
 
   const isMenuItemActive = (item) => {
     if (item.hasSubMenu && item.id === activeMainItem) {
@@ -437,9 +444,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-      case "training":
-        submenuContent = null;
-        break;
+        case "qmsuser":
+          submenuContent = (
+            <UserManagementSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
       default:
         submenuContent = null;
     }
