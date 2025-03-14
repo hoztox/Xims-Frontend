@@ -97,3 +97,8 @@
     line-height: normal;
     color: #AAAAAA;
 }
+
+.not-found {
+    font-family: 'Switzer Regular';
+    color: gray;
+}

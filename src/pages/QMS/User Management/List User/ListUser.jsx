@@ -151,7 +151,7 @@ const ListUser = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="8" className="text-center py-4 text-white">No users found.</td>
+                <td colSpan="8" className="text-center py-4 not-found">No users found.</td>
               </tr>
             )}
             <tr>
