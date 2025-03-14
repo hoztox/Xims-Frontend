@@ -27,6 +27,7 @@ import LogoutIcon from "../../assets/images/Company-Sidebar/icon18.svg";
 import DocumentationSubmenu from "../Company_Sidebar/QMS/Documentation/DocumentationSubmenu";
 import UserManagementSubmenu from "./QMS/User Management/UserManagementSubmenu";
 import EmployeeTrainingSubmenu from "./QMS/Employee Training/EmployeeTrainingSubmenu";
+import ActionsMeetingSubmenu from "./QMS/Actions Meeting Management/ActionsMeetingSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -72,11 +73,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/qmsemployeetraining",
       },
       {
-        id: "actions",
+        id: "qmsactions",
         label: "Actions, Meeting and Communication Management",
         icon: ActionsIcon,
-        hasSubMenu: false,
-        path: "/company/actions",
+        hasSubMenu: true,
+        submenuType: "qmsactions",
+        pathPrefix: "/company/qmsactions",
       },
       {
         id: "audits",
@@ -639,9 +641,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       return "qmsemployeetraining";
     }
 
+    if (path.includes("/company/qmsactions")) {
+      return "qmsactions";
+    }
+
     if (path.includes("/company/qmsuser")) {
       return "qmsuser";
     }
+
 
     return null;
   };
@@ -892,6 +899,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       case "qmsemployeetraining":
         submenuContent = (
           <EmployeeTrainingSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "qmsactions":
+        submenuContent = (
+          <ActionsMeetingSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />

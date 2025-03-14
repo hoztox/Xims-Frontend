@@ -1,7 +1,6 @@
 import React from "react";
 import policy from "../../../../assets/images/Company-Sidebar/policy.svg";
 import manual from "../../../../assets/images/Company-Sidebar/manual.svg";
-import "./usermanagementsubmenu.css";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const UserManagementSubmenu = (props) => {
