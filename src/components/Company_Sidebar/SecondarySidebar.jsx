@@ -30,6 +30,7 @@ import EmployeeTrainingSubmenu from "./QMS/Employee Training/EmployeeTrainingSub
 import ActionsMeetingSubmenu from "./QMS/Actions Meeting Management/ActionsMeetingSubmenu";
 import AuditInspectionSubmenu from "./QMS/Audit Inspection Management/AuditInspectionSubmenu";
 import CustomerManagementSubmenu from "./QMS/Customer Management/CustomerManagementSubmenu";
+import SupplierManagementSubmenu from "./QMS/Supplier Management/SupplierManagementSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -99,11 +100,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/qmscustomermanagement",
       },
       {
-        id: "supplier",
+        id: "qmssuppliermanagement",
         label: "Supplier Management",
         icon: SupplierIcon,
-        hasSubMenu: false,
-        path: "/company/supplier",
+        hasSubMenu: true,
+        submenuType: "qmssuppliermanagement",
+        pathPrefix: "/company/qmssuppliermanagement",
       },
       {
         id: "compliance",
@@ -657,6 +659,10 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       return "qmscustomermanagement";
     }
 
+    if (path.includes("/company/qmssuppliermanagement")) {
+      return "qmssuppliermanagement";
+    }
+
     if (path.includes("/company/qmsuser")) {
       return "qmsuser";
     }
@@ -927,6 +933,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           case "qmscustomermanagement":
             submenuContent = (
               <CustomerManagementSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+              />
+            );
+            break;
+          case "qmssuppliermanagement":
+            submenuContent = (
+              <SupplierManagementSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
               />

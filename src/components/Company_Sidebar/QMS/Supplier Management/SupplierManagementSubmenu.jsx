@@ -3,53 +3,40 @@ import policy from "../../../../assets/images/Company-Sidebar/policy.svg";
 import manual from "../../../../assets/images/Company-Sidebar/manual.svg";
 import procedure from "../../../../assets/images/Company-Sidebar/manual.svg";
 import record from "../../../../assets/images/Company-Sidebar/record-format.svg";
-import parties from "../../../../assets/images/Company-Sidebar/interested parties.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const CustomerManagementSubmenu = (props) => {
+const SupplierManagementSubmenu = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
 
     const categories = [
         {
-            id: "add-customer ",
-            label: "Add Customer ",
+            id: "add-supplier",
+            label: "Add Supplier",
             icon: <img src={policy} alt="Policy" className="w-[15px] h-[15px]" />,
-            //   path: "/company/qms/policy",
+            // path: "/company/qms/policy",
         },
         {
-            id: "list-customer",
-            label: "List Customer",
+            id: "enter-supplier-problems",
+            label: "Enter Supplier Problems",
             icon: <img src={manual} alt="Manual" className="w-[15px] h-[15px]" />,
-            //   path: "/company/qms/manual",
+            // path: "/company/qms/manual",
         },
         {
-            id: "add-complaints-feedback",
-            label: "Add Complaints and Feedback",
+            id: "supplier-problem-log",
+            label: "Supplier Problem Log",
             icon: (
                 <img src={procedure} alt="Procedure" className="w-[15px] h-[15px]" />
             ),
-            //   path: "/company/qms/procedure",
+            // path: "/company/qms/procedure",
         },
         {
-            id: "list-complaints-feedback",
-            label: "List Complaints and Feedback",
+            id: "supplier-Performance-evaluation",
+            label: "Supplier Performance Evaluation",
             icon: (
                 <img src={record} alt="Record Format" className="w-[15px] h-[15px]" />
             ),
-            //   path: "/company/qms/record-format",
-        },
-        {
-            id: "customer-satisfaction-survey",
-            label: "Customer Satisfaction Survey",
-            icon: (
-                <img
-                    src={parties}
-                    alt="Interested Parties"
-                    className="w-[15px] h-[15px]"
-                />
-            ),
-            //   path: "/company/qms/interested-parties",
+            // path: "/company/qms/record-format",
         },
     ]
 
@@ -57,13 +44,15 @@ const CustomerManagementSubmenu = (props) => {
         return location.pathname === category.path;
     };
 
+    // Handle clicking on a submenu item
     const handleCategoryClick = (category) => {
         if (props && props.handleItemClick) {
-            props.handleItemClick(category.id, category.path, "qmscustomermanagement");
+            props.handleItemClick(category.id, category.path, "qmssuppliermanagement");
         } else {
             navigate(category.path);
         }
     };
+
     return (
         <div className="grid grid-cols-3 gap-[10px] bg-[#1C1C24] p-5 w-[555px] absolute top-16 border-t border-r border-b border-[#383840]">
             {categories.map((category) => {
@@ -90,4 +79,4 @@ const CustomerManagementSubmenu = (props) => {
     );
 };
 
-export default CustomerManagementSubmenu
+export default SupplierManagementSubmenu
