@@ -29,6 +29,7 @@ import UserManagementSubmenu from "./QMS/User Management/UserManagementSubmenu";
 import EmployeeTrainingSubmenu from "./QMS/Employee Training/EmployeeTrainingSubmenu";
 import ActionsMeetingSubmenu from "./QMS/Actions Meeting Management/ActionsMeetingSubmenu";
 import AuditInspectionSubmenu from "./QMS/Audit Inspection Management/AuditInspectionSubmenu";
+import CustomerManagementSubmenu from "./QMS/Customer Management/CustomerManagementSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -90,11 +91,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/qmsauditinspection",
       },
       {
-        id: "customer",
+        id: "qmscustomermanagement",
         label: "Customer Management",
         icon: CustomerIcon,
-        hasSubMenu: false,
-        path: "/company/customer",
+        hasSubMenu: true,
+        submenuType: "qmscustomermanagement",
+        pathPrefix: "/company/qmscustomermanagement",
       },
       {
         id: "supplier",
@@ -651,6 +653,10 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       return "qmsauditinspection";
     }
 
+    if (path.includes("/company/qmscustomermanagement")) {
+      return "qmscustomermanagement";
+    }
+
     if (path.includes("/company/qmsuser")) {
       return "qmsuser";
     }
@@ -913,6 +919,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           case "qmsauditinspection":
             submenuContent = (
               <AuditInspectionSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+              />
+            );
+            break;
+          case "qmscustomermanagement":
+            submenuContent = (
+              <CustomerManagementSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
               />
