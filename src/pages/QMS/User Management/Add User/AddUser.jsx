@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../../../Utils/Config";
 import axios from 'axios';
-import {Toaster ,toast} from 'react-hot-toast'; // Import react-hot-toast
+import { Toaster, toast } from 'react-hot-toast'; // Import react-hot-toast
 import "./adduser.css";
 
 const AddUser = () => {
@@ -66,7 +66,7 @@ const AddUser = () => {
   const validateForm = () => {
     // Check required fields
     const requiredFields = ['username', 'first_name', 'last_name', 'password', 'confirm_password', 'country', 'email', 'confirm_email', 'phone', 'secret_question', 'answer'];
-    
+
     for (const field of requiredFields) {
       if (!formData[field]) {
         setError(`${field.replace('_', ' ')} is required`);
@@ -91,14 +91,14 @@ const AddUser = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-  
+
     setIsLoading(true);
     setError(null);
-  
+
     try {
       // Format date of birth
       let formattedDob = '';
@@ -106,7 +106,7 @@ const AddUser = () => {
       if (day && month && year) {
         formattedDob = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
       }
-  
+
       // Prepare data for submission
       const dataToSubmit = {
         ...formData,
@@ -115,19 +115,19 @@ const AddUser = () => {
         confirm_password: formData.confirm_password,
         confirm_email: formData.confirm_email
       };
-      
+
       // Remove the date_of_birth object since we've already formatted it
       delete dataToSubmit.date_of_birth;
-      
+
       // Add back formatted date of birth if it exists
       if (formattedDob) {
         dataToSubmit.date_of_birth = formattedDob;
       }
-  
+
       console.log('Sending data:', dataToSubmit);
-  
+
       const response = await axios.post(`${BASE_URL}/company/users/create/`, dataToSubmit);
-  
+
       // Handle success
       if (response.status === 201) {
         console.log('Added User', response.data);
@@ -137,12 +137,12 @@ const AddUser = () => {
       }
     } catch (err) {
       console.error('Error saving user:', err);
-      
+
       if (err.response?.data) {
         // Format the error from the backend response
         const errorData = err.response.data;
         let errorMessage = 'An error occurred while saving the user:';
-        
+
         // Convert error object to readable message
         Object.keys(errorData).forEach(key => {
           const errorMessages = errorData[key];
@@ -152,7 +152,7 @@ const AddUser = () => {
             errorMessage += `\n- ${key}: ${errorMessages}`;
           }
         });
-        
+
         setError(errorMessage);
         // Show error toast notification
         toast.error('Failed to add user');
@@ -170,7 +170,7 @@ const AddUser = () => {
       <Toaster position="top-center" />
       <div className="flex justify-between items-center add-user-header">
         <h1 className="add-user-text">Add User</h1>
-        <button 
+        <button
           className="list-user-btn duration-200"
           onClick={handleListUsers}
         >
@@ -499,7 +499,64 @@ const AddUser = () => {
               </div>
             </div>
           </div>
+
+          {/* <div className="md:col-span-2">
+            <label className="permissions-texts cursor-pointer">Permissions</label>
+            <div className="flex flex-wrap gap-5 mt-3">
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="quality"
+                  // checked={formData.permissions.quality}
+                  // onChange={handleChange}
+                  className="mr-2 form-checkboxes"
+                />
+                <span className="permissions-texts cursor-pointer">QUALITY</span>
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="environment"
+                  // checked={formData.permissions.environment}
+                  // onChange={handleChange}
+                  className="mr-2 form-checkboxes"
+                />
+                <span className="permissions-texts cursor-pointer">ENVIRONMENT</span>
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="healthAndSafety"
+                  // checked={formData.permissions.healthAndSafety}
+                  // onChange={handleChange}
+                  className="mr-2 form-checkboxes"
+                />
+                <span className="permissions-texts cursor-pointer whitespace-nowrap">HEALTH AND SAFETY</span>
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="energy"
+                  // checked={formData.permissions.energy}
+                  // onChange={handleChange}
+                  className="mr-2 form-checkboxes"
+                />
+                <span className="permissions-texts cursor-pointer">ENERGY</span>
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="iso"
+                  // checked={formData.permissions.iso}
+                  // onChange={handleChange}
+                  className="mr-2 form-checkboxes"
+                />
+                <span className="permissions-texts cursor-pointer">ISO</span>
+              </label>
+            </div>
+          </div> */}
         </div>
+
 
         <div className="flex justify-end gap-[22px] mt-5 mx-[122px] pb-[22px]">
           <button
