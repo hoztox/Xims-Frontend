@@ -1,28 +1,75 @@
-import React, { useState } from 'react'
-import { Search, PlusCircle, Lock, Edit2, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
-import "./listuser.css"
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Search } from 'lucide-react';
+import plusicon from "../../../../assets/images/Company User Management/plus icon.svg";
+import permissions from "../../../../assets/images/Company User Management/permission.svg";
+import edits from "../../../../assets/images/Company User Management/edits.svg";
+import deletes from "../../../../assets/images/Company User Management/deletes.svg";
+import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../../../Utils/Config";
+import toast, { Toaster } from 'react-hot-toast';
+import "./listuser.css";
 
 const ListUser = () => {
+  const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const usersPerPage = 10;
 
-  const generateUsers = (count) => {
-    return Array(count).fill(null).map((_, index) => ({
-      id: index + 1,
-      userName: 'Anonymous',
-      name: 'Anonymous',
-      email: 'Anonymous',
-      status: 'Live',
-    }));
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchUsers();
+  }, [currentPage, searchQuery]);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/company/users/`, {
+        params: {
+          search: searchQuery,
+          page: currentPage,
+          limit: usersPerPage
+        }
+      });
+  
+      console.log("API Response:", response.data); // Debugging
+  
+      if (Array.isArray(response.data)) {
+        setUsers(response.data); // Directly set the users
+        setTotalPages(1); // Since API is not returning totalPages, set a default
+      } else {
+        setUsers([]); // Handle unexpected structure
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+  
+  
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1);
   };
 
-  const allUsers = generateUsers(31);
-  const usersPerPage = 10;
-  const totalPages = Math.ceil(allUsers.length / usersPerPage);
+  const handleAddUsers = () => {
+    navigate('/company/qms/adduser');
+  };
 
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = allUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const handleDeleteUser = async (userId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+    if (!confirmDelete) return;
+
+    try {
+      await axios.delete(`${BASE_URL}/company/users/delete/${userId}/`);
+      setUsers(users.filter(user => user.id !== userId)); // Update UI
+      toast.success("User deleted successfully");
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      toast.error("Failed to delete user. Please try again.");
+    }
+  };
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -36,114 +83,119 @@ const ListUser = () => {
     setCurrentPage(prev => Math.min(prev + 1, totalPages));
   };
 
-
   return (
     <div className="bg-[#1C1C24] list-users-main">
-        <div className="flex items-center justify-between px-[14px] pt-[24px]">
-          <h1 className="list-users-head">List Users</h1>
-          <div className="flex space-x-5">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className=" serach-input focus:outline-none bg-transparent"
-              />
-              <div className='absolute right-3 top-2.5 text-gray-400 bg-gray-800'>
-           
-                <Search size={18} />
-             
-              </div>
+      <Toaster position="top-center" reverseOrder={false} />
+      <div className="flex items-center justify-between px-[14px] pt-[24px]">
+        <h1 className="list-users-head">List Users</h1>
+        <div className="flex space-x-5">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="serach-input focus:outline-none bg-transparent"
+            />
+            <div className='absolute right-[1px] top-[2px] text-white bg-[#24242D] p-[10.5px] w-[55px] rounded-tr-[6px] rounded-br-[6px] flex justify-center items-center'>
+              <Search size={18} />
             </div>
-            <button className="flex items-center space-x-2 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-md transition">
-              <span>Add Users</span>
-              <PlusCircle size={18} />
-            </button>
           </div>
+          <button
+            className="flex items-center justify-center add-user-btn gap-[10px] duration-200"
+            onClick={handleAddUsers}
+          >
+            <span>Add Users</span>
+            <img src={plusicon} alt="Add Icon" className='w-[18px] h-[18px] add-plus' />
+          </button>
         </div>
+      </div>
 
-        <div className=" rounded-md overflow-hidden">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-gray-700">
-                <th className="py-3 px-4 text-left font-medium text-gray-400">No</th>
-                <th className="py-3 px-4 text-left font-medium text-gray-400">User Name</th>
-                <th className="py-3 px-4 text-left font-medium text-gray-400">Name</th>
-                <th className="py-3 px-4 text-left font-medium text-gray-400">Email</th>
-                <th className="py-3 px-4 text-left font-medium text-gray-400">Status</th>
-                <th className="py-3 px-4 text-left font-medium text-gray-400">Permissions</th>
-                <th className="py-3 px-4 text-left font-medium text-gray-400">Edit</th>
-                <th className="py-3 px-4 text-left font-medium text-gray-400">Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentUsers.map((user, index) => (
-                <tr key={user.id} className="border-b border-gray-700 hover:bg-gray-750">
-                  <td className="py-3 px-4">{indexOfFirstUser + index + 1}</td>
-                  <td className="py-3 px-4">{user.userName}</td>
-                  <td className="py-3 px-4">{user.name}</td>
-                  <td className="py-3 px-4">{user.email}</td>
-                  <td className="py-3 px-4">{user.status}</td>
-                  <td className="py-3 px-4 text-center">
-                    <Lock size={18} className="mx-auto text-gray-400" />
+      <div className="p-5 overflow-hidden">
+        <table className="w-full">
+          <thead className='bg-[#24242D]'>
+            <tr className="list-users-tr h-[48px]">
+              <th className="px-5 text-left add-user-theads">No</th>
+              <th className="px-5 text-left add-user-theads">User Name</th>
+              <th className="px-5 text-left add-user-theads">Name</th>
+              <th className="px-5 text-left add-user-theads">Email</th>
+              <th className="px-5 text-left add-user-theads">Status</th>
+              <th className="px-5 text-center add-user-theads">Permissions</th>
+              <th className="px-5 text-center add-user-theads">Edit</th>
+              <th className="px-5 text-center add-user-theads">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.length > 0 ? (
+              users.map((user, index) => (
+                <tr key={user.id} className="border-b border-[#383840] hover:bg-[#1a1a20] cursor-pointer h-[46px]">
+                  <td className="px-[23px] add-user-datas">{(currentPage - 1) * usersPerPage + index + 1}</td>
+                  <td className="px-5 add-user-datas">{user.username}</td>
+                  <td className="px-5 add-user-datas">{user.last_name}</td>
+                  <td className="px-5 add-user-datas">{user.email}</td>
+                  <td className="px-5 add-user-datas">{user.status}</td>
+                  <td className="px-4 add-user-datas text-center flex justify-center items-center h-[46px]">
+                    <img src={permissions} alt="Permission" className='w-[16px] h-[16px]' />
                   </td>
-                  <td className="py-3 px-4 text-center">
-                    <button className="text-blue-400 hover:text-blue-300">
-                      <Edit2 size={18} className="mx-auto" />
+                  <td className="px-4 add-user-datas text-center">
+                    <button>
+                      <img src={edits} alt="Edit" className='w-[16px] h-[16px]' />
                     </button>
                   </td>
-                  <td className="py-3 px-4 text-center">
-                    <button className="text-red-400 hover:text-red-300">
-                      <Trash2 size={18} className="mx-auto" />
+                  <td className="px-4 add-user-datas text-center">
+                    <button onClick={() => handleDeleteUser(user.id)}>
+                      <img src={deletes} alt="Delete" className='w-[16px] h-[16px]' />
                     </button>
                   </td>
                 </tr>
-              ))}
+              ))
+            ) : (
               <tr>
-                <td colSpan="8" className="py-4 px-6 border-t border-gray-700">
-                  <div className="flex items-center justify-between">
-                    <div className="text-gray-400">
-                      Total-{allUsers.length}
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <button 
-                        onClick={handlePrevious}
-                        disabled={currentPage === 1}
-                        className="px-3 py-1 rounded hover:bg-gray-700 disabled:opacity-50"
-                      >
-                        Previous
-                      </button>
-                      
-                      {Array.from({ length: Math.min(4, totalPages) }, (_, i) => i + 1).map((page) => (
-                        <button
-                          key={page}
-                          onClick={() => handlePageClick(page)}
-                          className={`px-3 py-1 rounded ${
-                            currentPage === page ? 'bg-blue-600' : 'hover:bg-gray-700'
-                          }`}
-                        >
-                          {page}
-                        </button>
-                      ))}
-                      
-                      <button 
-                        onClick={handleNext}
-                        disabled={currentPage === totalPages}
-                        className="px-3 py-1 rounded hover:bg-gray-700 disabled:opacity-50"
-                      >
-                        Next
-                      </button>
-                    </div>
-                  </div>
-                </td>
+                <td colSpan="8" className="text-center py-4 text-white">No users found.</td>
               </tr>
-            </tbody>
-          </table>
-        </div>
+            )}
+            <tr>
+              <td colSpan="8" className="pt-[15px] border-t border-[#383840]">
+
+                <div className="flex items-center justify-between">
+                  <div className="text-white total-text">
+                    Total-{users.length}
+                  </div>
+                  <div className="flex items-center gap-5">
+                    <button
+                      onClick={handlePrevious}
+                      disabled={currentPage === 1}
+                      className="cursor-pointer swipe-text"
+                    >
+                      Previous
+                    </button>
+
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <button
+                        key={page}
+                        onClick={() => handlePageClick(page)}
+                        className={`${currentPage === page ? 'pagin-active' : 'pagin-inactive'}`}
+                      >
+                        {page}
+                      </button>
+                    ))}
+
+                    <button
+                      onClick={handleNext}
+                      disabled={currentPage === totalPages}
+                      className="cursor-pointer swipe-text"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-     
+    </div>
   );
 };
 
-export default ListUser
+export default ListUser;

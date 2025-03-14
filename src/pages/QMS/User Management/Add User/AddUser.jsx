@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import {BASE_URL} from "../../../../Utils/Config"
+import { BASE_URL } from "../../../../Utils/Config";
 import axios from 'axios';
+import {Toaster ,toast} from 'react-hot-toast'; // Import react-hot-toast
 import "./adduser.css";
 
 const AddUser = () => {
@@ -130,6 +131,8 @@ const AddUser = () => {
       // Handle success
       if (response.status === 201) {
         console.log('Added User', response.data);
+        // Show success toast notification
+        toast.success('User added successfully!');
         navigate('/company/qms/listuser');
       }
     } catch (err) {
@@ -151,8 +154,12 @@ const AddUser = () => {
         });
         
         setError(errorMessage);
+        // Show error toast notification
+        toast.error('Failed to add user');
       } else {
         setError('An error occurred while saving the user.');
+        // Show generic error toast notification
+        toast.error('An error occurred while saving the user');
       }
     } finally {
       setIsLoading(false);
@@ -160,6 +167,7 @@ const AddUser = () => {
   };
   return (
     <div className="bg-[#1C1C24]">
+      <Toaster position="top-center" />
       <div className="flex justify-between items-center add-user-header">
         <h1 className="add-user-text">Add User</h1>
         <button 
