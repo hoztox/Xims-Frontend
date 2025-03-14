@@ -9,7 +9,7 @@ import scope from "../../../../assets/images/Company-Sidebar/record-format.svg";
 import "./documentationsubmenu.css";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const DocumentationSubmenu = (props) => {
+const DocumentationSubmenu = () => {
   const navigate = useNavigate();
   const location = useLocation();
 

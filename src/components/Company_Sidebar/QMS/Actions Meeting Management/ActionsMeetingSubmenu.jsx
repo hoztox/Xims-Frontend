@@ -5,7 +5,7 @@ import procedure from "../../../../assets/images/Company-Sidebar/manual.svg";
 import record from "../../../../assets/images/Company-Sidebar/record-format.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const ActionsMeetingSubmenu = (props) => {
+const ActionsMeetingSubmenu = () => {
     const navigate = useNavigate();
     const location = useLocation();
 

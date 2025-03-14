@@ -6,7 +6,7 @@ import record from "../../../../assets/images/Company-Sidebar/record-format.svg"
 import parties from "../../../../assets/images/Company-Sidebar/interested parties.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const CustomerManagementSubmenu = (props) => {
+const CustomerManagementSubmenu = () => {
     const navigate = useNavigate();
     const location = useLocation();
 

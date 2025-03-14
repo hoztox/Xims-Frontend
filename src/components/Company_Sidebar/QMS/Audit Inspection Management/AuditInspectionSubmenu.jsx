@@ -4,7 +4,7 @@ import manual from "../../../../assets/images/Company-Sidebar/manual.svg";
 import procedure from "../../../../assets/images/Company-Sidebar/manual.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const AuditInspectionSubmenu = (props) => {
+const AuditInspectionSubmenu = () => {
     const navigate = useNavigate();
     const location = useLocation();
 

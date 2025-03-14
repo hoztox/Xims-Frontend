@@ -8,7 +8,7 @@ import process from "../../../../assets/images/Company-Sidebar/interested partie
 import scope from "../../../../assets/images/Company-Sidebar/record-format.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const EmployeeTrainingSubmenu = (props) => {
+const EmployeeTrainingSubmenu = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
