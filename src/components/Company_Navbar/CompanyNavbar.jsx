@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 const CompanyNavbar = ({ selectedMenuItem, toggleSidebar, collapsed, setCollapsed }) => {
   const navigate = useNavigate();
-  
+
   // Handle the toggle with state update
   const handleToggle = () => {
     setCollapsed(!collapsed);
@@ -28,9 +28,9 @@ const CompanyNavbar = ({ selectedMenuItem, toggleSidebar, collapsed, setCollapse
       {/* Left Section */}
       <div className="flex justify-between w-full border-b border-[#383840] h-[88px] px-5">
         <div className="flex items-center">
-          <button 
-          className="mr-[41px]"
-          onClick={handleLogoClick}>
+          <button
+            className="mr-[41px]"
+            onClick={handleLogoClick}>
             <img src={logo} alt="Ximspro Logo" />
           </button>
 
@@ -55,8 +55,7 @@ const CompanyNavbar = ({ selectedMenuItem, toggleSidebar, collapsed, setCollapse
             }}
           >
             <p className="current-menu text-left">
-              {selectedMenuItem?.label?.split(" ").slice(0, 1).join(" ") || "Environmental"} <br />
-              {selectedMenuItem?.label?.split(" ").slice(1).join(" ") || "Management System"}
+              {selectedMenuItem?.label || "Environmental Management System"}
             </p>
           </div>
         </div>

@@ -51,17 +51,26 @@ const AddCompany = () => {
 
   useEffect(() => {
     const validateEmail = async () => {
+      // Check if email exists
       if (formDataState.email_address) {
+        // Email format validation using regex
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formDataState.email_address)) {
+          setEmailError('Invalid email format!');
+          setEmailValid(false);
+          return; // Stop further validation if format is invalid
+        }
+
         try {
           const response = await axios.get(`${BASE_URL}/accounts/validate-email/`, {
             params: { email_address: formDataState.email_address },
           });
           if (response.data.exists) {
-            setEmailError('Email already exists.');
+            setEmailError('Email already exists!');
             setEmailValid(false);
           } else {
             setEmailError('');
-            setEmailValid(true);
+            setEmailValid(true); // This will trigger the success message
           }
         } catch (error) {
           console.error('Error validating email:', error);
@@ -70,13 +79,17 @@ const AddCompany = () => {
         }
       } else {
         setEmailError('');
-        setEmailValid(null);
+        setEmailValid(null); // Reset when empty
       }
     };
 
-    validateEmail();
-  }, [formDataState.email_address]);
+    // Add a small delay to avoid too many requests while typing
+    const timeoutId = setTimeout(() => {
+      validateEmail();
+    }, 500);
 
+    return () => clearTimeout(timeoutId);
+  }, [formDataState.email_address]);
 
   useEffect(() => {
     const validateUserid = async () => {
@@ -86,11 +99,11 @@ const AddCompany = () => {
             params: { user_id: formDataState.user_id },
           });
           if (response.data.exists) {
-            setUseridError('User ID already exists.');
+            setUseridError('User ID already exists!');
             setUseridValid(false);
           } else {
             setUseridError('');
-            setUseridValid(true);
+            setUseridValid(true); // This will trigger the success message
           }
         } catch (error) {
           console.error('Error validating user id:', error);
@@ -99,11 +112,16 @@ const AddCompany = () => {
         }
       } else {
         setUseridError('');
-        setUseridValid(null);
+        setUseridValid(null); // Reset when empty
       }
     };
 
-    validateUserid();
+    // Add a small delay to avoid too many requests while typing
+    const timeoutId = setTimeout(() => {
+      validateUserid();
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
   }, [formDataState.user_id]);
 
 
@@ -397,14 +415,22 @@ const AddCompany = () => {
                   className="w-full text-sm focus:outline-none addcmyinputs"
                   required
                 />
-                {emailError && <p className="text-red-500 text-sm pt-2">{emailError}</p>}
-
-
-
-
-                {/* {emailError && (
-                  <p className="text-red-500 text-sm">{emailError}</p>
-                )} */}
+                {emailError && (
+                  <p className="text-red-500 text-sm pt-2 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    {emailError}
+                  </p>
+                )}
+                {emailValid === true && formDataState.email_address && (
+                  <p className="text-green-500 text-sm pt-2 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Email is available!
+                  </p>
+                )}
               </div>
               <div>
                 <label htmlFor="phone_no1">Phone No 1</label>
@@ -441,9 +467,9 @@ const AddCompany = () => {
                 >
                   <p
                     className={`filename ${fileName === "Choose File" ||
-                        fileName === "No file chosen"
-                        ? "noupfile"
-                        : "upfile"
+                      fileName === "No file chosen"
+                      ? "noupfile"
+                      : "upfile"
                       }`}
                   >
                     {fileName}
@@ -476,7 +502,22 @@ const AddCompany = () => {
                   onChange={handleInputChange}
                   className="w-full border text-sm focus:outline-none addcmyinputs"
                 />
-                {useridError && <p className="text-red-500 text-sm pt-2">{useridError}</p>}
+                {useridError && (
+                  <p className="text-red-500 text-sm pt-2 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    {useridError}
+                  </p>
+                )}
+                {userValid === true && formDataState.user_id && (
+                  <p className="text-green-500 text-sm pt-2 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    User ID is available!
+                  </p>
+                )}
               </div>
               <div className="relative">
                 <label htmlFor="password">Password</label>
