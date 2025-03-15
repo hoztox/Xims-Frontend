@@ -115,10 +115,10 @@ const AdminLogin = () => {
                         <h2 className="mb-7 lg:ml-12 text-white loginheading">Company Login</h2>
                         <form className="space-y-6" onSubmit={handleSubmit} >
                             <div className="relative">
-                                <label className="labels">Email</label>
+                                <label className="labels">Username</label>
                                 <input
                                     type="text"
-                                    placeholder="Email"
+                                    placeholder="Username"
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
                                     className="rounded-lg bg-[#161C23] mt-1 email outline-none inputs border-transparent"
