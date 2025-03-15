@@ -42,10 +42,10 @@ const AddCompany = () => {
   const { theme } = useTheme();
 
   const [emailError, setEmailError] = useState('');
-  const [emailValid, setEmailValid] = useState(null);
+  const [emailValid, setEmailValid] = useState(null);
 
   const [useridError, setUseridError] = useState('');
-  const [userValid, setUseridValid] = useState(null);
+  const [userValid, setUseridValid] = useState(null);
 
 
 
@@ -73,7 +73,7 @@ const AddCompany = () => {
         setEmailValid(null);
       }
     };
-  
+
     validateEmail();
   }, [formDataState.email_address]);
 
@@ -83,7 +83,7 @@ const AddCompany = () => {
       if (formDataState.user_id) {
         try {
           const response = await axios.get(`${BASE_URL}/accounts/validate-userid/`, {
-            params: { user_id: formDataState.user_id},
+            params: { user_id: formDataState.user_id },
           });
           if (response.data.exists) {
             setUseridError('User ID already exists.');
@@ -102,10 +102,10 @@ const AddCompany = () => {
         setUseridValid(null);
       }
     };
-  
+
     validateUserid();
   }, [formDataState.user_id]);
-  
+
 
 
 
@@ -171,7 +171,16 @@ const AddCompany = () => {
       try {
         const canvas = cropperRef.current.getCanvas();
         if (canvas) {
-          canvas.toBlob(async (blob) => {
+          // Create a new canvas with exactly 200x200 dimensions
+          const finalCanvas = document.createElement('canvas');
+          finalCanvas.width = 200;
+          finalCanvas.height = 200;
+          const ctx = finalCanvas.getContext('2d');
+
+          // Draw the cropped area onto the new canvas, resizing if necessary
+          ctx.drawImage(canvas, 0, 0, 400, 400);
+
+          finalCanvas.toBlob(async (blob) => {
             const file = new File([blob], `${Date.now()}_croppedImage.png`, {
               type: "image/png",
             });
@@ -293,9 +302,8 @@ const AddCompany = () => {
 
   return (
     <div
-      className={`flex flex-col md:flex-row w-full rounded-lg addmaincmpy ${
-        theme === "dark" ? "dark" : "light"
-      }`}
+      className={`flex flex-col md:flex-row w-full rounded-lg addmaincmpy ${theme === "dark" ? "dark" : "light"
+        }`}
     >
       <Toaster position="top-center" reverseOrder={false} />
 
@@ -311,8 +319,8 @@ const AddCompany = () => {
                   aspectRatio: 1,
                 }}
                 defaultSize={{
-                  width: "80%",
-                  height: "80%",
+                  width: 400,
+                  height: 400,
                 }}
               />
             </div>
@@ -343,13 +351,13 @@ const AddCompany = () => {
         <h2 className="addcmpnyhead">Add New Company</h2>
 
         <AddSuccessModal
-        showAddSuccessModal={showAddSuccessModal}
-        onClose={()=>{setShowAddSuccessModal(false)}}
+          showAddSuccessModal={showAddSuccessModal}
+          onClose={() => { setShowAddSuccessModal(false) }}
         />
 
         <AddErrorModal
-        showAddErrorModal={showAddErrorModal}
-        onClose={()=>{setShowAddErrorModal(false)}}
+          showAddErrorModal={showAddErrorModal}
+          onClose={() => { setShowAddErrorModal(false) }}
         />
 
         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -389,7 +397,7 @@ const AddCompany = () => {
                   className="w-full text-sm focus:outline-none addcmyinputs"
                   required
                 />
-{emailError && <p className="text-red-500 text-sm pt-2">{emailError}</p>}
+                {emailError && <p className="text-red-500 text-sm pt-2">{emailError}</p>}
 
 
 
@@ -432,12 +440,11 @@ const AddCompany = () => {
                   className="flex items-center justify-between text-sm cursor-pointer rounded px-3 lg:w-1/2 h-11 mt-2 choosefile"
                 >
                   <p
-                    className={`filename ${
-                      fileName === "Choose File" ||
-                      fileName === "No file chosen"
+                    className={`filename ${fileName === "Choose File" ||
+                        fileName === "No file chosen"
                         ? "noupfile"
                         : "upfile"
-                    }`}
+                      }`}
                   >
                     {fileName}
                   </p>
@@ -529,7 +536,7 @@ const AddCompany = () => {
             <button
               type="submit"
               className="lg:w-1/6 md:w-auto px-7 py-2 rounded duration-200 cursor-pointer submits"
-              // disabled={!isFormValid}
+            // disabled={!isFormValid}
             >
               Submit
             </button>
