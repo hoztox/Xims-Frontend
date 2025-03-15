@@ -19,7 +19,7 @@ const AdminLogin = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-
+    const [username, setUsername] = useState("");
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
     };
@@ -35,73 +35,67 @@ const AdminLogin = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        if (!email || !password) {
-            toast.error("Email and Password are required");
+        if (!username || !password) {
+            toast.error("Username and Password are required");
             return;
         }
-    
         try {
             setLoading(true);
-            console.log("Sending request to backend...");
-    
             const response = await axios.post(`${BASE_URL}/company/company/login/`, {
-                email,
+                username,
                 password,
             });
     
-            console.log("Response received:", response);
+            console.log("Login Response:", response.data); // Log the entire response
     
             if (response.status === 200) {
-                const { access, refresh, id, ...companyData } = response.data; // ✅ Extract `id` directly
-    
+               const { access, refresh, id, company_id = id, ...userData } = response.data;
+// Extract company_id
+                
                 console.log("Access Token:", access);
                 console.log("Refresh Token:", refresh);
-                console.log("Company ID:", id); // ✅ Now it works correctly!
+                console.log("Company ID:", company_id); // Log the company_id
+                console.log("User Data:", userData);
     
-                // Store in localStorage
-                localStorage.setItem("companyAccessToken", access);
-                localStorage.setItem("companyRefreshToken", refresh);
-                localStorage.setItem("companyId", id);
-                localStorage.setItem("companyName", companyData.company_name);
-                localStorage.setItem("companyEmail", companyData.email);
+                if (userData.company_name) {
+                    // Company login detected
+                    localStorage.setItem("companyAccessToken", access);
+                    localStorage.setItem("companyRefreshToken", refresh);
+                    localStorage.setItem("company_id", company_id); // Store company_id
+    
+                    Object.keys(userData).forEach((key) => {
+                        localStorage.setItem(`company_${key}`, JSON.stringify(userData[key]));
+                    });
+    
+                    console.log("Stored Company ID:", localStorage.getItem("company_id")); // Check if stored
+    
+                    navigate("/company/dashboard");
+                } else {
+                    // User login detected
+                    localStorage.setItem("userAccessToken", access);
+                    localStorage.setItem("userRefreshToken", refresh);
+    
+                    Object.keys(userData).forEach((key) => {
+                        localStorage.setItem(`user_${key}`, JSON.stringify(userData[key]));
+                    });
+    
+                    navigate("/user/dashboard");
+                }
     
                 toast.success("Successfully Logged In");
-    
-                setTimeout(() => {
-                    navigate("/company/dashboard");
-                }, 500);
-            } else {
-                throw new Error(response.data.error || "Login failed");
             }
         } catch (error) {
-            console.error("Error during login request:", error);
-            toast.error(error.response?.data?.error || "An error occurred during login.");
+            console.error("Login Error:", error.response?.data || error);
+            toast.error(error.response?.data?.error || "Login failed");
         } finally {
             setLoading(false);
         }
     };
     
     
-    
 
     
-    useEffect(() => {
-        const adminToken = localStorage.getItem("adminAuthToken");
-        const logoutTime = localStorage.getItem("logoutTime");
-
-        if (adminToken && logoutTime) {
-            const currentTime = new Date().getTime();
-            if (currentTime >= logoutTime) {
-                // Token has expired, perform logout
-                localStorage.removeItem("adminAuthToken");
-                localStorage.removeItem("logoutTime");
-                navigate("/company-login");
-            } else {
-                navigate("/company/dashboard");
-            }
-        }
-    }, [navigate]);
+ 
 
     return (
         <div className="flex flex-col h-screen items-center justify-center companyloginscreen">
@@ -123,10 +117,10 @@ const AdminLogin = () => {
                             <div className="relative">
                                 <label className="labels">Email</label>
                                 <input
-                                    type="email"
+                                    type="text"
                                     placeholder="Email"
-                                    value={email}
-                                    onChange={handleEmailChange}
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
                                     className="rounded-lg bg-[#161C23] mt-1 email outline-none inputs border-transparent"
                                 />
                             </div>

@@ -67,3 +67,5 @@ export async function companyLogin(email, password) {
         return null;
     }
 }
+
+

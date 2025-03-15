@@ -23,44 +23,59 @@ const ListUser = () => {
     fetchUsers();
   }, [currentPage, searchQuery]);
 
-  const companyId = localStorage.getItem("companyId") || null; 
+  const companyId = localStorage.getItem("company_id") || null;
+  console.log("Stored Company ID:", companyId);
+//   useEffect(() => { 
+//     const companyId = localStorage.getItem("company_id"); 
+//     console.log("Stored Company ID:", companyId);
 
-  useEffect(() => {
-    if (companyId) {
-      fetchUsers();
-    } else {
+//     if (companyId) {
+//         fetchUsers(companyId);
+//     } else {
+//         toast.error("Company ID not found.");
+//     }
+// }, [currentPage, searchQuery]);
+
+
+useEffect(() => { 
+   
+  
+
+  if (companyId) {
+      fetchUsers(companyId);
+  } else {
       toast.error("Company ID not found.");
+  }
+}, [currentPage, searchQuery]);
+
+const fetchUsers = async () => {
+  try {
+    if (!companyId) return;
+
+    const response = await axios.get(`${BASE_URL}/company/users/${companyId}/`, {
+      params: {
+        search: searchQuery,
+        page: currentPage,
+        limit: usersPerPage,
+      },
+    });
+
+    console.log("API Response:", response.data);
+
+    if (Array.isArray(response.data)) {
+      setUsers(response.data);
+      setTotalPages(1);  
+    } else if (response.data.users) {
+      setUsers(response.data.users);
+      setTotalPages(response.data.total_pages || 1);
+    } else {
+      setUsers([]);
     }
-  }, [currentPage, searchQuery, companyId]);
-
-  const fetchUsers = async () => {
-    try {
-      if (!companyId) return;
-
-      const response = await axios.get(`${BASE_URL}/company/users/${companyId}/`, {
-        params: {
-          search: searchQuery,
-          page: currentPage,
-          limit: usersPerPage,
-        },
-      });
-
-      console.log("API Response:", response.data);
-
-      if (Array.isArray(response.data)) {
-        setUsers(response.data);
-        setTotalPages(1);  
-      } else if (response.data.users) {
-        setUsers(response.data.users);
-        setTotalPages(response.data.total_pages || 1);
-      } else {
-        setUsers([]);
-      }
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      toast.error("Failed to load users.");
-    }
-  };
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    toast.error("Failed to load users.");
+    }
+  };
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
