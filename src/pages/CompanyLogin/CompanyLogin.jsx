@@ -33,54 +33,59 @@ const AdminLogin = () => {
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         if (!email || !password) {
-            toast.error("Username and Password are required");
+            toast.error("Email and Password are required");
             return;
         }
-
+    
         try {
             setLoading(true);
-            console.log("Attempting to send request to backend...");
+            console.log("Sending request to backend...");
+    
             const response = await axios.post(`${BASE_URL}/company/company/login/`, {
-                email: email,
-                password: password,
+                email,
+                password,
             });
-            console.log("Response:", response);
+    
+            console.log("Response received:", response);
+    
             if (response.status === 200) {
-                const adminToken = response.data.access;
-                const expirationTime = 24 * 60 * 60 * 1000;
-                const logoutTime = new Date().getTime() + expirationTime;
-
-                localStorage.setItem("adminAuthToken", adminToken);
-                localStorage.setItem("logoutTime", logoutTime);
-
+                const { access, refresh, id, ...companyData } = response.data; // ✅ Extract `id` directly
+    
+                console.log("Access Token:", access);
+                console.log("Refresh Token:", refresh);
+                console.log("Company ID:", id); // ✅ Now it works correctly!
+    
+                // Store in localStorage
+                localStorage.setItem("companyAccessToken", access);
+                localStorage.setItem("companyRefreshToken", refresh);
+                localStorage.setItem("companyId", id);
+                localStorage.setItem("companyName", companyData.company_name);
+                localStorage.setItem("companyEmail", companyData.email);
+    
                 toast.success("Successfully Logged In");
+    
                 setTimeout(() => {
                     navigate("/company/dashboard");
                 }, 500);
-
             } else {
                 throw new Error(response.data.error || "Login failed");
             }
         } catch (error) {
             console.error("Error during login request:", error);
-            if (error.response && error.response.status === 400) {
-                toast.error("Invalid username or password");
-            } else {
-                toast.error(
-                    error.message ||
-                    "An error occurred during login. Please try again later."
-                );
-            }
+            toast.error(error.response?.data?.error || "An error occurred during login.");
         } finally {
             setLoading(false);
         }
     };
+    
+    
+    
 
+    
     useEffect(() => {
         const adminToken = localStorage.getItem("adminAuthToken");
         const logoutTime = localStorage.getItem("logoutTime");

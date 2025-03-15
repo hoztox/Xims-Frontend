@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../../../Utils/Config";
 import axios from 'axios';
@@ -9,6 +9,7 @@ const AddUser = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+ 
 
   const [formData, setFormData] = useState({
     username: '',
@@ -91,80 +92,72 @@ const AddUser = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!validateForm()) {
       return;
     }
-
+  
     setIsLoading(true);
     setError(null);
-
+  
     try {
-      // Format date of birth
-      let formattedDob = '';
+     
+      const companyToken = localStorage.getItem("companyAccessToken");
+
+  
+      if (!companyToken) {
+        throw new Error("Unauthorized: No token found");
+      }
+  
+    
+      const tokenParts = companyToken.split(".");
+      if (tokenParts.length !== 3) {
+        throw new Error("Invalid token format");
+      }
+  
+      const payload = JSON.parse(atob(tokenParts[1])); 
+      console.log("Decoded Token Payload:", payload);
+  
+      const companyId = payload?.id; 
+      if (!companyId) {
+        throw new Error("Company ID not found in token payload");
+      }
+  
+      
+      let formattedDob = "";
       const { day, month, year } = formData.date_of_birth;
       if (day && month && year) {
-        formattedDob = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+        formattedDob = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
       }
-
-      // Prepare data for submission
+  
+    
       const dataToSubmit = {
         ...formData,
+        company_id: companyId,  
         date_of_birth: formattedDob || null,
-        // Include the confirmation fields that the backend requires
         confirm_password: formData.confirm_password,
-        confirm_email: formData.confirm_email
+        confirm_email: formData.confirm_email,
       };
-
-      // Remove the date_of_birth object since we've already formatted it
-      delete dataToSubmit.date_of_birth;
-
-      // Add back formatted date of birth if it exists
-      if (formattedDob) {
-        dataToSubmit.date_of_birth = formattedDob;
-      }
-
-      console.log('Sending data:', dataToSubmit);
-
+  
+      console.log("Sending data:", dataToSubmit);
+  
       const response = await axios.post(`${BASE_URL}/company/users/create/`, dataToSubmit);
-
-      // Handle success
+  
+      // ✅ Handle success
       if (response.status === 201) {
-        console.log('Added User', response.data);
-        // Show success toast notification
-        toast.success('User added successfully!');
-        navigate('/company/qms/listuser');
+        console.log("Added User", response.data);
+        toast.success("User added successfully!");
+        navigate("/company/qms/listuser");
       }
     } catch (err) {
-      console.error('Error saving user:', err);
-
-      if (err.response?.data) {
-        // Format the error from the backend response
-        const errorData = err.response.data;
-        let errorMessage = 'An error occurred while saving the user:';
-
-        // Convert error object to readable message
-        Object.keys(errorData).forEach(key => {
-          const errorMessages = errorData[key];
-          if (Array.isArray(errorMessages)) {
-            errorMessage += `\n- ${key}: ${errorMessages.join(', ')}`;
-          } else {
-            errorMessage += `\n- ${key}: ${errorMessages}`;
-          }
-        });
-
-        setError(errorMessage);
-        // Show error toast notification
-        toast.error('Failed to add user');
-      } else {
-        setError('An error occurred while saving the user.');
-        // Show generic error toast notification
-        toast.error('An error occurred while saving the user');
-      }
+      console.error("Error saving user:", err);
+      toast.error("Failed to add user");
     } finally {
       setIsLoading(false);
     }
   };
+  
+  
   return (
     <div className="bg-[#1C1C24]">
       <Toaster position="top-center" />

@@ -58,7 +58,10 @@ const ThemedApp = () => {
           <Route path="dashboard" element={<CompanyDashboard/>} />
           <Route path="qms/policy" element={<QmsPolicy/>} />
           <Route path="qms/adduser" element={<AddUser/>} />
-          <Route path="qms/listuser" element={<ListUser/>} />
+          
+          <Route path="qms/listuser" element={<ListUser />} />
+
+ 
           <Route path="qms/manual" element={<QmsManual/>} />
           <Route path="qms/procedure" element={<QmsProcedure/>} />
           <Route path="qms/record-format" element={<QmsRecordFormat/>} />

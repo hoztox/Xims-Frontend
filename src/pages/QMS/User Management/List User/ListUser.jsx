@@ -23,30 +23,44 @@ const ListUser = () => {
     fetchUsers();
   }, [currentPage, searchQuery]);
 
+  const companyId = localStorage.getItem("companyId") || null; 
+
+  useEffect(() => {
+    if (companyId) {
+      fetchUsers();
+    } else {
+      toast.error("Company ID not found.");
+    }
+  }, [currentPage, searchQuery, companyId]);
+
   const fetchUsers = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/company/users/`, {
+      if (!companyId) return;
+
+      const response = await axios.get(`${BASE_URL}/company/users/${companyId}/`, {
         params: {
           search: searchQuery,
           page: currentPage,
-          limit: usersPerPage
-        }
+          limit: usersPerPage,
+        },
       });
-  
-      console.log("API Response:", response.data); // Debugging
-  
+
+      console.log("API Response:", response.data);
+
       if (Array.isArray(response.data)) {
-        setUsers(response.data); // Directly set the users
-        setTotalPages(1); // Since API is not returning totalPages, set a default
+        setUsers(response.data);
+        setTotalPages(1);  
+      } else if (response.data.users) {
+        setUsers(response.data.users);
+        setTotalPages(response.data.total_pages || 1);
       } else {
-        setUsers([]); // Handle unexpected structure
+        setUsers([]);
       }
     } catch (error) {
       console.error("Error fetching users:", error);
+      toast.error("Failed to load users.");
     }
   };
-  
-  
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
