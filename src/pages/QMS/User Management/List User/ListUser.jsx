@@ -145,7 +145,7 @@ const fetchUsers = async () => {
           <thead className='bg-[#24242D]'>
             <tr className="list-users-tr h-[48px]">
               <th className="px-5 text-left add-user-theads">No</th>
-              <th className="px-5 text-left add-user-theads">User Name</th>
+              <th className="px-5 text-left add-user-theads">Username</th>
               <th className="px-5 text-left add-user-theads">Name</th>
               <th className="px-5 text-left add-user-theads">Email</th>
               <th className="px-5 text-left add-user-theads">Status</th>
