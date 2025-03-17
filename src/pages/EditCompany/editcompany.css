@@ -136,6 +136,11 @@ input[type="checkbox"]:not(:checked) + span {
   }
 
   .updatebtn {
+    font-family: "Switzer Light";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    padding: 10px 36px;
     background-color: #1E4DA1;
     color: white;
   }
