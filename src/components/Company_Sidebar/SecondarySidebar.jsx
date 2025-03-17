@@ -44,6 +44,7 @@ import EMSDocumentationSubmenu from "./EMS/Documentation/EMSDocumentationSubmenu
 import EMSEmployeeSubmenu from "./EMS/Employee Training/EMSEmployeeSubmenu";
 import EMSActionsMeetingSubmenu from "./EMS/Actions Meeting Management/EMSActionsMeetingSubmenu";
 import EMSAuditInspectionSubmenu from "./EMS/Audits Inspection Management/EMSAuditInspectionSubmenu";
+import EMSCustomerSubmenu from "./EMS/Customer Management/EMSCustomerSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -240,9 +241,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/emsauditinspection",
       },
       {
-        id: "customer",
+        id: "emscustomermanagement",
         label: "Customer Management",
         icon: CustomerIcon,
+        hasSubMenu: true,
+        submenuType: "emscustomermanagement",
+        pathPrefix: "/company/emscustomermanagement",
       },
       {
         id: "supplier",
@@ -1088,7 +1092,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         );
         break;
 
-        case "emsdocumentation":
+      case "emsdocumentation":
         submenuContent = (
           <EMSDocumentationSubmenu
             activeSubItem={activeSubItem}
@@ -1096,7 +1100,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-        case "emsemployeetraining":
+      case "emsemployeetraining":
         submenuContent = (
           <EMSEmployeeSubmenu
             activeSubItem={activeSubItem}
@@ -1104,7 +1108,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-        case "emsactions":
+      case "emsactions":
         submenuContent = (
           <EMSActionsMeetingSubmenu
             activeSubItem={activeSubItem}
@@ -1112,9 +1116,17 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-        case "emsauditinspection":
+      case "emsauditinspection":
         submenuContent = (
           <EMSAuditInspectionSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "emscustomermanagement":
+        submenuContent = (
+          <EMSCustomerSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
@@ -1200,8 +1212,8 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
                     src={item.icon}
                     alt={item.label}
                     className={`w-5 h-5 second-sidebar-icons ${isMenuItemActive(item) || isMenuItemHovered(item)
-                        ? "filter brightness-0 invert"
-                        : ""
+                      ? "filter brightness-0 invert"
+                      : ""
                       }`}
                   />
                   {!collapsed && (
