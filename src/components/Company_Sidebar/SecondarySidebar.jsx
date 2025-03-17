@@ -41,6 +41,7 @@ import ReportsAnalysisSubmenu from "./QMS/Reports Analysis/ReportsAnalysisSubmen
 
 // EMS
 import EMSDocumentationSubmenu from "./EMS/Documentation/EMSDocumentationSubmenu";
+import EMSEmployeeSubmenu from "./EMS/Employee Training/EMSEmployeeSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -205,7 +206,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         hasSubMenu: false,
       },
       {
-        id: "documentation",
+        id: "emsdocumentation",
         label: "Documentation",
         icon: DocumentationIcon,
         hasSubMenu: true,
@@ -213,9 +214,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/emsdocumentation",
       },
       {
-        id: "training",
+        id: "emsemployeetraining",
         label: "Employee Training & Performance",
         icon: TrainingIcon,
+        hasSubMenu: true,
+        submenuType: "emsemployeetraining",
+        pathPrefix: "/company/emsemployeetraining",
       },
       {
         id: "actions",
@@ -720,6 +724,10 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       return "emsdocumentation";
     }
 
+    if (path.includes("/company/emsemployeetraining")) {
+      return "emsemployeetraining";
+    }
+
 
     return null;
   };
@@ -1067,6 +1075,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "emsdocumentation":
         submenuContent = (
           <EMSDocumentationSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+        case "emsemployeetraining":
+        submenuContent = (
+          <EMSEmployeeSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
