@@ -45,6 +45,7 @@ import EMSEmployeeSubmenu from "./EMS/Employee Training/EMSEmployeeSubmenu";
 import EMSActionsMeetingSubmenu from "./EMS/Actions Meeting Management/EMSActionsMeetingSubmenu";
 import EMSAuditInspectionSubmenu from "./EMS/Audits Inspection Management/EMSAuditInspectionSubmenu";
 import EMSCustomerSubmenu from "./EMS/Customer Management/EMSCustomerSubmenu";
+import EMSSupplierSubmenu from "./EMS/Supplier Management/EMSSupplierSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -252,6 +253,9 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         id: "supplier",
         label: "Supplier Management",
         icon: SupplierIcon,
+        hasSubMenu: true,
+        submenuType: "emssuppliermanagement",
+        pathPrefix: "/company/emssuppliermanagement",
       },
       {
         id: "compliance",
@@ -1127,6 +1131,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       case "emscustomermanagement":
         submenuContent = (
           <EMSCustomerSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "emssuppliermanagement":
+        submenuContent = (
+          <EMSSupplierSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
