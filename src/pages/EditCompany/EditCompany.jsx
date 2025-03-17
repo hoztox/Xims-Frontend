@@ -36,7 +36,7 @@ const EditCompany = () => {
   const [imageSrc, setImageSrc] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
 
- const cropperSettings = {
+  const cropperSettings = {
     stencilProps: {
       aspectRatio: 1,
       grid: true
@@ -49,10 +49,33 @@ const EditCompany = () => {
       const response = await axios.get(`${BASE_URL}/accounts/permissions/`);
       const permissions = response.data;
       setPermissionList(Array.isArray(permissions) ? permissions : []);
+
     } catch (error) {
       console.error("Error fetching permissions:", error);
       toast.error("Failed to fetch permissions.");
     }
+  };
+
+  const handlePermissionChange = (permName) => {
+    setFormDataState((prevState) => {
+      // Create a copy of the current permissions array
+      const updatedPermissions = [...prevState.permissions];
+
+      // Check if this permission is already selected
+      const permIndex = updatedPermissions.indexOf(permName);
+
+      // If permission exists, remove it; otherwise add it
+      if (permIndex !== -1) {
+        updatedPermissions.splice(permIndex, 1);
+      } else {
+        updatedPermissions.push(permName);
+      }
+
+      return {
+        ...prevState,
+        permissions: updatedPermissions,
+      };
+    });
   };
 
   // Fetch existing company data when the component mounts
@@ -81,6 +104,7 @@ const EditCompany = () => {
         setFileName("Choose File");
         setCompanyLogoPreview(null);
       }
+      console.log("detailssssssssssssssssssssss", response.data)
     } catch (error) {
       console.error("Error fetching company data:", error);
       toast.error("Failed to fetch company data.");
@@ -115,12 +139,14 @@ const EditCompany = () => {
       setCompanyLogoPreview(null);
     }
   };
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const formData = new FormData();
+    console.log('Formdataaaa', formData);
+    
     formData.append("company_name", formDataState.company_name);
     formData.append("company_admin_name", formDataState.company_admin_name);
     formData.append("email_address", formDataState.email_address);
@@ -130,17 +156,25 @@ const EditCompany = () => {
     formData.append("user_id", formDataState.user_id);
     formData.append(
       "permissions",
-      JSON.stringify(
-        formDataState.permissions.map((perm) => parseInt(perm, 10))
-      )
+      JSON.stringify(formDataState.permissions)
     );
-
+  
     if (croppedImage && typeof croppedImage !== "string") {
       formData.append("company_logo", croppedImage);
     } else if (originalFile && originalFile !== companyLogoPreview) {
       formData.append("company_logo", originalFile);
     }
-
+    
+    // Log each entry to see what's actually in the FormData
+    console.log('Form data contents:');
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+    
+    // Or debug the permissions specifically before submission
+    console.log('Permissions being sent:', formDataState.permissions);
+    console.log('Permissions JSON:', JSON.stringify(formDataState.permissions));
+  
     try {
       const response = await axios.put(
         `${BASE_URL}/accounts/companies/update/${companyId}/`,
@@ -151,11 +185,11 @@ const EditCompany = () => {
           },
         }
       );
-
+  
       if (response.status === 200 || response.status === 201) {
         toast.success("Company updated successfully!");
         setTimeout(() => {
-          navigate("/admin/companies");
+          // navigate("/admin/companies");  
         }, 2000);
       }
     } catch (error) {
@@ -206,14 +240,13 @@ const EditCompany = () => {
     return `${baseName}...${extension}`;
   };
 
-  // Handle canceling crop and keeping original image
-  // Handle canceling crop and keeping original image
-const handleCancelCrop = useCallback(() => {
-  setIsCropModalOpen(false); // Close the modal
-  setCroppedImage(null); // Reset the cropped image state
-  setImageSrc(null); // Clear the image source used for cropping
-  // Do not change the companyLogoPreview here to avoid updating the logo
-}, []);
+
+  const handleCancelCrop = useCallback(() => {
+    setIsCropModalOpen(false);
+    setCroppedImage(null);
+    setImageSrc(null);
+
+  }, []);
 
 
   // Handle saving the cropped image
@@ -237,13 +270,12 @@ const handleCancelCrop = useCallback(() => {
       }
     }
   }, []);
-  
+
 
   return (
     <div
-      className={`flex flex-col md:flex-row w-full border rounded-lg gap-10 maineditcmpy ${
-        theme === "dark" ? "dark" : "light"
-      }`}
+      className={`flex flex-col md:flex-row w-full border rounded-lg gap-10 maineditcmpy ${theme === "dark" ? "dark" : "light"
+        }`}
     >
       <Toaster position="top-center" reverseOrder={false} />
 
@@ -321,12 +353,11 @@ const handleCancelCrop = useCallback(() => {
                     className="flex items-center justify-between text-sm cursor-pointer rounded px-3 lg:w-44 h-11 mt-2 editchoose"
                   >
                     <p
-                      className={`filename ${
-                        fileName === "Choose File" ||
+                      className={`filename ${fileName === "Choose File" ||
                         fileName === "No file chosen"
-                          ? "editnoup"
-                          : "editup"
-                      }`}
+                        ? "editnoup"
+                        : "editup"
+                        }`}
                     >
                       {fileName}
                     </p>
@@ -334,7 +365,7 @@ const handleCancelCrop = useCallback(() => {
                   </label>
                 </div>
                 <div className="flex flex-col justify-end w-full lg:mb-[8px] lg:ml-3 preview">
-                {(croppedImage || companyLogoPreview) && (
+                  {(croppedImage || companyLogoPreview) && (
                     <div className="w-20">
                       <img
                         src={
@@ -353,7 +384,7 @@ const handleCancelCrop = useCallback(() => {
 
             <div>
               <h3 className="text-[#677487] my-8">Permissions</h3>
-              <div className="permissions-list">
+              <div className="permissions-list permissionboxes flex">
                 {permissionList.map((permission) => (
                   <label
                     key={permission.id}
@@ -361,23 +392,10 @@ const handleCancelCrop = useCallback(() => {
                   >
                     <input
                       type="checkbox"
-                      value={permission.id}
-                      checked={formDataState.permissions.includes(
-                        permission.id
-                      )}
-                      onChange={(e) => {
-                        const checked = e.target.checked;
-                        const updatedPermissions = checked
-                          ? [...formDataState.permissions, permission.id]
-                          : formDataState.permissions.filter(
-                              (id) => id !== permission.id
-                            );
-
-                        setFormDataState((prevState) => ({
-                          ...prevState,
-                          permissions: updatedPermissions,
-                        }));
-                      }}
+                      value={permission.name}
+                      className="form-checkbox"
+                      checked={formDataState.permissions.includes(permission.name)}
+                      onChange={() => handlePermissionChange(permission.name)}
                     />
                     <span>{permission.name}</span>
                   </label>

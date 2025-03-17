@@ -91,6 +91,7 @@ const AddCompany = () => {
     return () => clearTimeout(timeoutId);
   }, [formDataState.email_address]);
 
+
   useEffect(() => {
     const validateUserid = async () => {
       if (formDataState.user_id) {
@@ -134,7 +135,7 @@ const AddCompany = () => {
 
       if (Array.isArray(permissions)) {
         setPermissionList(permissions); // Update permissionList state
-        console.log("Fetched Permissions:", permissions); // Log permissions to the console
+        console.log("Fetched Permissionssssssssssssssssss:", permissions); // Log permissions to the console
       } else {
         console.warn("Unexpected data format:", permissions);
         setPermissionList([]);
@@ -166,17 +167,17 @@ const AddCompany = () => {
     }
   };
 
-  const handlePermissionChange = (e, permissionId) => {
+  const handlePermissionChange = (e, permissionId, permissionName) => {
     const { checked } = e.target;
 
     setFormDataState((prevState) => {
       let updatedPermissions;
 
       if (checked) {
-        updatedPermissions = [...prevState.permissions, permissionId];
+        updatedPermissions = [...prevState.permissions, permissionName];
       } else {
         updatedPermissions = prevState.permissions.filter(
-          (id) => id !== permissionId
+          (name) => name !== permissionName
         );
       }
 
@@ -250,6 +251,7 @@ const AddCompany = () => {
 
     // Prepare the form data using FormData
     const formData = new FormData();
+    console.log("formdataaaaaaaaaaaaaa",formData)
     formData.append("company_name", formDataState.company_name);
     formData.append("company_admin_name", formDataState.company_admin_name);
     formData.append("email_address", formDataState.email_address);
@@ -257,6 +259,12 @@ const AddCompany = () => {
     formData.append("phone_no1", formDataState.phone_no1);
     formData.append("phone_no2", formDataState.phone_no2);
     formData.append("user_id", formDataState.user_id);
+
+    // Add permissions to the form data
+    // If the backend expects permissions as JSON
+    formDataState.permissions.forEach(permission => {
+      formData.append("permissions", permission);
+    });
 
     if (formDataState.company_logo) {
       formData.append("company_logo", formDataState.company_logo);
@@ -546,29 +554,32 @@ const AddCompany = () => {
           <div>
             <h3 className="text-[#677487] mb-4">Permissions</h3>
             <div className="flex flex-wrap permissionboxes">
-              {permissionList.map((permission) => (
-                <label
-                  key={permission.id}
-                  className="inline-flex items-center cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    className="form-checkbox"
-                    value={permission.id}
-                    onChange={(e) => handlePermissionChange(e, permission.id)}
-                  />
-                  <span className="ml-2">
-                    {permission.name
-                      .replace(/_/g, " ") // Replace underscores with spaces
-                      .split(" ") // Split into words
-                      .map(
-                        (word) => word.charAt(0).toUpperCase() + word.slice(1)
-                      ) // Capitalize each word
-                      .join(" ")}{" "}
-                    {/* Join words back with spaces */}
-                  </span>
-                </label>
-              ))}
+              {permissionList
+               
+                .map((permission) => (
+                  <label
+                    key={permission.id}
+                    className="inline-flex items-center cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      className="form-checkbox"
+                      value={permission.name}
+                      onChange={(e) => handlePermissionChange(e, permission.id, permission.name)}
+                      checked={formDataState.permissions.includes(permission.name)}
+                    />
+                    <span className="ml-2">
+                      {permission.name
+                        .replace(/_/g, " ") // Replace underscores with spaces
+                        .split(" ") // Split into words
+                        .map(
+                          (word) => word.charAt(0).toUpperCase() + word.slice(1)
+                        ) // Capitalize each word
+                        .join(" ")}
+                    </span>
+                  </label>
+                ))
+              }
             </div>
           </div>
 

@@ -95,8 +95,10 @@
 
 
 
+
+
 @media(min-width:432px){
-  .outsidehead, .mobsecondrow, .mobilethirdrow, .mobilefourthrow , .mobilefifththrow{
+  .outsidehead, .mobsecondrow, .mobilethirdrow, .mobilefourthrow , .mobilefifththrow , .mob-com-name {
     display: none;
   }
 }
@@ -129,7 +131,7 @@
 }
   .viewcomname {
     text-align: right;
-    width: 60%;
+    /* width: 60%; */
   }
   .mobcomlogo {
     text-align: left;
@@ -188,6 +190,17 @@
   font-size: 14px;
   line-height: 23px;
   color: #25282B;
+}
+.com-name-adminname {
+  flex-direction: column;
+}
+.desk-com-name {
+  display: none;
+}
+.mob-viewcomname {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 }
 

@@ -1168,23 +1168,21 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
     );
   };
 
+    useEffect(() => {
+      const access = localStorage.getItem("companyAccessToken");
+      if (!access) {
+          navigate("/company-login");
+      } else {
+          navigate("/company/dashboard");
+      }
+  }, [navigate]);
+
   const handleLogout = () => {
     // Remove authentication tokens
     localStorage.removeItem("companyAccessToken");
-    localStorage.removeItem("companyRefreshToken");
-    localStorage.removeItem("adminAuthToken");
-    console.log('Logout sucess');
-
-
-    // Remove all stored company-related data
-    Object.keys(localStorage).forEach((key) => {
-      if (key.startsWith("company_")) {
-        localStorage.removeItem(key);
-      }
-    });
-
-    // Redirect user to login page
+    localStorage.removeItem('logoutTime');
     navigate("/company-login");
+     
   };
 
   return (

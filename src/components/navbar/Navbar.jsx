@@ -34,6 +34,16 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const [activeMenu, setActiveMenu] = useState("Dashboard"); // Default active menu is 'Dashboard'
 
+
+  useEffect(() => {
+    const adminToken = localStorage.getItem('adminAuthToken');
+    if (!adminToken) {
+        navigate('/');
+    } else {
+        navigate('/admin/dashboard');
+    }
+}, [navigate]);
+
   // Handle outside click to close dropdown
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -79,6 +89,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("adminAuthToken");
+    localStorage.removeItem('logoutTime');
     navigate("/");
   };
 

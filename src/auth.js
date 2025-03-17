@@ -40,17 +40,17 @@ export async function companyLogin(email, password) {
         });
 
         if (response.status === 200) {
-            const { access, refresh, ...companyData } = response.data; // Extract all data except tokens
+            const { access, refresh, ...companyData } = response.data;
 
             console.log("Access Token:", access);
             console.log("Refresh Token:", refresh);
-            console.log("Company Data:", companyData); 
+            console.log("Company Data:", companyData);
 
             // Store tokens
             localStorage.setItem("companyAccessToken", access);
             localStorage.setItem("companyRefreshToken", refresh);
 
-            // Store all company data
+            // Store company data
             Object.keys(companyData).forEach((key) => {
                 localStorage.setItem(`company_${key}`, JSON.stringify(companyData[key]));
             });
@@ -67,5 +67,3 @@ export async function companyLogin(email, password) {
         return null;
     }
 }
-
-

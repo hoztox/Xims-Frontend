@@ -26,6 +26,7 @@ const ViewCompany = () => {
   const [formDataState, setFormDataState] = useState({
     company_name: "",
     company_admin_name: "",
+    user_id: "",
     email_address: "",
     phone_no1: "",
     phone_no2: "",
@@ -46,16 +47,6 @@ const ViewCompany = () => {
   const [showDeleteErrorModal, setShowDeleteErrorModal] = useState(false);
   const [companies, setCompanies] = useState([]);
 
-  // Fetch permissions from backend
-  const fetchPermission = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/accounts/permissions/`);
-      setPermissionList(response.data || []);
-    } catch (error) {
-      console.error("Error fetching permissions:", error);
-      toast.error("Failed to fetch permissions.");
-    }
-  };
 
   // Fetch existing company data when the component mounts
   const fetchCompanyData = async () => {
@@ -68,6 +59,7 @@ const ViewCompany = () => {
       setFormDataState({
         company_name: companyData.company_name || "",
         company_admin_name: companyData.company_admin_name || "",
+        user_id: companyData.user_id || "",
         email_address: companyData.email_address || "",
         phone_no1: companyData.phone_no1 || "",
         phone_no2: companyData.phone_no2 || "",
@@ -85,7 +77,6 @@ const ViewCompany = () => {
   };
 
   useEffect(() => {
-    fetchPermission();
     fetchCompanyData();
   }, [companyId]);
 
@@ -183,9 +174,8 @@ const ViewCompany = () => {
         />
       </div>
       <div
-        className={`view-company-container ${
-          theme === "dark" ? "dark" : "light"
-        }`}
+        className={`view-company-container ${theme === "dark" ? "dark" : "light"
+          }`}
       >
         <Toaster position="top-center" reverseOrder={false} />
         <h2 className="headercmpy insidehead">Company Information</h2>
@@ -194,7 +184,7 @@ const ViewCompany = () => {
         <div className="information">
           <div className="md:grid grid-cols-1 md:grid-cols-2 lg:w-[100%] grids">
             <div className="md:border-r leftsection">
-              <div className="grid md:grid-cols-2 md:border-b md:mr-[40px] md:h-[200px] lefttopsection">
+              <div className="grid md:grid-cols-3 md:border-b md:mr-[40px] md:h-[200px] lefttopsection">
                 <div className="mobcomlogo">
                   <label className="viewcpmylabels">Company Logo</label>
                   {formDataState.company_logo ? (
@@ -209,9 +199,23 @@ const ViewCompany = () => {
                     <p className="nologo">No logo available</p>
                   )}
                 </div>
-                <div className="viewcomname">
+
+                <div className="viewcomname desk-com-name">
                   <label className="viewcpmylabels">Company Name</label>
                   <p className="viewdata">{formDataState.company_name}</p>
+                </div>
+
+                <div className="viewcomname mob-viewcomname">
+                  <div className="viewcomname mob-com-name">
+                    <label className="viewcpmylabels">Company Name</label>
+                    <p className="viewdata">{formDataState.company_name}</p>
+                  </div>
+
+                  <div>
+                    <label className="viewcpmylabels">Company Admin Name</label>
+                    <p className="viewdata">{formDataState.company_admin_name}</p>
+                  </div>
+
                 </div>
               </div>
               <div className="mobsecondrow">
@@ -224,10 +228,10 @@ const ViewCompany = () => {
                   <p className="viewdata">{formDataState.phone_no2}</p>
                 </div>
               </div>
-              <div className="md:grid md:grid-cols-2 md:mr-[40px] md:mt-[50px] mobthirdrow">
+              <div className="md:grid md:grid-cols-3 md:mr-[40px] md:mt-[50px] mobthirdrow">
                 <div className="mobadminname">
-                  <label className="viewcpmylabels">Company Admin Name</label>
-                  <p className="viewdata">{formDataState.company_admin_name}</p>
+                  <label className="viewcpmylabels">Username</label>
+                  <p className="viewdata">{formDataState.user_id}</p>
                 </div>
                 <div className="mobemailaddress">
                   <label className="viewcpmylabels">Email Address</label>
@@ -275,18 +279,18 @@ const ViewCompany = () => {
                 </div>
               </div>
               <div className="md:mt-[50px] mobpermissions">
-                <h3 className="viewcpmylabels">Permissions</h3>
-                <ul className="lists">
-                  {formDataState.permissions.map((permissionId) => {
-                    const permission = permissionList.find(
-                      (perm) => perm.id.toString() === permissionId
-                    );
-                    return permission ? (
-                      <li key={permission.id}>{permission.name}</li>
-                    ) : null;
-                  })}
+                <h3 className="viewcpmylabels mb-0">Permissions</h3>
+                <ul className="viewdata flex gap-5">
+                  {formDataState.permissions.length > 0 ? (
+                    formDataState.permissions.map((permission, index) => (
+                      <li key={index}>{permission}</li>
+                    ))
+                  ) : (
+                    <li>No permissions assigned</li>
+                  )}
                 </ul>
               </div>
+
             </div>
             <div>
               <div className="grid md:grid-cols-3 md:justify-between ml-[40px] md:border-b md:h-[200px] rightsection">
