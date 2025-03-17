@@ -148,6 +148,32 @@ input[type="checkbox"]:not(:checked) + span {
     background-color: #18366b;
   }
 
+  .updatebtns {
+    font-family: "Switzer Light";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    padding: 10px 36px;
+    border: 1px solid  ;
+    color: #1E4DA1;
+  }
+
+  .maineditcmpy.dark .updatebtns {
+    border: 1px solid white;
+    color: white;
+  }
+  .maineditcmpy.dark .updatebtns:hover {
+    background-color: white;
+    color: #0D0D0D;
+  }
+
+  .updatebtns:hover {
+    background-color:#1E4DA1 ;
+    color: white;
+  }
+
+
+
   .maineditcmpy.dark .updatebtn {
     background-color: white;
     color: #0D0D0D;

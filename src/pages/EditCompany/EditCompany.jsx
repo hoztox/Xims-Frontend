@@ -404,7 +404,12 @@ const EditCompany = () => {
             </div>
           </div>
 
-          <div className="flex justify-end updatebtnmob">
+          <div className="flex justify-between gap-5">
+            <button
+              className="lg:w-1/7 md:w-auto text-white px-7 py-2 rounded duration-200 cursor-pointer updatebtns"
+            >
+              Change Password
+            </button>
             <button
               type="submit"
               className="lg:w-1/7 md:w-auto text-white px-7 py-2 rounded duration-200 cursor-pointer updatebtn"
