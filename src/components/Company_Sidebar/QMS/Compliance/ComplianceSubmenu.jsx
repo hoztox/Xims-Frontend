@@ -35,7 +35,11 @@ const ComplianceSubmenu = () => {
     },
     {
       id: "Management-of-change",
-      label: "Management of Change",
+      label: (
+        <>
+            Management of <br /> Change
+        </>
+    ),
       icon: (
         <img src={record} alt="Record Format" className="w-[15px] h-[15px]" />
       ),
@@ -43,7 +47,11 @@ const ComplianceSubmenu = () => {
     },
     {
       id: "management-of-change-log",
-      label: "Management of Change Log",
+      label: (
+        <>
+            Management of <br /> Change Log
+        </>
+    ),
       icon: (
         <img src={parties} alt="Interested Parties" className="w-[15px] h-[15px]" />
       ),

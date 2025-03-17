@@ -36,6 +36,7 @@ import RiskOpportunitiesSubmenu from "./QMS/Risk and Opportunities/RiskOpportuni
 import EnergyManagementSubmenu from "./QMS/Energy Management/EnergyManagementSubmenu";
 import CorrectionPreventiveSubmenu from "./QMS/Correction Preventive Actions/CorrectionPreventiveSubmenu";
 import ObjectiveSubmenu from "./QMS/Objectives and Targets/ObjectiveSubmenu";
+import NonconformitySubmenu from "./QMS/Nonconformity Report Managements/NonconformitySubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -161,11 +162,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/qmsuser",
       },
       {
-        id: "nonconformity",
+        id: "qmsnonconformity",
         label: "Non Conformity Report Management",
         icon: NonConformityIcon,
-        hasSubMenu: false,
-        path: "/company/nonconformity",
+        hasSubMenu: true,
+        submenuType: "qmsnonconformity",
+        pathPrefix: "/company/qmsnonconformity",
       },
       {
         id: "reports",
@@ -187,7 +189,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         icon: LogoutIcon,
         hasSubMenu: false,
       },
-    ], 
+    ],
 
     EMS: [
       {
@@ -692,6 +694,10 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       return "qmsobjectives";
     }
 
+    if (path.includes("/company/qmsnonconformity")) {
+      return "qmsnonconformity";
+    }
+
     if (path.includes("/company/qmsuser")) {
       return "qmsuser";
     }
@@ -844,7 +850,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
     if (item.hasSubMenu) {
       setManuallyActivated(true);
       const isTogglingCurrent = currentSubmenu === item.submenuType;
-  
+
       setShowSubmenu((prev) => (isTogglingCurrent ? !prev : true));
       setCurrentSubmenu(
         isTogglingCurrent && !showSubmenu ? null : item.submenuType
@@ -854,7 +860,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       );
       return;
     }
-  
+
     // For items without submenu, update state and navigate
     setActiveMainItem(item.id);
     setActiveSubItem(null);
@@ -862,16 +868,16 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
     setShowSubmenu(false);
     setActiveSubmenuParent(null);
     setManuallyActivated(true);
-  
+
     // Save active state to localStorage
     localStorage.setItem("activeMainItem", item.id);
     localStorage.removeItem("activeSubItem");
-  
+
     // Navigate to the item's path
     if (item.path) {
       navigate(item.path);
     }
-  
+
     // Remove this line to prevent auto-collapse
     // if (setCollapsed && typeof setCollapsed === "function") {
     //   setCollapsed(true);
@@ -886,16 +892,16 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
     setManuallyActivated(true);
     setActiveSubmenuParent(null);
     setShowSubmenu(false);
-  
+
     // Save active submenu state to localStorage
     localStorage.setItem("activeMainItem", parentMenuId);
     localStorage.setItem("activeSubItem", subItemId);
-  
+
     // Navigate to the selected path
     if (path) {
       navigate(path);
     }
-  
+
     // Remove this line to prevent auto-collapse
     // if (setCollapsed && typeof setCollapsed === "function") {
     //   setCollapsed(true);
@@ -935,102 +941,110 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-        case "qmsemployeetraining":
-          submenuContent = (
-            <EmployeeTrainingSubmenu
+      case "qmsemployeetraining":
+        submenuContent = (
+          <EmployeeTrainingSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
-            />
-          );
-          break;
-          case "qmsactions":
-            submenuContent = (
-              <ActionsMeetingSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-              />
-            );
-            break;
-          case "qmsauditinspection":
-            submenuContent = (
-              <AuditInspectionSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-              />
-            );
-            break;
-          case "qmscustomermanagement":
-            submenuContent = (
-              <CustomerManagementSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-              />
-            );
-            break;
-          case "qmssuppliermanagement":
-            submenuContent = (
-              <SupplierManagementSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-              />
-            );
-            break;
-          case "qmscompliancemanagement":
-            submenuContent = (
-              <ComplianceSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-              />
-            );
-            break;
-          case "qmsriskmanagement":
-            submenuContent = (
-              <RiskOpportunitiesSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-              />
-            );
-            break;
-          case "qmsenergymanagement":
-            submenuContent = (
-              <EnergyManagementSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-              />
-            );
-            break;
-          case "qmscorrectionmanagement":
-            submenuContent = (
-              <CorrectionPreventiveSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-              />
-            );
-            break;
-          case "qmsobjectives":
-            submenuContent = (
-              <ObjectiveSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-              />
-            );
-            break;
-            case "qmsuser":
-              submenuContent = (
-                <UserManagementSubmenu
-                  activeSubItem={activeSubItem}
-                  handleItemClick={handleSubMenuItemClick}
-                />
-              );
-              break;
-            default:
-              submenuContent = null;
-            }
-            
-            if (!submenuContent) return null;
-            
-            return (
-              <motion.div
+          />
+        );
+        break;
+      case "qmsactions":
+        submenuContent = (
+          <ActionsMeetingSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "qmsauditinspection":
+        submenuContent = (
+          <AuditInspectionSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "qmscustomermanagement":
+        submenuContent = (
+          <CustomerManagementSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "qmssuppliermanagement":
+        submenuContent = (
+          <SupplierManagementSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "qmscompliancemanagement":
+        submenuContent = (
+          <ComplianceSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "qmsriskmanagement":
+        submenuContent = (
+          <RiskOpportunitiesSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "qmsenergymanagement":
+        submenuContent = (
+          <EnergyManagementSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "qmscorrectionmanagement":
+        submenuContent = (
+          <CorrectionPreventiveSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "qmsobjectives":
+        submenuContent = (
+          <ObjectiveSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "qmsuser":
+        submenuContent = (
+          <UserManagementSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "qmsnonconformity":
+        submenuContent = (
+          <NonconformitySubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      default:
+        submenuContent = null;
+    }
+
+    if (!submenuContent) return null;
+
+    return (
+      <motion.div
         ref={submenuRef}
         className="absolute left-full bg-[#2A2A36] border border-[#383840] rounded-r-md shadow-lg -z-10"
         style={{ top: `${submenuPosition}px` }}
@@ -1053,15 +1067,15 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
     localStorage.removeItem("companyRefreshToken");
     localStorage.removeItem("adminAuthToken");
     console.log('Logout sucess');
-    
-  
+
+
     // Remove all stored company-related data
     Object.keys(localStorage).forEach((key) => {
       if (key.startsWith("company_")) {
         localStorage.removeItem(key);
       }
     });
-  
+
     // Redirect user to login page
     navigate("/company-login");
   };
@@ -1102,11 +1116,10 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
                   <img
                     src={item.icon}
                     alt={item.label}
-                    className={`w-5 h-5 second-sidebar-icons ${
-                      isMenuItemActive(item) || isMenuItemHovered(item)
+                    className={`w-5 h-5 second-sidebar-icons ${isMenuItemActive(item) || isMenuItemHovered(item)
                         ? "filter brightness-0 invert"
                         : ""
-                    }`}
+                      }`}
                   />
                   {!collapsed && (
                     <span className="ml-3 second-sidebar-spans">
