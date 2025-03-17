@@ -23,7 +23,7 @@ import AnalysisIcon from "../../assets/images/Company-Sidebar/icon16.svg";
 import BackupIcon from "../../assets/images/Company-Sidebar/icon17.svg";
 import LogoutIcon from "../../assets/images/Company-Sidebar/icon18.svg";
 
-// Import submenu components
+// QMS
 import DocumentationSubmenu from "../Company_Sidebar/QMS/Documentation/DocumentationSubmenu";
 import UserManagementSubmenu from "./QMS/User Management/UserManagementSubmenu";
 import EmployeeTrainingSubmenu from "./QMS/Employee Training/EmployeeTrainingSubmenu";
@@ -38,6 +38,9 @@ import CorrectionPreventiveSubmenu from "./QMS/Correction Preventive Actions/Cor
 import ObjectiveSubmenu from "./QMS/Objectives and Targets/ObjectiveSubmenu";
 import NonconformitySubmenu from "./QMS/Nonconformity Report Managements/NonconformitySubmenu";
 import ReportsAnalysisSubmenu from "./QMS/Reports Analysis/ReportsAnalysisSubmenu";
+
+// EMS
+import EMSDocumentationSubmenu from "./EMS/Documentation/EMSDocumentationSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -205,6 +208,9 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         id: "documentation",
         label: "Documentation",
         icon: DocumentationIcon,
+        hasSubMenu: true,
+        submenuType: "emsdocumentation",
+        pathPrefix: "/company/emsdocumentation",
       },
       {
         id: "training",
@@ -651,7 +657,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       }
     }
 
-    // Legacy fallback checks
+    // QMS 
     if (path.includes("/company/qmsdocumentation")) {
       return "qmsdocumentation";
     }
@@ -706,6 +712,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
 
     if (path.includes("/company/qmsreportsanalysis")) {
       return "qmsreportsanalysis";
+    }
+
+
+    // EMS
+    if (path.includes("/company/emsdocumentation")) {
+      return "emsdocumentation";
     }
 
 
@@ -1046,6 +1058,15 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       case "qmsreportsanalysis":
         submenuContent = (
           <ReportsAnalysisSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+
+        case "emsdocumentation":
+        submenuContent = (
+          <EMSDocumentationSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
