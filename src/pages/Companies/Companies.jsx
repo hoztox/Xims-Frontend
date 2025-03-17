@@ -113,11 +113,11 @@ const Companies = () => {
   };
 
   const handleExportToCSV = () => {
-    const csvHeaders = ["ID", "Name", "Admin Name", "Email", "Phone", "Status"];
+    const csvHeaders = ["ID", "Name", "Username", "Email", "Phone", "Status"];
     const csvRows = paginatedCompanies.map((company) => [
       company.id,
       company.company_name,
-      company.company_admin_name,
+      company.user_id,
       company.email_address,
       company.phone_no1,
       company.status,
@@ -372,7 +372,7 @@ const Companies = () => {
                   Company Name
                 </th>
                 <th className="text-start companiesthead comadminname nodisplayhead tabview">
-                  Admin Name
+                 Username
                 </th>
                 <th className="text-start companiesthead compnyemail nodisplayhead ">
                   Email
@@ -441,7 +441,7 @@ const Companies = () => {
                     </td>
 
                     <td className="companiesdata nodisplaydata cmpyadminnametab">
-                      {company.company_admin_name}
+                      {company.user_id}
                     </td>
                     <td className="companiesdata companyemaildata nodisplaydata ">
                       {company.email_address}
@@ -556,9 +556,9 @@ const Companies = () => {
                           {/* Dropdown content goes here */}
                           <div className="flex justify-between gap-3 ">
                             <div>
-                              <h4 className="mobhead">Admin Name</h4>
+                              <h4 className="mobhead">Username</h4>
                               <p className="mobdata mobcmpyadmin">
-                                {company.company_admin_name}
+                                {company.user_id}
                               </p>
                             </div>
                             <div>
