@@ -37,6 +37,7 @@ import EnergyManagementSubmenu from "./QMS/Energy Management/EnergyManagementSub
 import CorrectionPreventiveSubmenu from "./QMS/Correction Preventive Actions/CorrectionPreventiveSubmenu";
 import ObjectiveSubmenu from "./QMS/Objectives and Targets/ObjectiveSubmenu";
 import NonconformitySubmenu from "./QMS/Nonconformity Report Managements/NonconformitySubmenu";
+import ReportsAnalysisSubmenu from "./QMS/Reports Analysis/ReportsAnalysisSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -170,11 +171,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/qmsnonconformity",
       },
       {
-        id: "reports",
+        id: "qmsreportsanalysis",
         label: "Reports & Analysis",
         icon: ReportsIcon,
-        hasSubMenu: false,
-        path: "/company/reports",
+        hasSubMenu: true,
+        submenuType: "qmsreportsanalysis",
+        pathPrefix: "/company/qmsreportsanalysis",
       },
       {
         id: "backup",
@@ -694,12 +696,16 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       return "qmsobjectives";
     }
 
+    if (path.includes("/company/qmsuser")) {
+      return "qmsuser";
+    }
+
     if (path.includes("/company/qmsnonconformity")) {
       return "qmsnonconformity";
     }
 
-    if (path.includes("/company/qmsuser")) {
-      return "qmsuser";
+    if (path.includes("/company/qmsreportsanalysis")) {
+      return "qmsreportsanalysis";
     }
 
 
@@ -1032,6 +1038,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       case "qmsnonconformity":
         submenuContent = (
           <NonconformitySubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "qmsreportsanalysis":
+        submenuContent = (
+          <ReportsAnalysisSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
