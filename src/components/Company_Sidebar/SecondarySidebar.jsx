@@ -35,6 +35,7 @@ import ComplianceSubmenu from "./QMS/Compliance/ComplianceSubmenu";
 import RiskOpportunitiesSubmenu from "./QMS/Risk and Opportunities/RiskOpportunitiesSubmenu";
 import EnergyManagementSubmenu from "./QMS/Energy Management/EnergyManagementSubmenu";
 import CorrectionPreventiveSubmenu from "./QMS/Correction Preventive Actions/CorrectionPreventiveSubmenu";
+import ObjectiveSubmenu from "./QMS/Objectives and Targets/ObjectiveSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -144,11 +145,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/qmscorrectionmanagement",
       },
       {
-        id: "objectives",
+        id: "qmsobjectives",
         label: "Objectives & Targets",
         icon: ObjectivesIcon,
-        hasSubMenu: false,
-        path: "/company/objectives",
+        hasSubMenu: true,
+        submenuType: "qmsobjectives",
+        pathPrefix: "/company/qmsobjectives",
       },
       {
         id: "qmsuser",
@@ -686,6 +688,10 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       return "qmscorrectionmanagement";
     }
 
+    if (path.includes("/company/qmsobjectives")) {
+      return "qmsobjectives";
+    }
+
     if (path.includes("/company/qmsuser")) {
       return "qmsuser";
     }
@@ -996,6 +1002,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           case "qmscorrectionmanagement":
             submenuContent = (
               <CorrectionPreventiveSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+              />
+            );
+            break;
+          case "qmsobjectives":
+            submenuContent = (
+              <ObjectiveSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
               />
