@@ -33,6 +33,7 @@ import CustomerManagementSubmenu from "./QMS/Customer Management/CustomerManagem
 import SupplierManagementSubmenu from "./QMS/Supplier Management/SupplierManagementSubmenu";
 import ComplianceSubmenu from "./QMS/Compliance/ComplianceSubmenu";
 import RiskOpportunitiesSubmenu from "./QMS/Risk and Opportunities/RiskOpportunitiesSubmenu";
+import EnergyManagementSubmenu from "./QMS/Energy Management/EnergyManagementSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -126,11 +127,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/qmsriskmanagement",
       },
       {
-        id: "energy",
+        id: "qmsenergymanagement",
         label: "Energy Management",
         icon: EnergyIcon,
-        hasSubMenu: false,
-        path: "/company/energy",
+        hasSubMenu: true,
+        submenuType: "qmsenergymanagement",
+        pathPrefix: "/company/qmsenergymanagement",
       },
       {
         id: "correction",
@@ -674,6 +676,10 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       return "qmsriskmanagement";
     }
 
+    if (path.includes("/company/qmsenergymanagement")) {
+      return "qmsenergymanagement";
+    }
+
     if (path.includes("/company/qmsuser")) {
       return "qmsuser";
     }
@@ -968,6 +974,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           case "qmsriskmanagement":
             submenuContent = (
               <RiskOpportunitiesSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+              />
+            );
+            break;
+          case "qmsenergymanagement":
+            submenuContent = (
+              <EnergyManagementSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
               />
