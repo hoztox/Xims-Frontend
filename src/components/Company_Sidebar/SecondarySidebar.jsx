@@ -34,6 +34,7 @@ import SupplierManagementSubmenu from "./QMS/Supplier Management/SupplierManagem
 import ComplianceSubmenu from "./QMS/Compliance/ComplianceSubmenu";
 import RiskOpportunitiesSubmenu from "./QMS/Risk and Opportunities/RiskOpportunitiesSubmenu";
 import EnergyManagementSubmenu from "./QMS/Energy Management/EnergyManagementSubmenu";
+import CorrectionPreventiveSubmenu from "./QMS/Correction Preventive Actions/CorrectionPreventiveSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -135,11 +136,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/qmsenergymanagement",
       },
       {
-        id: "correction",
+        id: "qmscorrectionmanagement",
         label: "Correction Corrective Actions & Preventive Actions",
         icon: CorrectionIcon,
-        hasSubMenu: false,
-        path: "/company/correction",
+        hasSubMenu: true,
+        submenuType: "qmscorrectionmanagement",
+        pathPrefix: "/company/qmscorrectionmanagement",
       },
       {
         id: "objectives",
@@ -680,6 +682,10 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       return "qmsenergymanagement";
     }
 
+    if (path.includes("/company/qmscorrectionmanagement")) {
+      return "qmscorrectionmanagement";
+    }
+
     if (path.includes("/company/qmsuser")) {
       return "qmsuser";
     }
@@ -982,6 +988,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           case "qmsenergymanagement":
             submenuContent = (
               <EnergyManagementSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+              />
+            );
+            break;
+          case "qmscorrectionmanagement":
+            submenuContent = (
+              <CorrectionPreventiveSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
               />
