@@ -46,11 +46,7 @@ const DocumentationSubmenu = () => {
       id: "interested-parties",
       label: "Interested Parties",
       icon: (
-        <img
-          src={parties}
-          alt="Interested Parties"
-          className="w-[15px] h-[15px]"
-        />
+        <img src={parties} alt="Interested Parties" className="w-[15px] h-[15px]" />
       ),
       path: "/company/qms/interested-parties",
     },

@@ -56,18 +56,20 @@ const ThemedApp = () => {
 
         <Route path="/company" element={<CompanyLayout/>}>
           <Route path="dashboard" element={<CompanyDashboard/>} />
-          <Route path="qms/policy" element={<QmsPolicy/>} />
-          <Route path="qms/adduser" element={<AddUser/>} />
-          
-          <Route path="qms/listuser" element={<ListUser />} />
 
- 
+          {/* Documentation */}
+          <Route path="qms/policy" element={<QmsPolicy/>} />
           <Route path="qms/manual" element={<QmsManual/>} />
           <Route path="qms/procedure" element={<QmsProcedure/>} />
           <Route path="qms/record-format" element={<QmsRecordFormat/>} />
           <Route path="qms/interested-parties" element={<QmsInterestedParties/>} />
           <Route path="qms/processes" element={<QmsProcesses/>} />
           <Route path="qms/scope-statements" element={<QmsScopeStatements/>} />
+
+          {/* User Management */}
+          <Route path="qms/adduser" element={<AddUser/>} />
+          <Route path="qms/listuser" element={<ListUser />} />
+          
           <Route path="backup" element={<CompanyBackup/>} />
         </Route>
 

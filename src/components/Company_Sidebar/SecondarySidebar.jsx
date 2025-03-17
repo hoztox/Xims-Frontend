@@ -31,6 +31,8 @@ import ActionsMeetingSubmenu from "./QMS/Actions Meeting Management/ActionsMeeti
 import AuditInspectionSubmenu from "./QMS/Audit Inspection Management/AuditInspectionSubmenu";
 import CustomerManagementSubmenu from "./QMS/Customer Management/CustomerManagementSubmenu";
 import SupplierManagementSubmenu from "./QMS/Supplier Management/SupplierManagementSubmenu";
+import ComplianceSubmenu from "./QMS/Compliance/ComplianceSubmenu";
+import RiskOpportunitiesSubmenu from "./QMS/Risk and Opportunities/RiskOpportunitiesSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -108,18 +110,20 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/qmssuppliermanagement",
       },
       {
-        id: "compliance",
+        id: "qmscompliancemanagement",
         label: "Compliance, Sustainability & Management of Change",
         icon: ComplianceIcon,
-        hasSubMenu: false,
-        path: "/company/compliance",
+        hasSubMenu: true,
+        submenuType: "qmscompliancemanagement",
+        pathPrefix: "/company/qmscompliancemanagement",
       },
       {
-        id: "risk",
+        id: "qmsriskmanagement",
         label: "Risk & Opportunities Management",
         icon: RiskIcon,
-        hasSubMenu: false,
-        path: "/company/risk",
+        hasSubMenu: true,
+        submenuType: "qmsriskmanagement",
+        pathPrefix: "/company/qmsriskmanagement",
       },
       {
         id: "energy",
@@ -662,6 +666,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       return "qmssuppliermanagement";
     }
 
+    if (path.includes("/company/qmscompliancemanagement")) {
+      return "qmscompliancemanagement";
+    }
+
+    if (path.includes("/company/qmsriskmanagement")) {
+      return "qmsriskmanagement";
+    }
+
     if (path.includes("/company/qmsuser")) {
       return "qmsuser";
     }
@@ -940,6 +952,22 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           case "qmssuppliermanagement":
             submenuContent = (
               <SupplierManagementSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+              />
+            );
+            break;
+          case "qmscompliancemanagement":
+            submenuContent = (
+              <ComplianceSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+              />
+            );
+            break;
+          case "qmsriskmanagement":
+            submenuContent = (
+              <RiskOpportunitiesSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
               />
