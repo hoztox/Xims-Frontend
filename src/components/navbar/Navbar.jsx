@@ -35,14 +35,7 @@ const Navbar = () => {
   const [activeMenu, setActiveMenu] = useState("Dashboard"); // Default active menu is 'Dashboard'
 
 
-  useEffect(() => {
-    const adminToken = localStorage.getItem('adminAuthToken');
-    if (!adminToken) {
-        navigate('/');
-    } else {
-        navigate('/admin/dashboard');
-    }
-}, [navigate]);
+
 
   // Handle outside click to close dropdown
   useEffect(() => {

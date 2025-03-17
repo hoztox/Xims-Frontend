@@ -13,6 +13,18 @@ const AdminLogin = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+
+    useEffect(() => {
+      const adminToken = localStorage.getItem('adminAuthToken');
+      console.log('Admin Token',adminToken);
+      
+      if (!adminToken) {
+          navigate('/');
+      } else {
+          navigate('/admin/dashboard');
+      }
+  }, [navigate]);
+
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };

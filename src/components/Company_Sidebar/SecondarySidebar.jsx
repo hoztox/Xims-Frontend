@@ -1168,14 +1168,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
     );
   };
 
-    useEffect(() => {
-      const access = localStorage.getItem("companyAccessToken");
-      if (!access) {
-          navigate("/company-login");
-      } else {
-          navigate("/company/dashboard");
-      }
-  }, [navigate]);
+  
 
   const handleLogout = () => {
     // Remove authentication tokens
