@@ -42,6 +42,7 @@ import ReportsAnalysisSubmenu from "./QMS/Reports Analysis/ReportsAnalysisSubmen
 // EMS
 import EMSDocumentationSubmenu from "./EMS/Documentation/EMSDocumentationSubmenu";
 import EMSEmployeeSubmenu from "./EMS/Employee Training/EMSEmployeeSubmenu";
+import EMSActionsMeetingSubmenu from "./EMS/Actions Meeting Management/EMSActionsMeetingSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -222,9 +223,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/emsemployeetraining",
       },
       {
-        id: "actions",
+        id: "emsactions",
         label: "Actions, Meeting and Communication Management",
         icon: ActionsIcon,
+        hasSubMenu: true,
+        submenuType: "emsactions",
+        pathPrefix: "/company/emsactions",
       },
       {
         id: "audits",
@@ -728,6 +732,10 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       return "emsemployeetraining";
     }
 
+    if (path.includes("/company/emsactions")) {
+      return "emsactions";
+    }
+
 
     return null;
   };
@@ -1083,6 +1091,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "emsemployeetraining":
         submenuContent = (
           <EMSEmployeeSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+        case "emsactions":
+        submenuContent = (
+          <EMSActionsMeetingSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
