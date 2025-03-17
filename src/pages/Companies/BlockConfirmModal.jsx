@@ -9,9 +9,9 @@ const BlockConfirmModal = ({ showBlockConfirmModal,actionType, onConfirm, onCanc
     const modalMessage =
     actionType === "block"
       ? "Are you sure you want to block this company?"
-      : "Are you sure you want to activate this company?";
+      : "Are you sure you want to unblock this company?";
 
-      const confirmButtonLabel = actionType === "block" ? "Block" : "Activate";
+      const confirmButtonLabel = actionType === "block" ? "Block" : "Unblock";
   return (
     <AnimatePresence>
       {showBlockConfirmModal && (

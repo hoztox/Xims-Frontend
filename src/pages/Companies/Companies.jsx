@@ -269,7 +269,7 @@ const Companies = () => {
           const message =
             newAction === "block"
               ? "Company Blocked Successfully!"
-              : "Company Activated Successfully!";
+              : "Company Unblocked Successfully!";
           setSuccessMessage(message);
           setShowBlockSuccessModal(true);
           setTimeout(() => {
