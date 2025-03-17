@@ -43,6 +43,7 @@ import ReportsAnalysisSubmenu from "./QMS/Reports Analysis/ReportsAnalysisSubmen
 import EMSDocumentationSubmenu from "./EMS/Documentation/EMSDocumentationSubmenu";
 import EMSEmployeeSubmenu from "./EMS/Employee Training/EMSEmployeeSubmenu";
 import EMSActionsMeetingSubmenu from "./EMS/Actions Meeting Management/EMSActionsMeetingSubmenu";
+import EMSAuditInspectionSubmenu from "./EMS/Audits Inspection Management/EMSAuditInspectionSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -231,9 +232,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/emsactions",
       },
       {
-        id: "audits",
+        id: "emsauditinspection",
         label: "Audits & Inspections Management",
         icon: AuditsIcon,
+        hasSubMenu: true,
+        submenuType: "emsauditinspection",
+        pathPrefix: "/company/emsauditinspection",
       },
       {
         id: "customer",
@@ -666,75 +670,79 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
     }
 
     // QMS 
-    if (path.includes("/company/qmsdocumentation")) {
-      return "qmsdocumentation";
-    }
+    // if (path.includes("/company/qmsdocumentation")) {
+    //   return "qmsdocumentation";
+    // }
 
-    if (path.includes("/company/qmsemployeetraining")) {
-      return "qmsemployeetraining";
-    }
+    // if (path.includes("/company/qmsemployeetraining")) {
+    //   return "qmsemployeetraining";
+    // }
 
-    if (path.includes("/company/qmsactions")) {
-      return "qmsactions";
-    }
+    // if (path.includes("/company/qmsactions")) {
+    //   return "qmsactions";
+    // }
 
-    if (path.includes("/company/qmsauditinspection")) {
-      return "qmsauditinspection";
-    }
+    // if (path.includes("/company/qmsauditinspection")) {
+    //   return "qmsauditinspection";
+    // }
 
-    if (path.includes("/company/qmscustomermanagement")) {
-      return "qmscustomermanagement";
-    }
+    // if (path.includes("/company/qmscustomermanagement")) {
+    //   return "qmscustomermanagement";
+    // }
 
-    if (path.includes("/company/qmssuppliermanagement")) {
-      return "qmssuppliermanagement";
-    }
+    // if (path.includes("/company/qmssuppliermanagement")) {
+    //   return "qmssuppliermanagement";
+    // }
 
-    if (path.includes("/company/qmscompliancemanagement")) {
-      return "qmscompliancemanagement";
-    }
+    // if (path.includes("/company/qmscompliancemanagement")) {
+    //   return "qmscompliancemanagement";
+    // }
 
-    if (path.includes("/company/qmsriskmanagement")) {
-      return "qmsriskmanagement";
-    }
+    // if (path.includes("/company/qmsriskmanagement")) {
+    //   return "qmsriskmanagement";
+    // }
 
-    if (path.includes("/company/qmsenergymanagement")) {
-      return "qmsenergymanagement";
-    }
+    // if (path.includes("/company/qmsenergymanagement")) {
+    //   return "qmsenergymanagement";
+    // }
 
-    if (path.includes("/company/qmscorrectionmanagement")) {
-      return "qmscorrectionmanagement";
-    }
+    // if (path.includes("/company/qmscorrectionmanagement")) {
+    //   return "qmscorrectionmanagement";
+    // }
 
-    if (path.includes("/company/qmsobjectives")) {
-      return "qmsobjectives";
-    }
+    // if (path.includes("/company/qmsobjectives")) {
+    //   return "qmsobjectives";
+    // }
 
-    if (path.includes("/company/qmsuser")) {
-      return "qmsuser";
-    }
+    // // if (path.includes("/company/qmsuser")) {
+    // //   return "qmsuser";
+    // // }
 
-    if (path.includes("/company/qmsnonconformity")) {
-      return "qmsnonconformity";
-    }
+    // if (path.includes("/company/qmsnonconformity")) {
+    //   return "qmsnonconformity";
+    // }
 
-    if (path.includes("/company/qmsreportsanalysis")) {
-      return "qmsreportsanalysis";
-    }
+    // if (path.includes("/company/qmsreportsanalysis")) {
+    //   return "qmsreportsanalysis";
+    // }
 
 
-    // EMS
-    if (path.includes("/company/emsdocumentation")) {
-      return "emsdocumentation";
-    }
+    // // EMS
+    // if (path.includes("/company/emsdocumentation")) {
+    //   return "emsdocumentation";
+    // }
 
-    if (path.includes("/company/emsemployeetraining")) {
-      return "emsemployeetraining";
-    }
+    // if (path.includes("/company/emsemployeetraining")) {
+    //   return "emsemployeetraining";
+    // }
 
-    if (path.includes("/company/emsactions")) {
-      return "emsactions";
-    }
+    // if (path.includes("/company/emsactions")) {
+    //   return "emsactions";
+    // }
+
+    // if (path.includes("/company/emsauditinspection")) {
+    //   return "emsauditinspection";
+    // }
 
 
     return null;
@@ -1099,6 +1107,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "emsactions":
         submenuContent = (
           <EMSActionsMeetingSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+        case "emsauditinspection":
+        submenuContent = (
+          <EMSAuditInspectionSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
