@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Search, ChevronUp, Plus } from 'lucide-react';
+import { Search, ChevronUp } from 'lucide-react';
+import plus from "../../../../assets/images/Company Documentation/plus icon.svg"
 import arrow from '../../../../assets/images/Company Documentation/arrow.svg';
 import view from "../../../../assets/images/Company Documentation/view.svg";
 import edit from "../../../../assets/images/Company Documentation/edit.svg";
@@ -38,11 +39,11 @@ const QmsPolicy = () => {
             <Search className=" text-white w-[18px]" />
           </div>
         </div>
-        <button className="bg-transparent border border-[#858585] text-[#858585] rounded-[4px] p-[10px] flex items-center justify-center gap-[10px] transition-all duration-200 w-[140px] h-[42px] add-policy-btn hover:bg-[#858585] hover:text-white group"
+        <button className="bg-transparent border border-[#858585] text-[#858585] rounded-[4px] p-[10px] flex items-center justify-center gap-[10px] transition-all duration-200 w-[140px] h-[42px] add-policy-btn hover:bg-[#858585] hover:text-white"
         onClick={handleAddQMSPolicy}
         >
           <span>Add Policy</span>
-          <Plus size={22} className='text-[#858585] group-hover:text-white transition-colors duration-200' />
+          <img src={plus} alt="Add Policy" className='add-policy-img'/>
         </button>
       </div>
 
