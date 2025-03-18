@@ -19,12 +19,14 @@ const DocumentationSubmenu = (props) => {
       label: "Policy",
       icon: <img src={policy} alt="Policy" className="w-[15px] h-[15px]" />,
       path: "/company/qms/policy",
+      relatedPaths: ["/company/qms/addpolicy"]
     },
     {
       id: "manual",
       label: "Manual",
       icon: <img src={manual} alt="Manual" className="w-[15px] h-[15px]" />,
       path: "/company/qms/manual",
+      relatedPaths: []
     },
     {
       id: "procedure",
@@ -33,6 +35,7 @@ const DocumentationSubmenu = (props) => {
         <img src={procedure} alt="Procedure" className="w-[15px] h-[15px]" />
       ),
       path: "/company/qms/procedure",
+      relatedPaths: []
     },
     {
       id: "record-format",
@@ -41,6 +44,7 @@ const DocumentationSubmenu = (props) => {
         <img src={record} alt="Record Format" className="w-[15px] h-[15px]" />
       ),
       path: "/company/qms/record-format",
+      relatedPaths: []
     },
     {
       id: "interested-parties",
@@ -49,12 +53,14 @@ const DocumentationSubmenu = (props) => {
         <img src={parties} alt="Interested Parties" className="w-[15px] h-[15px]" />
       ),
       path: "/company/qms/interested-parties",
+      relatedPaths: []
     },
     {
       id: "processes",
       label: "Processes",
       icon: <img src={process} alt="Processes" className="w-[15px] h-[15px]" />,
       path: "/company/qms/processes",
+      relatedPaths: []
     },
     {
       id: "scope-statements",
@@ -63,12 +69,15 @@ const DocumentationSubmenu = (props) => {
         <img src={scope} alt="Scope Statements" className="w-[15px] h-[15px]" />
       ),
       path: "/company/qms/scope-statements",
+      relatedPaths: []
     },
   ];
 
-  // Check if a category is active
+  // Check if a category is active, including related paths
   const isActive = (category) => {
-    return location.pathname === category.path;
+    const currentPath = location.pathname;
+    return currentPath === category.path || 
+           (category.relatedPaths && category.relatedPaths.includes(currentPath));
   };
 
   // Handle clicking on a submenu item
@@ -87,7 +96,7 @@ const DocumentationSubmenu = (props) => {
         return (
           <div
             key={category.id}
-            className="flex flex-col items-center justify-center py-[10px] rounded-md bg-[#85858515] transition-colors duration-200 cursor-pointer h-[100px] gap-[10px] documentation-submenu-cards"
+            className={`flex flex-col items-center justify-center py-[10px] rounded-md bg-[#85858515] transition-colors duration-200 cursor-pointer h-[100px] gap-[10px] documentation-submenu-cards`}
             onClick={() => handleCategoryClick(category)}
           >
             <div className="bg-[#5B5B5B] rounded-full p-[5px] w-[26px] h-[26px] flex justify-center items-center">

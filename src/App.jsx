@@ -6,7 +6,7 @@ import AdminLogin from "./pages/AdminLogin/AdminLogin";
 import Password from "./pages/ForgotPassword/Password";
 import Layout from "./pages/Layout";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import Companies from "./pages/Companies/Companies";    
+import Companies from "./pages/Companies/Companies";
 import AddCompany from "./pages/AddCompany/AddCompany";
 import ViewCompany from "./pages/ViewCompany/ViewCompany";
 import EditCompany from "./pages/EditCompany/EditCompany";
@@ -31,6 +31,7 @@ import QmsInterestedParties from "./pages/QMS/Documentation/Interested Parties/Q
 import QmsProcesses from "./pages/QMS/Documentation/Processes/QmsProcesses";
 import QmsScopeStatements from "./pages/QMS/Documentation/Scope Statements/QmsScopeStatements";
 import EmsPolicy from "./pages/EMS/Documentation/Policy/EmsPolicy";
+import AddQmsPolicy from "./pages/QMS/Documentation/Policy/AddQmsPolicy";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -47,33 +48,34 @@ const ThemedApp = () => {
         <Route path="/">
           <Route index element={<AdminLogin />} />
           <Route path="forgotpassword" element={<Password />} />
-          <Route path="changepassword" element={<ChangePassword/>} />
+          <Route path="changepassword" element={<ChangePassword />} />
         </Route>
 
 
         <Route path="/company-login">
-           <Route index element={<CompanyLogin/>} />
+          <Route index element={<CompanyLogin />} />
         </Route>
 
-        <Route path="/company" element={<CompanyLayout/>}>
-          <Route path="dashboard" element={<CompanyDashboard/>} />
+        <Route path="/company" element={<CompanyLayout />}>
+          <Route path="dashboard" element={<CompanyDashboard />} />
 
           {/* Documentation */}
-          <Route path="qms/policy" element={<QmsPolicy/>} />
-          <Route path="ems/policy" element={<EmsPolicy/>} />
+          <Route path="qms/policy" element={<QmsPolicy />} />
+          <Route path="qms/addpolicy" element={<AddQmsPolicy />} />
+          <Route path="ems/policy" element={<EmsPolicy />} />
 
-          <Route path="qms/manual" element={<QmsManual/>} />
-          <Route path="qms/procedure" element={<QmsProcedure/>} />
-          <Route path="qms/record-format" element={<QmsRecordFormat/>} />
-          <Route path="qms/interested-parties" element={<QmsInterestedParties/>} />
-          <Route path="qms/processes" element={<QmsProcesses/>} />
-          <Route path="qms/scope-statements" element={<QmsScopeStatements/>} />
+          <Route path="qms/manual" element={<QmsManual />} />
+          <Route path="qms/procedure" element={<QmsProcedure />} />
+          <Route path="qms/record-format" element={<QmsRecordFormat />} />
+          <Route path="qms/interested-parties" element={<QmsInterestedParties />} />
+          <Route path="qms/processes" element={<QmsProcesses />} />
+          <Route path="qms/scope-statements" element={<QmsScopeStatements />} />
 
           {/* User Management */}
-          <Route path="qms/adduser" element={<AddUser/>} />
+          <Route path="qms/adduser" element={<AddUser />} />
           <Route path="qms/listuser" element={<ListUser />} />
-          
-          <Route path="backup" element={<CompanyBackup/>} />
+
+          <Route path="backup" element={<CompanyBackup />} />
         </Route>
 
         {/* Admin Routes with Layout */}
@@ -81,13 +83,13 @@ const ThemedApp = () => {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="companies" element={<Companies />} />
 
-          <Route path="add-subscriber" element={<AddSubscriber/>} />
-          <Route path="manage-subscriber" element={<ManageSubscriber/>}/>
-          <Route path="change-subscriber/:id" element={<ChangeSubscription/>}/>
+          <Route path="add-subscriber" element={<AddSubscriber />} />
+          <Route path="manage-subscriber" element={<ManageSubscriber />} />
+          <Route path="change-subscriber/:id" element={<ChangeSubscription />} />
 
-          <Route path="add-subscription-plan" element={<AddSubscriptionPlan/>}/>
-          <Route path="manage-subscription" element={<ManageSubscription/>}/>
-          <Route path="edit-subscription/:id" element={<EditSubscription/>}/>
+          <Route path="add-subscription-plan" element={<AddSubscriptionPlan />} />
+          <Route path="manage-subscription" element={<ManageSubscription />} />
+          <Route path="edit-subscription/:id" element={<EditSubscription />} />
 
 
 

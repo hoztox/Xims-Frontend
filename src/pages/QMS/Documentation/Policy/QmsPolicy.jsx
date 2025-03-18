@@ -4,13 +4,19 @@ import arrow from '../../../../assets/images/Company Documentation/arrow.svg';
 import view from "../../../../assets/images/Company Documentation/view.svg";
 import edit from "../../../../assets/images/Company Documentation/edit.svg";
 import deleteIcon from "../../../../assets/images/Company Documentation/delete.svg";
+import { useNavigate} from "react-router-dom";
 import './qmspolicy.css';
 
 const QmsPolicy = () => {
+  const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(true);
   const [qmsPolicies, setQmsPolicies] = useState([
     { id: 1, name: 'Energy Policy' },
   ]);
+
+  const handleAddQMSPolicy = () => {
+    navigate('/company/qms/addpolicy')
+  }
 
   return (
     <div className="bg-[#1C1C24] rounded-lg text-white p-5">
@@ -32,7 +38,9 @@ const QmsPolicy = () => {
             <Search className=" text-white w-[18px]" />
           </div>
         </div>
-        <button className="bg-transparent border border-[#858585] text-[#858585] rounded-[4px] p-[10px] flex items-center justify-center gap-[10px] transition-all duration-200 w-[140px] h-[42px] add-policy-btn hover:bg-[#858585] hover:text-white group">
+        <button className="bg-transparent border border-[#858585] text-[#858585] rounded-[4px] p-[10px] flex items-center justify-center gap-[10px] transition-all duration-200 w-[140px] h-[42px] add-policy-btn hover:bg-[#858585] hover:text-white group"
+        onClick={handleAddQMSPolicy}
+        >
           <span>Add Policy</span>
           <Plus size={22} className='text-[#858585] group-hover:text-white transition-colors duration-200' />
         </button>
