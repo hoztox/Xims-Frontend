@@ -5,7 +5,6 @@ import procedure from "../../../../assets/images/Company-Sidebar/manual.svg";
 import record from "../../../../assets/images/Company-Sidebar/record-format.svg";
 import parties from "../../../../assets/images/Company-Sidebar/interested parties.svg";
 import process from "../../../../assets/images/Company-Sidebar/interested parties.svg";
-import scope from "../../../../assets/images/Company-Sidebar/record-format.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const EMSComplianceSubmenu = (props) => {
