@@ -52,6 +52,7 @@ import EMSEnergyManagementSubmenu from "./EMS/Energy Management/EMSEnergyManagem
 import EMSCorrectionSubmenu from "./EMS/Correction Preventive Actions/EMSCorrectionSubmenu";
 import EMSObjectivesSubmenu from "./EMS/Objective and Targets/EMSObjectivesSubmenu";
 import EMSUserManagementSubmenu from "./EMS/User Management/EMSUserManagementSubmenu";
+import EMSNonConformitySubmenu from "./EMS/Non Conformity Report/EMSNonConformitySubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -312,9 +313,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/emsuser",
       },
       {
-        id: "nonconformity",
+        id: "emsnonconformity",
         label: "Non Conformity Report Management",
         icon: NonConformityIcon,
+        hasSubMenu: true,
+        submenuType: "emsnonconformity",
+        pathPrefix: "/company/emsnonconformity",
       },
       {
         id: "reports",
@@ -1211,6 +1215,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       case "emsuser":
         submenuContent = (
           <EMSUserManagementSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "emsnonconformity":
+        submenuContent = (
+          <EMSNonConformitySubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
