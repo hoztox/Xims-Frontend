@@ -9,7 +9,7 @@ import scope from "../../../../assets/images/Company-Sidebar/record-format.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 
 
-const EMSDocumentationSubmenu = () => {
+const EMSDocumentationSubmenu = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -18,7 +18,7 @@ const EMSDocumentationSubmenu = () => {
             id: "policy",
             label: "Policy",
             icon: <img src={policy} alt="Policy" className="w-[15px] h-[15px]" />,
-            // path: "/company/qms/policy",
+            path: "/company/ems/policy",
         },
         {
             id: "manual",

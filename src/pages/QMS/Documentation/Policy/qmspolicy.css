@@ -42,15 +42,6 @@
     line-height: normal;
 }
 
-.add-policy-btn:hover {
-    background-color: #858585;
-    color: white;
-}
-
-.add-policy-btn:hover .plus-icon {
-    color: white;
-}
-
 .policy-list-head {
     font-family: 'Switzer Regular';
     font-size: 14px;
@@ -65,7 +56,6 @@
     font-style: normal;
     line-height: normal;
     font-weight: 400;
-    color: #858585;
 }
 
 .view-policy-btn-text {

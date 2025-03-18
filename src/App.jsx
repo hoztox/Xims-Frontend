@@ -30,6 +30,7 @@ import QmsRecordFormat from "./pages/QMS/Documentation/Record Format/QmsRecordFo
 import QmsInterestedParties from "./pages/QMS/Documentation/Interested Parties/QmsInterestedParties";
 import QmsProcesses from "./pages/QMS/Documentation/Processes/QmsProcesses";
 import QmsScopeStatements from "./pages/QMS/Documentation/Scope Statements/QmsScopeStatements";
+import EmsPolicy from "./pages/EMS/Documentation/Policy/EmsPolicy";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -59,6 +60,8 @@ const ThemedApp = () => {
 
           {/* Documentation */}
           <Route path="qms/policy" element={<QmsPolicy/>} />
+          <Route path="ems/policy" element={<EmsPolicy/>} />
+
           <Route path="qms/manual" element={<QmsManual/>} />
           <Route path="qms/procedure" element={<QmsProcedure/>} />
           <Route path="qms/record-format" element={<QmsRecordFormat/>} />

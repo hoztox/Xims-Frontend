@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Eye, Pencil, Trash2, ChevronUp, Plus } from 'lucide-react';
+import { Search, ChevronUp, Plus } from 'lucide-react';
 import arrow from '../../../../assets/images/Company Documentation/arrow.svg';
 import view from "../../../../assets/images/Company Documentation/view.svg";
 import edit from "../../../../assets/images/Company Documentation/edit.svg";
@@ -8,7 +8,7 @@ import './qmspolicy.css';
 
 const QmsPolicy = () => {
   const [isExpanded, setIsExpanded] = useState(true);
-  const [policies, setPolicies] = useState([
+  const [qmsPolicies, setQmsPolicies] = useState([
     { id: 1, name: 'Energy Policy' },
   ]);
 
@@ -32,9 +32,9 @@ const QmsPolicy = () => {
             <Search className=" text-white w-[18px]" />
           </div>
         </div>
-        <button className="bg-transparent border border-[#858585] text-[#858585] rounded-[4px] p-[10px] flex items-center justify-center gap-[10px] transition-all duration-200 w-[140px] h-[42px] add-policy-btn">
+        <button className="bg-transparent border border-[#858585] text-[#858585] rounded-[4px] p-[10px] flex items-center justify-center gap-[10px] transition-all duration-200 w-[140px] h-[42px] add-policy-btn hover:bg-[#858585] hover:text-white group">
           <span>Add Policy</span>
-          <Plus size={22} className='text-[#858585] plus-icon' />
+          <Plus size={22} className='text-[#858585] group-hover:text-white transition-colors duration-200' />
         </button>
       </div>
 
@@ -48,11 +48,11 @@ const QmsPolicy = () => {
         </div>
 
         <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-          {policies.map((policy) => (
-            <div key={policy.id} className="px-5 pt-6 pb-5 border-b border-gray-700 flex justify-start items-center last:border-b-0">
+          {qmsPolicies.map((qmsPolicy) => (
+            <div key={qmsPolicy.id} className="px-5 pt-6 pb-5 border-b border-gray-700 flex justify-start items-center last:border-b-0">
               <div className="flex items-center gap-[50px]">
                 <div className='gap-[15px] flex flex-col'>
-                  <span className="policy-name">{policy.name}</span>
+                  <span className="policy-name text-[#858585]">{qmsPolicy.name}</span>
                   <button className='flex justify-center items-center gap-2'>
                     <p className='view-policy-btn-text'>View Policy</p>
                     <img src={view} alt="View Icon" className='w-[16px] h-[16px]' />
