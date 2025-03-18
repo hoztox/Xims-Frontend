@@ -3,6 +3,7 @@ import { Search } from 'lucide-react';
 import plusicon from "../../../../assets/images/Company Documentation/plus icon.svg";
 import edits from "../../../../assets/images/Company Documentation/edit.svg";
 import deletes from "../../../../assets/images/Company Documentation/delete.svg";
+import { useNavigate} from "react-router-dom";
 import "./qmsmanual.css";
 
 const QmsManual = () => {
@@ -11,6 +12,7 @@ const QmsManual = () => {
     { id: 2, section_title: "Anonymous", section_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
     { id: 3, section_title: "Anonymous", section_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
   ]);
+  const navigate  = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const manualPerPage = 10;
@@ -36,6 +38,10 @@ const QmsManual = () => {
   const handlePrevious = () => setCurrentPage(prev => Math.max(prev - 1, 1));
   const handleNext = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
 
+  const handleQMSAddManual = () => {
+    navigate('/company/qms/addmanual')
+  }
+
   return (
     <div className="bg-[#1C1C24] list-manual-main">
       <div className="flex items-center justify-between px-[14px] pt-[24px]">
@@ -53,7 +59,9 @@ const QmsManual = () => {
               <Search size={18} />
             </div>
           </div>
-          <button className="flex items-center justify-center add-manual-btn gap-[10px] duration-200">
+          <button className="flex items-center justify-center add-manual-btn gap-[10px] duration-200"
+          onClick={handleQMSAddManual}
+          >
             <span>Add Manual Sections</span>
             <img src={plusicon} alt="Add Icon" className='w-[18px] h-[18px] add-plus' />
           </button>
