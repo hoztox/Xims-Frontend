@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 
+
 @font-face {
     font-family: 'Cabinet Grotesk Bold';
     src: url('../src/assets/fonts/Cabinet Grotesk/CabinetGrotesk-Bold.woff') format('woff');
@@ -26,7 +27,7 @@
   }
 
   @font-face {
-    font-family: 'Switzer Light';
+    font-family: 'Switzer Light'; 
     src: url('../src/assets/fonts/Switzer/Switzer-Light.otf') format('truetype');
     font-style: normal;
   }
@@ -60,3 +61,4 @@
     src: url('../src/assets/fonts/Technor/Technor-Regular.otf') format('truetype');
     font-style: normal;
   }
+
