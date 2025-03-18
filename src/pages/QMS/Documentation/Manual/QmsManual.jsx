@@ -3,7 +3,7 @@ import { Search } from 'lucide-react';
 import plusicon from "../../../../assets/images/Company Documentation/plus icon.svg";
 import edits from "../../../../assets/images/Company Documentation/edit.svg";
 import deletes from "../../../../assets/images/Company Documentation/delete.svg";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./qmsmanual.css";
 
 const QmsManual = () => {
@@ -11,8 +11,17 @@ const QmsManual = () => {
     { id: 1, section_title: "Anonymous", section_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
     { id: 2, section_title: "Anonymous", section_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
     { id: 3, section_title: "Anonymous", section_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 4, section_title: "Anonymous", section_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 5, section_title: "Anonymous", section_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 6, section_title: "Anonymous", section_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 7, section_title: "Anonymous", section_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 8, section_title: "Anonymous", section_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 9, section_title: "Anonymous", section_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 10, section_title: "Anonymous", section_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 11, section_title: "Extra Page Data", section_no: "11", approved_by: "Manager", revision: "V2", date: '04-12-2024' },
   ]);
-  const navigate  = useNavigate();
+
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const manualPerPage = 10;
@@ -24,8 +33,7 @@ const QmsManual = () => {
     manuals.revision.toLowerCase().includes(searchQuery.toLowerCase()) ||
     manuals.date.replace(/^0+/, '').includes(searchQuery.replace(/^0+/, '')) // Normalizing date search
   );
-  
-  
+
   const totalPages = Math.ceil(filteredManual.length / manualPerPage);
   const paginatedManual = filteredManual.slice((currentPage - 1) * manualPerPage, currentPage * manualPerPage);
 
@@ -34,13 +42,28 @@ const QmsManual = () => {
     setCurrentPage(1);
   };
 
-  const handlePageClick = (pageNumber) => setCurrentPage(pageNumber);
-  const handlePrevious = () => setCurrentPage(prev => Math.max(prev - 1, 1));
-  const handleNext = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo(0, 0); // Scroll to top on page change
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(prev => prev - 1);
+      window.scrollTo(0, 0);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(prev => prev + 1);
+      window.scrollTo(0, 0);
+    }
+  };
 
   const handleQMSAddManual = () => {
-    navigate('/company/qms/addmanual')
-  }
+    navigate('/company/qms/addmanual');
+  };
 
   return (
     <div className="bg-[#1C1C24] list-manual-main">
@@ -60,7 +83,7 @@ const QmsManual = () => {
             </div>
           </div>
           <button className="flex items-center justify-center add-manual-btn gap-[10px] duration-200"
-          onClick={handleQMSAddManual}
+            onClick={handleQMSAddManual}
           >
             <span>Add Manual Sections</span>
             <img src={plusicon} alt="Add Icon" className='w-[18px] h-[18px] add-plus' />
@@ -76,13 +99,13 @@ const QmsManual = () => {
               <th className="px-5 text-left add-manual-theads">Section Title</th>
               <th className="px-5 text-left add-manual-theads">Section No</th>
               <th className="px-5 text-left add-manual-theads">Approved by</th>
-              <th className="px-5 text-left add-manual-theads">Revison</th>
+              <th className="px-5 text-left add-manual-theads">Revision</th>
               <th className="px-5 text-left add-manual-theads">Date</th>
               <th className="px-5 text-center add-manual-theads">Edit</th>
               <th className="px-5 text-center add-manual-theads">Delete</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody key={currentPage}>
             {paginatedManual.length > 0 ? (
               paginatedManual.map((manual, index) => (
                 <tr key={manual.id} className="border-b border-[#383840] hover:bg-[#1a1a20] cursor-pointer h-[46px]">
@@ -101,9 +124,7 @@ const QmsManual = () => {
                 </tr>
               ))
             ) : (
-              <tr>
-                <td colSpan="8" className="text-center py-4 not-found">No Manuals found.</td>
-              </tr>
+              <tr><td colSpan="8" className="text-center py-4 not-found">No Manuals found.</td></tr>
             )}
             <tr>
               <td colSpan="8" className="pt-[15px] border-t border-[#383840]">
@@ -121,6 +142,8 @@ const QmsManual = () => {
             </tr>
           </tbody>
         </table>
+
+
       </div>
     </div>
   );
