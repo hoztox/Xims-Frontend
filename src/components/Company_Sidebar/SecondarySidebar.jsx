@@ -47,6 +47,7 @@ import EMSAuditInspectionSubmenu from "./EMS/Audits Inspection Management/EMSAud
 import EMSCustomerSubmenu from "./EMS/Customer Management/EMSCustomerSubmenu";
 import EMSSupplierSubmenu from "./EMS/Supplier Management/EMSSupplierSubmenu";
 import EMSComplianceSubmenu from "./EMS/Compliance/EMSComplianceSubmenu";
+import EMSRiskManagementSubmenu from "./EMS/Risk Management/EMSRiskManagementSubmenu";
 // Other submenu components would be imported here
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -267,9 +268,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/emscompliance",
       },
       {
-        id: "risk",
+        id: "emsriskmanagement",
         label: "Risk, Opportunities & Incident Management",
         icon: RiskIcon,
+        hasSubMenu: true,
+        submenuType: "emsriskmanagement",
+        pathPrefix: "/company/emsriskmanagement",
       },
       {
         id: "energy",
@@ -1151,6 +1155,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       case "emscompliance":
         submenuContent = (
           <EMSComplianceSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "emsriskmanagement":
+        submenuContent = (
+          <EMSRiskManagementSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
