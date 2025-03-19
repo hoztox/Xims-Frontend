@@ -70,11 +70,14 @@ import OHSObjectivesSubmenu from "./OHS/Objectives and Targets/OHSObjectivesSubm
 import OHSUserSubmenu from "./OHS/User Management/OHSUserSubmenu";
 import OHSNonConformitySubmenu from "./OHS/Non Conformity Report/OHSNonConformitySubmenu";
 import OHSReportAnalysisSubmenu from "./OHS/Reports Analysis/OHSReportAnalysisSubmenu";
-import EnMSDocumentationSubmenu from "./EnMS/Documentation/EnMSDocumentationSubmenu";
-import EnMSEmployeeSubmenu from "./EnMS/Employee Training/EnMSEmployeeSubmenu";
 
 
 // EnMS
+import EnMSDocumentationSubmenu from "./EnMS/Documentation/EnMSDocumentationSubmenu";
+import EnMSEmployeeSubmenu from "./EnMS/Employee Training/EnMSEmployeeSubmenu";
+import EnMSActionMeetingSubmenu from "./EnMS/Action Meeting Management/EnMSActionMeetingSubmenu";
+
+
 
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -525,9 +528,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/enmsemployeetraining",
       },
       {
-        id: "actions",
+        id: "enmsactions",
         label: "Actions, Meeting and Communication Management",
         icon: ActionsIcon,
+        hasSubMenu: true,
+        submenuType: "enmsactions",
+        pathPrefix: "/company/enmsactions",
       },
       {
         id: "audits",
@@ -1449,6 +1455,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "enmsemployeetraining":
           submenuContent = (
             <EnMSEmployeeSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        case "enmsactions":
+          submenuContent = (
+            <EnMSActionMeetingSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
             />
