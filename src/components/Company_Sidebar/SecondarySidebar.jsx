@@ -87,6 +87,7 @@ import EnMSObjectivesSubmenu from "./EnMS/Objectives and Targets/EnMSObjectivesS
 import EnMSUserSubmenu from "./EnMS/User Management/EnMSUserSubmenu";
 import EnMSNonConformitySubmenu from "./EnMS/Non Conformity Report/EnMSNonConformitySubmenu";
 import EnMSReportAnalysisSubmenu from "./EnMS/Report Analysis/EnMSReportAnalysisSubmenu";
+import BMSDocumentationSubmenu from "./BMS/Documentation/BMSDocumentationSubmenu";
 
 
 
@@ -655,11 +656,15 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         label: "Dashboard",
         icon: DashboardIcon,
         path: "/company/dashboard",
+        hasSubMenu: false,
       },
       {
-        id: "documentation",
+        id: "bmsdocumentation",
         label: "Documentation",
         icon: DocumentationIcon,
+        hasSubMenu: true,
+        submenuType: "bmsdocumentation",
+        pathPrefix: "/company/bmsdocumentation",
       },
       {
         id: "training",
@@ -1606,6 +1611,16 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
+
+      case "bmsdocumentation":
+        submenuContent = (
+          <BMSDocumentationSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+
       default:
         submenuContent = null;
     }
