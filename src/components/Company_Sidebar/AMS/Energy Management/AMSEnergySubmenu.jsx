@@ -60,7 +60,7 @@ const AMSEnergySubmenu = () => {
         };
 
   return (
-    <div className="grid grid-cols-4 gap-[10px] bg-[#1C1C24] p-5 w-[730px] absolute top-16 border-t border-r border-b border-[#383840]">
+    <div className="grid grid-cols-3 gap-[10px] bg-[#1C1C24] p-5 w-[555px] absolute top-16 border-t border-r border-b border-[#383840]">
             {categories.map((category) => {
                 const active = isActive(category);
                 return (
