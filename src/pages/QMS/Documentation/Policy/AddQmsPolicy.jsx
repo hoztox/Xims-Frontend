@@ -17,9 +17,11 @@ import removelink from "../../../../assets/images/Company Documentation/remove-l
 import textcolor from '../../../../assets/images/Company Documentation/text-color.svg'
 import bgcolor from '../../../../assets/images/Company Documentation/bg-color.svg'
 import files from "../../../../assets/images/Company Documentation/file-icon.svg"
+import { useNavigate } from 'react-router-dom';
 import "./addqmspolicy.css"
 
 const AddQmsPolicy = () => {
+  const navigate = useNavigate()
   const [fileName, setFileName] = useState('');
   const [fileSelected, setFileSelected] = useState(false);
   const editorRef = useRef(null);
@@ -597,6 +599,8 @@ const AddQmsPolicy = () => {
       }
     };
 
+    
+
     // Handle paste events to preserve list formatting
     const handlePaste = (e) => {
       e.preventDefault();
@@ -708,6 +712,10 @@ const AddQmsPolicy = () => {
       </div>
     );
   };
+
+  const handleCancelAddPolicy = () => {
+    navigate('/company/qms/policy')
+  }
 
   return (
     <div className="w-full bg-[#1C1C24] rounded-lg p-5 text-white">
@@ -918,7 +926,9 @@ const AddQmsPolicy = () => {
 
       {/* Buttons */}
       <div className="flex justify-end gap-[21px] mt-8">
-        <button className="cancel-btn duration-200">
+        <button className="cancel-btn duration-200"
+        onClick={handleCancelAddPolicy}
+        >
           Cancel
         </button>
         <button className="save-btn duration-200">
