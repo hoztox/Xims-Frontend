@@ -105,6 +105,7 @@ import BMSReportSubmenu from "./BMS/Report Analysis/BMSReportSubmenu";
 import AMSDocumentationSubmenu from "./AMS/Documentation/AMSDocumentationSubmenu";
 import AMSEmployeeSubmenu from "./AMS/Employee Training/AMSEmployeeSubmenu";
 import AMSMeetingSubmenu from "./AMS/Meeting Communication Management/AMSMeetingSubmenu";
+import AMSAuditSubmenu from "./AMS/Audit Inspection Management/AMSAuditSubmenu";
 
 
 
@@ -835,9 +836,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/amsmeeting",
       },
       {
-        id: "audits",
+        id: "amsauditinspection",
         label: "Audits & Inspections Management",
         icon: AuditsIcon,
+        hasSubMenu: true,
+        submenuType: "amsauditinspection",
+        pathPrefix: "/company/amsauditinspection",
       },
       {
         id: "customer",
@@ -1816,6 +1820,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "amsmeeting":
           submenuContent = (
             <AMSMeetingSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        case "amsauditinspection":
+          submenuContent = (
+            <AMSAuditSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
             />
