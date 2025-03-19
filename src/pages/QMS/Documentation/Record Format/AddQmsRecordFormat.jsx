@@ -3,7 +3,7 @@ import { ChevronDown } from 'lucide-react';
 import file from "../../../../assets/images/Company Documentation/file-icon.svg"
 import { useNavigate } from 'react-router-dom';
 
-const AddQmsProcedure = () => {
+const AddQmsRecordFormat = () => {
     const navigate = useNavigate()
     const currentDate = new Date();
     const currentDay = currentDate.getDate();
@@ -13,9 +13,9 @@ const AddQmsProcedure = () => {
     const [selectedFile, setSelectedFile] = useState(null);
 
     const [formData, setFormData] = useState({
-        procedureName: '12345566',
+        recordName: '12345566',
         writtenBy: "",
-        procedureNumber: '12345566',
+        recordNumber: '12345566',
         checkedBy: "",
         revision: '12345566',
         approvedBy: "",
@@ -27,7 +27,7 @@ const AddQmsProcedure = () => {
         },
         years: '',
         months: '',
-        recordFormat: '',
+        retentionperiod: '',
         publish: false,
         sendNotification: false
     });
@@ -105,7 +105,7 @@ const AddQmsProcedure = () => {
     };
 
     const handleCancelClick = () => {
-        navigate('/company/qms/procedure')
+        navigate('/company/qms/record-format')
     }
 
 
@@ -121,18 +121,18 @@ const AddQmsProcedure = () => {
     return (
         <div className="bg-[#1C1C24] rounded-lg text-white">
             <div>
-                <h1 className="add-manual-sections">Add Procedures</h1>
+                <h1 className="add-manual-sections">Add Record Formats</h1>
 
                 <div className="border-t border-[#383840] mx-[18px] pt-[22px] px-[104px]">
                     <div className="grid md:grid-cols-2 gap-5">
                         <div>
                             <label className="add-qms-manual-label">
-                                Procedure Name/Title
+                                Record Name/Title
                             </label>
                             <input
                                 type="text"
-                                name="procedureName"
-                                value={formData.procedureName}
+                                name="recordName"
+                                value={formData.recordName}
                                 onChange={handleChange}
                                 className="w-full add-qms-manual-inputs"
                             />
@@ -159,12 +159,12 @@ const AddQmsProcedure = () => {
 
                         <div>
                             <label className="add-qms-manual-label">
-                                Procedure Number <span className="text-red-500">*</span>
+                                Record Number <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="text"
-                                name="procedureNumber"
-                                value={formData.procedureNumber}
+                                name="recordNumber"
+                                value={formData.recordNumber}
                                 onChange={handleChange}
                                 className="w-full add-qms-manual-inputs"
                             />
@@ -354,12 +354,12 @@ const AddQmsProcedure = () => {
 
                         <div>
                             <label className="add-qms-manual-label">
-                                Relate Record Format
+                            Retention Period
                             </label>
                             <input
                                 type="text"
-                                name="recordFormat"
-                                value={formData.recordFormat}
+                                name="retentionperiod"
+                                value={formData.retentionperiod}
                                 onChange={handleChange}
                                 className="w-full add-qms-manual-inputs"
                             />
@@ -405,4 +405,4 @@ const AddQmsProcedure = () => {
     );
 };
 
-export default AddQmsProcedure
+export default AddQmsRecordFormat

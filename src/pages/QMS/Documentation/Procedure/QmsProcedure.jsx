@@ -4,7 +4,6 @@ import plusicon from "../../../../assets/images/Company Documentation/plus icon.
 import edits from "../../../../assets/images/Company Documentation/edit.svg";
 import deletes from "../../../../assets/images/Company Documentation/delete.svg";
 import { useNavigate } from "react-router-dom";
-import "./qmsprocedure.css";
 
 const QmsProcedure = () => {
   const [procedure, setProcedure] = useState([
@@ -75,9 +74,9 @@ const QmsProcedure = () => {
   }
 
   return (
-    <div className="bg-[#1C1C24] list-procedure-main">
+    <div className="bg-[#1C1C24] list-manual-main">
       <div className="flex items-center justify-between px-[14px] pt-[24px]">
-        <h1 className="list-procedure-head">List Procedures</h1>
+        <h1 className="list-manual-head">List Procedures</h1>
         <div className="flex space-x-5">
           <div className="relative">
             <input
@@ -85,13 +84,13 @@ const QmsProcedure = () => {
               placeholder="Search..."
               value={searchQuery}
               onChange={handleSearchChange}
-              className="serach-input-procedure focus:outline-none bg-transparent"
+              className="serach-input-manual focus:outline-none bg-transparent"
             />
             <div className='absolute right-[1px] top-[2px] text-white bg-[#24242D] p-[10.5px] w-[55px] rounded-tr-[6px] rounded-br-[6px] flex justify-center items-center'>
               <Search size={18} />
             </div>
           </div>
-          <button className="flex items-center justify-center add-procedure-btn gap-[10px] duration-200"
+          <button className="flex items-center justify-center add-manual-btn gap-[10px] duration-200"
           onClick={handleAddProcedure}
           >
             <span>Add Procedure</span>
@@ -104,30 +103,30 @@ const QmsProcedure = () => {
         <table className="w-full">
           <thead className='bg-[#24242D]'>
             <tr className="h-[48px]">
-              <th className="px-5 text-left add-procedure-theads">No</th>
-              <th className="px-5 text-left add-procedure-theads">Procedure Title</th>
-              <th className="px-5 text-left add-procedure-theads">Procedure No</th>
-              <th className="px-5 text-left add-procedure-theads">Approved by</th>
-              <th className="px-5 text-left add-procedure-theads">Revision</th>
-              <th className="px-5 text-left add-procedure-theads">Date</th>
-              <th className="px-5 text-center add-procedure-theads">Edit</th>
-              <th className="px-5 text-center add-procedure-theads">Delete</th>
+              <th className="px-5 text-left add-manual-theads">No</th>
+              <th className="px-5 text-left add-manual-theads">Procedure Title</th>
+              <th className="px-5 text-left add-manual-theads">Procedure No</th>
+              <th className="px-5 text-left add-manual-theads">Approved by</th>
+              <th className="px-5 text-left add-manual-theads">Revision</th>
+              <th className="px-5 text-left add-manual-theads">Date</th>
+              <th className="px-5 text-center add-manual-theads">Edit</th>
+              <th className="px-5 text-center add-manual-theads">Delete</th>
             </tr>
           </thead>
           <tbody>
             {paginatedProcedure.length > 0 ? (
               paginatedProcedure.map((procedure, index) => (
                 <tr key={procedure.id} className="border-b border-[#383840] hover:bg-[#1a1a20] cursor-pointer h-[46px]">
-                  <td className="px-[23px] add-procedure-datas">{(currentPage - 1) * procedurePerPage + index + 1}</td>
-                  <td className="px-5 add-procedure-datas">{procedure.procedure_title}</td>
-                  <td className="px-5 add-procedure-datas">{procedure.procedure_no}</td>
-                  <td className="px-5 add-procedure-datas">{procedure.approved_by}</td>
-                  <td className="px-5 add-procedure-datas">{procedure.revision}</td>
-                  <td className="px-5 add-procedure-datas">{procedure.date}</td>
-                  <td className="px-4 add-procedure-datas text-center">
+                  <td className="px-[23px] add-manual-datas">{(currentPage - 1) * procedurePerPage + index + 1}</td>
+                  <td className="px-5 add-manual-datas">{procedure.procedure_title}</td>
+                  <td className="px-5 add-manual-datas">{procedure.procedure_no}</td>
+                  <td className="px-5 add-manual-datas">{procedure.approved_by}</td>
+                  <td className="px-5 add-manual-datas">{procedure.revision}</td>
+                  <td className="px-5 add-manual-datas">{procedure.date}</td>
+                  <td className="px-4 add-manual-datas text-center">
                     <button><img src={edits} alt="Edit" className='w-[16px] h-[16px]' /></button>
                   </td>
-                  <td className="px-4 add-procedure-datas text-center">
+                  <td className="px-4 add-manual-datas text-center">
                     <button><img src={deletes} alt="Delete" className='w-[16px] h-[16px]' /></button>
                   </td>
                 </tr>

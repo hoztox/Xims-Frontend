@@ -35,7 +35,7 @@ const DocumentationSubmenu = (props) => {
         <img src={procedure} alt="Procedure" className="w-[15px] h-[15px]" />
       ),
       path: "/company/qms/procedure",
-      relatedPaths: []
+      relatedPaths: ["/company/qms/addprocedure"]
     },
     {
       id: "record-format",
@@ -44,7 +44,7 @@ const DocumentationSubmenu = (props) => {
         <img src={record} alt="Record Format" className="w-[15px] h-[15px]" />
       ),
       path: "/company/qms/record-format",
-      relatedPaths: []
+      relatedPaths: ["/company/qms/addrecordformat"]
     },
     {
       id: "interested-parties",
