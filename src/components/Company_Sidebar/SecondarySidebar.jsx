@@ -113,6 +113,7 @@ import AMSRiskSubmenu from "./AMS/Risk Management/AMSRiskSubmenu";
 import AMSEnergySubmenu from "./AMS/Energy Management/AMSEnergySubmenu";
 import AMSCorrectionSubmenu from "./AMS/Correction Preventive Actions/AMSCorrectionSubmenu";
 import AMSObjectivesSubmenu from "./AMS/Objectives and Targets/AMSObjectivesSubmenu";
+import AMSUserSubmenu from "./AMS/User Management/AMSUserSubmenu";
 
 
 
@@ -907,9 +908,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/amsobjectives",
       },
       {
-        id: "user",
+        id: "amsuser",
         label: "User Management",
         icon: UserIcon,
+        hasSubMenu: true,
+        submenuType: "amsuser",
+        pathPrefix: "/company/amsuser",
       },
       {
         id: "nonconformity",
@@ -1912,6 +1916,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "amsobjectives":
           submenuContent = (
             <AMSObjectivesSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        case "amsuser":
+          submenuContent = (
+            <AMSUserSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
             />
