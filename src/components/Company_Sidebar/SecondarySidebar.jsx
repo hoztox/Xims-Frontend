@@ -94,6 +94,7 @@ import BMSActionMeetingSubmenu from "./BMS/Action Meeting Management/BMSActionMe
 import BMSAuditSubmenu from "./BMS/Audit Inspection Management/BMSAuditSubmenu";
 import BMSCustomerSubmenu from "./BMS/Customer Management/BMSCustomerSubmenu";
 import BMSSupplierSubmenu from "./BMS/Supplier Management/BMSSupplierSubmenu";
+import BMSComplianceSubmenu from "./BMS/Compliance/BMSComplianceSubmenu";
 
 
 
@@ -713,9 +714,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/bmssuppliermanagement",
       },
       {
-        id: "compliance",
+        id: "bmscompliance",
         label: "Compliance, Sustainability & Management of Change",
         icon: ComplianceIcon,
+        hasSubMenu: true,
+        submenuType: "bmscompliance",
+        pathPrefix: "/company/bmscompliance",
       },
       {
         id: "risk",
@@ -1676,6 +1680,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       case "bmssuppliermanagement":
         submenuContent = (
           <BMSSupplierSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "bmscompliance":
+        submenuContent = (
+          <BMSComplianceSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
