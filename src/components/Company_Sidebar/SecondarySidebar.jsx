@@ -58,6 +58,7 @@ import EMSReportsAnalysisSubmenu from "./EMS/Reports Analysis/EMSReportsAnalysis
 // OHS
 import OHSDocumentationSubmenu from "./OHS/Documentation/OHSDocumentationSubmenu";
 import OHSEmployeeSubmenu from "./OHS/Employee Training/OHSEmployeeSubmenu";
+import OHSActionMeetingSubmenu from "./OHS/Action Meeting Management/OHSActionMeetingSubmenu";
  
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -367,9 +368,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/ohsemployeetraining",
       },
       {
-        id: "actions",
+        id: "ohsactions",
         label: "Actions, Meeting and Communication Management",
         icon: ActionsIcon,
+        hasSubMenu: true,
+        submenuType: "ohsactions",
+        pathPrefix: "/company/ohsactions",
       },
       {
         id: "audits",
@@ -1263,6 +1267,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "ohsemployeetraining":
         submenuContent = (
           <OHSEmployeeSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+        case "ohsactions":
+        submenuContent = (
+          <OHSActionMeetingSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
