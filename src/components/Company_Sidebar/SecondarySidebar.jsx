@@ -88,6 +88,7 @@ import EnMSUserSubmenu from "./EnMS/User Management/EnMSUserSubmenu";
 import EnMSNonConformitySubmenu from "./EnMS/Non Conformity Report/EnMSNonConformitySubmenu";
 import EnMSReportAnalysisSubmenu from "./EnMS/Report Analysis/EnMSReportAnalysisSubmenu";
 import BMSDocumentationSubmenu from "./BMS/Documentation/BMSDocumentationSubmenu";
+import BMSEmployeeSubmenu from "./BMS/Employee Training/BMSEmployeeSubmenu";
 
 
 
@@ -667,9 +668,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/bmsdocumentation",
       },
       {
-        id: "training",
+        id: "bmsemployeetraining",
         label: "Employee Training & Performance",
         icon: TrainingIcon,
+        hasSubMenu: true,
+        submenuType: "bmsemployeetraining",
+        pathPrefix: "/company/bmsemployeetraining",
       },
       {
         id: "actions",
@@ -1615,6 +1619,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       case "bmsdocumentation":
         submenuContent = (
           <BMSDocumentationSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "bmsemployeetraining":
+        submenuContent = (
+          <BMSEmployeeSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
