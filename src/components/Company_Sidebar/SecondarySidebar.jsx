@@ -61,6 +61,7 @@ import OHSEmployeeSubmenu from "./OHS/Employee Training/OHSEmployeeSubmenu";
 import OHSActionMeetingSubmenu from "./OHS/Action Meeting Management/OHSActionMeetingSubmenu";
 import OHSAuditInpectionSubmenu from "./OHS/Audit Inspection Management/OHSAuditInpectionSubmenu";
 import OHSCustomerSubmenu from "./OHS/Customer Management/OHSCustomerSubmenu";
+import OHSSupplierSubmenu from "./OHS/Supplier Management/OHSSupplierSubmenu";
  
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -394,9 +395,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/ohscustomermanagement",
       },
       {
-        id: "supplier",
+        id: "ohssuppliermanagement",
         label: "Supplier Management",
         icon: SupplierIcon,
+        hasSubMenu: true,
+        submenuType: "ohssuppliermanagement",
+        pathPrefix: "/company/ohssuppliermanagement",
       },
       {
         id: "compliance",
@@ -1299,6 +1303,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "ohscustomermanagement":
         submenuContent = (
           <OHSCustomerSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+        case "ohssuppliermanagement":
+        submenuContent = (
+          <OHSSupplierSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
