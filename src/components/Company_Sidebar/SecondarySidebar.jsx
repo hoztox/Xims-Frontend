@@ -639,8 +639,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         label: "Backup",
         icon: BackupIcon,
         path: "/company/backup",
+        hasSubMenu: false,
       },
-      { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
+      {
+        id: "logout",
+        label: "Log Out",
+        icon: LogoutIcon,
+        hasSubMenu: false,
+      },
     ],
 
     BMS: [
@@ -1486,121 +1492,121 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-      
 
-        case "enmsdocumentation":
-          submenuContent = (
-            <EnMSDocumentationSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-            />
-          );
-          break;
-        case "enmsemployeetraining":
-          submenuContent = (
-            <EnMSEmployeeSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-            />
-          );
-          break;
-        case "enmsactions":
-          submenuContent = (
-            <EnMSActionMeetingSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-            />
-          );
-          break;
-        case "enmsauditinspection":
-          submenuContent = (
-            <EnMSAuditSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-            />
-          );
-          break;
-        case "enmscustomermanagement":
-          submenuContent = (
-            <EnMSCustomerSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-            />
-          );
-          break;
-        case "enmssuppliermanagement":
-          submenuContent = (
-            <EnMSSupplierSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-            />
-          );
-          break;
-        case "enmscompliance":
-          submenuContent = (
-            <EnMSComplianceSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-            />
-          );
-          break;
-        case "enmsriskmanagement":
-          submenuContent = (
-            <EnMSRiskSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-            />
-          );
-          break;
-        case "enmsenergymanagement":
-          submenuContent = (
-            <EnMSEnergySubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-            />
-          );
-          break;
-        case "enmscorrectionmanagement":
-          submenuContent = (
-            <EnMSCorrectionSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-            />
-          );
-          break;
-        case "enmsobjectives":
-          submenuContent = (
-            <EnMSObjectivesSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-            />
-          );
-          break;
-        case "enmsuser":
-          submenuContent = (
-            <EnMSUserSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-            />
-          );
-          break;
-        case "enmsnonconformity":
-          submenuContent = (
-            <EnMSNonConformitySubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-            />
-          );
-          break;
-        case "enmsreportsanalysis":
-          submenuContent = (
-            <EnMSReportAnalysisSubmenu
-              activeSubItem={activeSubItem}
-              handleItemClick={handleSubMenuItemClick}
-            />
-          );
-          break;
-        default:
+
+      case "enmsdocumentation":
+        submenuContent = (
+          <EnMSDocumentationSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "enmsemployeetraining":
+        submenuContent = (
+          <EnMSEmployeeSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "enmsactions":
+        submenuContent = (
+          <EnMSActionMeetingSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "enmsauditinspection":
+        submenuContent = (
+          <EnMSAuditSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "enmscustomermanagement":
+        submenuContent = (
+          <EnMSCustomerSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "enmssuppliermanagement":
+        submenuContent = (
+          <EnMSSupplierSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "enmscompliance":
+        submenuContent = (
+          <EnMSComplianceSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "enmsriskmanagement":
+        submenuContent = (
+          <EnMSRiskSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "enmsenergymanagement":
+        submenuContent = (
+          <EnMSEnergySubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "enmscorrectionmanagement":
+        submenuContent = (
+          <EnMSCorrectionSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "enmsobjectives":
+        submenuContent = (
+          <EnMSObjectivesSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "enmsuser":
+        submenuContent = (
+          <EnMSUserSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "enmsnonconformity":
+        submenuContent = (
+          <EnMSNonConformitySubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "enmsreportsanalysis":
+        submenuContent = (
+          <EnMSReportAnalysisSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      default:
         submenuContent = null;
     }
 
