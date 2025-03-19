@@ -115,6 +115,7 @@ import AMSCorrectionSubmenu from "./AMS/Correction Preventive Actions/AMSCorrect
 import AMSObjectivesSubmenu from "./AMS/Objectives and Targets/AMSObjectivesSubmenu";
 import AMSUserSubmenu from "./AMS/User Management/AMSUserSubmenu";
 import AMSNonConformitySubmenu from "./AMS/Non Conformity Report/AMSNonConformitySubmenu";
+import AMSReportSubmenu from "./AMS/Report Analysis/AMSReportSubmenu";
 
 
 
@@ -925,17 +926,26 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/amsnonconformity",
       },
       {
-        id: "reports",
+        id: "amsreportsanalysis",
         label: "Reports & Analysis",
         icon: ReportsIcon,
+        hasSubMenu: true,
+        submenuType: "amsreportsanalysis",
+        pathPrefix: "/company/amsreportsanalysis",
       },
       {
         id: "backup",
         label: "Backup",
         icon: BackupIcon,
         path: "/company/backup",
+        hasSubMenu: false,
       },
-      { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
+      { 
+        id: "logout", 
+        label: "Log Out", 
+        icon: LogoutIcon, 
+        hasSubMenu: false,
+      },
     ],
 
     IMS: [
@@ -1936,6 +1946,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "amsnonconformity":
           submenuContent = (
             <AMSNonConformitySubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        case "amsreportsanalysis":
+          submenuContent = (
+            <AMSReportSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
             />
