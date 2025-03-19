@@ -68,6 +68,7 @@ import OHSEnergySubmenu from "./OHS/Energy Management/OHSEnergySubmenu";
 import OHSCorrectionSubmenu from "./OHS/Correction Preventive Actions/OHSCorrectionSubmenu";
 import OHSObjectivesSubmenu from "./OHS/Objectives and Targets/OHSObjectivesSubmenu";
 import OHSUserSubmenu from "./OHS/User Management/OHSUserSubmenu";
+import OHSNonConformitySubmenu from "./OHS/Non Conformity Report/OHSNonConformitySubmenu";
  
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -457,9 +458,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/ohsuser",
       },
       {
-        id: "nonconformity",
+        id: "ohsnonconformity",
         label: "Non Conformity Report Management",
         icon: NonConformityIcon,
+        hasSubMenu: true,
+        submenuType: "ohsnonconformity",
+        pathPrefix: "/company/ohsnonconformity",
       },
       {
         id: "reports",
@@ -1383,6 +1387,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "ohsuser":
         submenuContent = (
           <OHSUserSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+        case "ohsnonconformity":
+        submenuContent = (
+          <OHSNonConformitySubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
