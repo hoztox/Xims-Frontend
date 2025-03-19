@@ -11,6 +11,23 @@ const QmsProcedure = () => {
     { id: 1, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
     { id: 2, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
     { id: 3, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 4, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 5, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 6, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 7, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 8, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 9, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 10, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 11, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 12, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 13, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 14, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 15, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 16, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 17, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 18, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 19, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
+    { id: 20, procedure_title: "Anonymous", procedure_no: "Anonymous", approved_by: "Anonymous", revision: "Anonymous", date: '03-12-2024' },
   ]);
 
   const navigate = useNavigate();
@@ -114,15 +131,22 @@ const QmsProcedure = () => {
                 <td colSpan="8" className="text-center py-4 not-found">No Procedures found.</td>
               </tr>
             )}
+             <tr>
+              <td colSpan="8" className="pt-[15px] border-t border-[#383840]">
+                <div className="flex items-center justify-between">
+                  <div className="text-white total-text">Total-{filteredProcedure.length}</div>
+                  <div className="flex items-center gap-5">
+                    <button onClick={handlePrevious} disabled={currentPage === 1} className="cursor-pointer swipe-text">Previous</button>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <button key={page} onClick={() => handlePageClick(page)} className={`${currentPage === page ? 'pagin-active' : 'pagin-inactive'}`}>{page}</button>
+                    ))}
+                    <button onClick={handleNext} disabled={currentPage === totalPages} className="cursor-pointer swipe-text">Next</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
-        <div className="pagination">
-          <button onClick={handlePrevious} disabled={currentPage === 1}>Previous</button>
-          {Array.from({ length: totalPages }, (_, i) => (
-            <button key={i} onClick={() => handlePageClick(i + 1)}>{i + 1}</button>
-          ))}
-          <button onClick={handleNext} disabled={currentPage === totalPages}>Next</button>
-        </div>
       </div>
     </div>
   );
