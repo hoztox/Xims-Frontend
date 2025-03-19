@@ -1620,7 +1620,6 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         );
         break;
 
-
       case "enmsdocumentation":
         submenuContent = (
           <EnMSDocumentationSubmenu
