@@ -101,6 +101,7 @@ import BMSCorrectionSubmenu from "./BMS/Correction Preventive Actions/BMSCorrect
 import BMSObjectivesSubmenu from "./BMS/Objectives and Targets/BMSObjectivesSubmenu";
 import BMSUserSubmenu from "./BMS/User Management/BMSUserSubmenu";
 import BMSNonConformitySubmenu from "./BMS/Non Conformity Report/BMSNonConformitySubmenu";
+import BMSReportSubmenu from "./BMS/Report Analysis/BMSReportSubmenu";
 
 
 
@@ -776,17 +777,26 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/bmsnonconformity",
       },
       {
-        id: "reports",
+        id: "bmsreportsanalysis",
         label: "Reports & Analysis",
         icon: ReportsIcon,
+        hasSubMenu: true,
+        submenuType: "bmsreportsanalysis",
+        pathPrefix: "/company/bmsreportsanalysis",
       },
       {
         id: "backup",
         label: "Backup",
         icon: BackupIcon,
         path: "/company/backup",
+        hasSubMenu: false,
       },
-      { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
+      { 
+        id: "logout", 
+        label: "Log Out", 
+        icon: LogoutIcon, 
+        hasSubMenu: false, 
+      },
     ],
 
     AMS: [
@@ -1760,6 +1770,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       case "bmsnonconformity":
         submenuContent = (
           <BMSNonConformitySubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "bmsreportsanalysis":
+        submenuContent = (
+          <BMSReportSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
