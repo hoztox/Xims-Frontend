@@ -84,6 +84,7 @@ import EnMSRiskSubmenu from "./EnMS/Risk Management/EnMSRiskSubmenu";
 import EnMSEnergySubmenu from "./EnMS/Energy Management/EnMSEnergySubmenu";
 import EnMSCorrectionSubmenu from "./EnMS/Correction Preventive Actions/EnMSCorrectionSubmenu";
 import EnMSObjectivesSubmenu from "./EnMS/Objectives and Targets/EnMSObjectivesSubmenu";
+import EnMSUserSubmenu from "./EnMS/User Management/EnMSUserSubmenu";
 
 
 
@@ -608,9 +609,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/enmsobjectives",
       },
       {
-        id: "user",
+        id: "enmsuser",
         label: "User Management",
         icon: UserIcon,
+        hasSubMenu: true,
+        submenuType: "enmsuser",
+        pathPrefix: "/company/enmsuser",
       },
       {
         id: "nonconformity",
@@ -1559,6 +1563,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "enmsobjectives":
           submenuContent = (
             <EnMSObjectivesSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        case "enmsuser":
+          submenuContent = (
+            <EnMSUserSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
             />
