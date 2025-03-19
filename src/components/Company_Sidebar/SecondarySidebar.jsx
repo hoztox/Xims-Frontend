@@ -104,6 +104,7 @@ import BMSNonConformitySubmenu from "./BMS/Non Conformity Report/BMSNonConformit
 import BMSReportSubmenu from "./BMS/Report Analysis/BMSReportSubmenu";
 import AMSDocumentationSubmenu from "./AMS/Documentation/AMSDocumentationSubmenu";
 import AMSEmployeeSubmenu from "./AMS/Employee Training/AMSEmployeeSubmenu";
+import AMSMeetingSubmenu from "./AMS/Meeting Communication Management/AMSMeetingSubmenu";
 
 
 
@@ -826,9 +827,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/amsemployeetraining",
       },
       {
-        id: "actions",
+        id: "amsmeeting",
         label: "Meeting and Communication Management",
         icon: ActionsIcon,
+        hasSubMenu: true,
+        submenuType: "amsmeeting",
+        pathPrefix: "/company/amsmeeting",
       },
       {
         id: "audits",
@@ -1804,6 +1808,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "amsemployeetraining":
           submenuContent = (
             <AMSEmployeeSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        case "amsmeeting":
+          submenuContent = (
+            <AMSMeetingSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
             />
