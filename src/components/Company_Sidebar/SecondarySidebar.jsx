@@ -80,6 +80,7 @@ import EnMSAuditSubmenu from "./EnMS/Audit Inspection Management/EnMSAuditSubmen
 import EnMSCustomerSubmenu from "./EnMS/Customer Management/EnMSCustomerSubmenu";
 import EnMSSupplierSubmenu from "./EnMS/Supplier Management/EnMSSupplierSubmenu";
 import EnMSComplianceSubmenu from "./EnMS/Compliance/EnMSComplianceSubmenu";
+import EnMSRiskSubmenu from "./EnMS/Risk Management/EnMSRiskSubmenu";
 
 
 
@@ -572,9 +573,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/enmscompliance",
       },
       {
-        id: "risk",
+        id: "enmsriskmanagement",
         label: "Risk, Opportunities & Incident Management",
         icon: RiskIcon,
+        hasSubMenu: true,
+        submenuType: "enmsriskmanagement",
+        pathPrefix: "/company/enmsriskmanagement",
       },
       {
         id: "energy",
@@ -1511,6 +1515,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "enmscompliance":
           submenuContent = (
             <EnMSComplianceSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        case "enmsriskmanagement":
+          submenuContent = (
+            <EnMSRiskSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
             />
