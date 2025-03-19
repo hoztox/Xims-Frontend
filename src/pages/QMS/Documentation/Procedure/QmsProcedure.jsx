@@ -70,6 +70,10 @@ const QmsProcedure = () => {
     }
   };
 
+  const handleAddProcedure = () => {
+    navigate('/company/qms/addprocedure')
+  }
+
   return (
     <div className="bg-[#1C1C24] list-procedure-main">
       <div className="flex items-center justify-between px-[14px] pt-[24px]">
@@ -87,7 +91,9 @@ const QmsProcedure = () => {
               <Search size={18} />
             </div>
           </div>
-          <button className="flex items-center justify-center add-procedure-btn gap-[10px] duration-200">
+          <button className="flex items-center justify-center add-procedure-btn gap-[10px] duration-200"
+          onClick={handleAddProcedure}
+          >
             <span>Add Procedure</span>
             <img src={plusicon} alt="Add Icon" className='w-[18px] h-[18px] add-plus' />
           </button>

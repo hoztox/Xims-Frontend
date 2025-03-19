@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { ChevronDown } from 'lucide-react';
 import file from "../../../../assets/images/Company Documentation/file-icon.svg"
-import "./addqmsmanual.css"
 import { useNavigate } from 'react-router-dom';
+import "./addqmsprocedure.css"
 
-const AddQmsManual = () => {
+const AddQmsProcedure = () => {
     const navigate = useNavigate()
     const currentDate = new Date();
     const currentDay = currentDate.getDate();
@@ -14,9 +14,9 @@ const AddQmsManual = () => {
     const [selectedFile, setSelectedFile] = useState(null);
 
     const [formData, setFormData] = useState({
-        sectionName: '12345566',
+        procedureName: '12345566',
         writtenBy: "",
-        sectionNumber: '12345566',
+        procedureNumber: '12345566',
         checkedBy: "",
         revision: '12345566',
         approvedBy: "",
@@ -28,6 +28,7 @@ const AddQmsManual = () => {
         },
         years: '',
         months: '',
+        recordFormat: '',
         publish: false,
         sendNotification: false
     });
@@ -84,7 +85,7 @@ const AddQmsManual = () => {
 
     const handleDropdownChange = (e, dropdown) => {
         const value = e.target.value;
-        
+
         setFormData(prev => {
             if (['day', 'month', 'year'].includes(dropdown)) {
                 return {
@@ -100,13 +101,12 @@ const AddQmsManual = () => {
                 [dropdown]: value
             };
         });
-    
+
         setOpenDropdowns(prev => ({ ...prev, [dropdown]: false })); // Close dropdown
     };
-    
 
     const handleCancelClick = () => {
-        navigate('/company/qms/manual')
+        navigate('/company/qms/procedure')
     }
 
 
@@ -122,18 +122,18 @@ const AddQmsManual = () => {
     return (
         <div className="bg-[#1C1C24] rounded-lg text-white">
             <div>
-                <h1 className="add-manual-sections">Add Manual Sections</h1>
+                <h1 className="add-manual-sections">Add Procedures</h1>
 
                 <div className="border-t border-[#383840] mx-[18px] pt-[22px] px-[104px]">
                     <div className="grid md:grid-cols-2 gap-5">
                         <div>
                             <label className="add-qms-manual-label">
-                                Section Name/Title
+                                Procedure Name/Title
                             </label>
                             <input
                                 type="text"
-                                name="sectionName"
-                                value={formData.sectionName}
+                                name="procedureName"
+                                value={formData.procedureName}
                                 onChange={handleChange}
                                 className="w-full add-qms-manual-inputs"
                             />
@@ -160,12 +160,12 @@ const AddQmsManual = () => {
 
                         <div>
                             <label className="add-qms-manual-label">
-                                Section Number <span className="text-red-500">*</span>
+                                Procedure Number <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="text"
-                                name="sectionNumber"
-                                value={formData.sectionNumber}
+                                name="procedureNumber"
+                                value={formData.procedureNumber}
                                 onChange={handleChange}
                                 className="w-full add-qms-manual-inputs"
                             />
@@ -352,44 +352,58 @@ const AddQmsManual = () => {
                                 />
                             </div>
                         </div>
+
+                        <div>
+                            <label className="add-qms-manual-label">
+                                Relate Record Format
+                            </label>
+                            <input
+                                type="text"
+                                name="recordFormat"
+                                value={formData.recordFormat}
+                                onChange={handleChange}
+                                className="w-full add-qms-manual-inputs"
+                            />
+                        </div>
+
+                        <div className="flex flex-col items-end mt-[55px] justify-center">
+                            <div className='flex gap-[113px] mb-5'>
+                                <div className="flex items-center">
+                                    <span className="mr-3 add-qms-manual-label">Publish?</span>
+                                    <input
+                                        type="checkbox"
+                                        className="qms-manual-form-checkbox"
+                                        checked={formData.publish}
+                                        onChange={() => setFormData(prev => ({ ...prev, publish: !prev.publish }))}
+                                    />
+                                </div>
+                                <div className="flex items-center">
+                                    <span className="mr-3 add-qms-manual-label">Send Notification?</span>
+                                    <input
+                                        type="checkbox"
+                                        className="qms-manual-form-checkbox"
+                                        checked={formData.sendNotification}
+                                        onChange={() => setFormData(prev => ({ ...prev, sendNotification: !prev.sendNotification }))}
+                                    />
+                                </div>
+                            </div>
+                            <div className='flex gap-[22px] mb-6'>
+                                <button className="cancel-btn duration-200"
+                                    onClick={handleCancelClick}
+                                >
+                                    Cancel
+                                </button>
+                                <button className="save-btn duration-200">
+                                    Save
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="flex flex-col items-end mt-[22px] justify-center">
-                        <div className='flex gap-[113px] mb-5'>
-                            <div className="flex items-center">
-                                <span className="mr-3 add-qms-manual-label">Publish?</span>
-                                <input
-                                    type="checkbox"
-                                    className="qms-manual-form-checkbox"
-                                    checked={formData.publish}
-                                    onChange={() => setFormData(prev => ({ ...prev, publish: !prev.publish }))}
-                                />
-                            </div>
-                            <div className="flex items-center">
-                                <span className="mr-3 add-qms-manual-label">Send Notification?</span>
-                                <input
-                                    type="checkbox"
-                                    className="qms-manual-form-checkbox"
-                                    checked={formData.sendNotification}
-                                    onChange={() => setFormData(prev => ({ ...prev, sendNotification: !prev.sendNotification }))}
-                                />
-                            </div>
-                        </div>
-                        <div className='flex gap-[22px] mb-6'>
-                            <button className="cancel-btn duration-200"
-                            onClick={handleCancelClick}
-                            >
-                                Cancel
-                            </button>
-                            <button className="save-btn duration-200">
-                                Save
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     );
 };
 
-export default AddQmsManual
+export default AddQmsProcedure
