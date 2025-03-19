@@ -54,7 +54,11 @@ import EMSObjectivesSubmenu from "./EMS/Objective and Targets/EMSObjectivesSubme
 import EMSUserManagementSubmenu from "./EMS/User Management/EMSUserManagementSubmenu";
 import EMSNonConformitySubmenu from "./EMS/Non Conformity Report/EMSNonConformitySubmenu";
 import EMSReportsAnalysisSubmenu from "./EMS/Reports Analysis/EMSReportsAnalysisSubmenu";
-// Other submenu components would be imported here
+
+// OHS
+import OHSDocumentationSubmenu from "./OHS/Documentation/OHSDocumentationSubmenu";
+import OHSEmployeeSubmenu from "./OHS/Employee Training/OHSEmployeeSubmenu";
+ 
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
   const location = useLocation();
@@ -344,16 +348,23 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         label: "Dashboard",
         icon: DashboardIcon,
         path: "/company/dashboard",
+        hasSubMenu: false,
       },
       {
-        id: "documentation",
+        id: "ohsdocumentation",
         label: "Documentation",
         icon: DocumentationIcon,
+        hasSubMenu: true,
+        submenuType: "ohsdocumentation",
+        pathPrefix: "/company/ohsdocumentation",
       },
       {
-        id: "training",
+        id: "ohsemployeetraining",
         label: "Employee Training & Performance",
         icon: TrainingIcon,
+        hasSubMenu: true,
+        submenuType: "ohsemployeetraining",
+        pathPrefix: "/company/ohsemployeetraining",
       },
       {
         id: "actions",
@@ -1235,6 +1246,23 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       case "emsreportsanalysis":
         submenuContent = (
           <EMSReportsAnalysisSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+
+        case "ohsdocumentation":
+        submenuContent = (
+          <OHSDocumentationSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+        case "ohsemployeetraining":
+        submenuContent = (
+          <OHSEmployeeSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
