@@ -102,6 +102,8 @@ import BMSObjectivesSubmenu from "./BMS/Objectives and Targets/BMSObjectivesSubm
 import BMSUserSubmenu from "./BMS/User Management/BMSUserSubmenu";
 import BMSNonConformitySubmenu from "./BMS/Non Conformity Report/BMSNonConformitySubmenu";
 import BMSReportSubmenu from "./BMS/Report Analysis/BMSReportSubmenu";
+import AMSDocumentationSubmenu from "./AMS/Documentation/AMSDocumentationSubmenu";
+import AMSEmployeeSubmenu from "./AMS/Employee Training/AMSEmployeeSubmenu";
 
 
 
@@ -805,16 +807,23 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         label: "Dashboard",
         icon: DashboardIcon,
         path: "/company/dashboard",
+        hasSubMenu: false,
       },
       {
-        id: "documentation",
+        id: "amsdocumentation",
         label: "Documentation",
         icon: DocumentationIcon,
+        hasSubMenu: true,
+        submenuType: "amsdocumentation",
+        pathPrefix: "/company/amsdocumentation",
       },
       {
-        id: "training",
+        id: "amsemployeetraining",
         label: "Employee Training & Performance",
         icon: TrainingIcon,
+        hasSubMenu: true,
+        submenuType: "amsemployeetraining",
+        pathPrefix: "/company/amsemployeetraining",
       },
       {
         id: "actions",
@@ -1784,7 +1793,23 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         );
         break;
 
-      default:
+        case "amsdocumentation":
+          submenuContent = (
+            <AMSDocumentationSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        case "amsemployeetraining":
+          submenuContent = (
+            <AMSEmployeeSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        default:
         submenuContent = null;
     }
 
