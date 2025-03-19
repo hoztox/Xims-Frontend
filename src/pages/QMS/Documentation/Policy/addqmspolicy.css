@@ -19,3 +19,11 @@
     line-height: normal;
     font-style: normal;
 }
+
+.attach-policy-text {
+    font-family: 'Switzer Light'; 
+    font-size: 20px;
+    font-style: normal;
+    line-height: normal;
+    color: white;
+}

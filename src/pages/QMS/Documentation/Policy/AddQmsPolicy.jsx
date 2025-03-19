@@ -18,6 +18,7 @@ import addlink from "../../../../assets/images/Company Documentation/add-link.sv
 import removelink from "../../../../assets/images/Company Documentation/remove-link.svg"
 import textcolor from '../../../../assets/images/Company Documentation/text-color.svg'
 import bgcolor from '../../../../assets/images/Company Documentation/bg-color.svg'
+import files from "../../../../assets/images/Company Documentation/file-icon.svg"
 import "./addqmspolicy.css"
 
 const AddQmsPolicy = () => {
@@ -897,30 +898,32 @@ const AddQmsPolicy = () => {
       </div>
 
       {/* File upload */}
-      <div className="flex items-center justify-between mb-6">
-        <label className="font-medium">Attach Energy Policy:</label>
-        <div className="flex items-center">
-          <label className="flex items-center px-4 py-2 bg-gray-800 text-gray-300 rounded-md border border-gray-700 cursor-pointer hover:bg-gray-700 transition">
+      <div className="flex items-center justify-between mt-8 mb-[23px]">
+        <label className="attach-policy-text">Attach Energy Policy:</label>
+        <div className="flex items-center ">
+          <label className="flex justify-center gap-[10px] items-center w-[326px] h-[44px] px-[10px] text-[#AAAAAA] rounded-md border border-[#383840] cursor-pointer transition">
             Choose File
-            <FileUp size={20} className="ml-2" />
+            <img src={files} alt="File Icon" />
             <input
               type="file"
               className="hidden"
               onChange={handleFileChange}
             />
           </label>
-          <span className="ml-3 text-gray-400 text-sm">
+          <span className="ml-3 text-[#54545B] no-file ">
             {fileSelected ? fileName : 'No file chosen'}
           </span>
         </div>
       </div>
 
+      <div className="border-t border-[#383840]"></div>
+
       {/* Buttons */}
-      <div className="flex justify-end gap-4">
-        <button className="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition">
+      <div className="flex justify-end gap-[21px] mt-8">
+        <button className="cancel-btn duration-200">
           Cancel
         </button>
-        <button className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+        <button className="save-btn duration-200">
           Save
         </button>
       </div>
