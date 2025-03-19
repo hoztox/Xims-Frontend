@@ -76,6 +76,7 @@ import OHSReportAnalysisSubmenu from "./OHS/Reports Analysis/OHSReportAnalysisSu
 import EnMSDocumentationSubmenu from "./EnMS/Documentation/EnMSDocumentationSubmenu";
 import EnMSEmployeeSubmenu from "./EnMS/Employee Training/EnMSEmployeeSubmenu";
 import EnMSActionMeetingSubmenu from "./EnMS/Action Meeting Management/EnMSActionMeetingSubmenu";
+import EnMSAuditSubmenu from "./EnMS/Audit Inspection Management/EnMSAuditSubmenu";
 
 
 
@@ -536,9 +537,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/enmsactions",
       },
       {
-        id: "audits",
+        id: "enmsauditinspection",
         label: "Audits & Inspections Management",
         icon: AuditsIcon,
+        hasSubMenu: true,
+        submenuType: "enmsauditinspection",
+        pathPrefix: "/company/enmsauditinspection",
       },
       {
         id: "customer",
@@ -1463,6 +1467,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "enmsactions":
           submenuContent = (
             <EnMSActionMeetingSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        case "enmsauditinspection":
+          submenuContent = (
+            <EnMSAuditSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
             />
