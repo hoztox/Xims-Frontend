@@ -106,6 +106,7 @@ import AMSDocumentationSubmenu from "./AMS/Documentation/AMSDocumentationSubmenu
 import AMSEmployeeSubmenu from "./AMS/Employee Training/AMSEmployeeSubmenu";
 import AMSMeetingSubmenu from "./AMS/Meeting Communication Management/AMSMeetingSubmenu";
 import AMSAuditSubmenu from "./AMS/Audit Inspection Management/AMSAuditSubmenu";
+import AMSCustomerSubmenu from "./AMS/Customer Management/AMSCustomerSubmenu";
 
 
 
@@ -844,9 +845,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/amsauditinspection",
       },
       {
-        id: "customer",
+        id: "amscustomermanagement",
         label: "Customer Management",
         icon: CustomerIcon,
+        hasSubMenu: true,
+        submenuType: "amscustomermanagement",
+        pathPrefix: "/company/amscustomermanagement",
       },
       {
         id: "supplier",
@@ -1828,6 +1832,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "amsauditinspection":
           submenuContent = (
             <AMSAuditSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        case "amscustomermanagement":
+          submenuContent = (
+            <AMSCustomerSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
             />
