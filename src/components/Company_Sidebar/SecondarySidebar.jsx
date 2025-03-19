@@ -59,6 +59,7 @@ import EMSReportsAnalysisSubmenu from "./EMS/Reports Analysis/EMSReportsAnalysis
 import OHSDocumentationSubmenu from "./OHS/Documentation/OHSDocumentationSubmenu";
 import OHSEmployeeSubmenu from "./OHS/Employee Training/OHSEmployeeSubmenu";
 import OHSActionMeetingSubmenu from "./OHS/Action Meeting Management/OHSActionMeetingSubmenu";
+import OHSAuditInpectionSubmenu from "./OHS/Audit Inspection Management/OHSAuditInpectionSubmenu";
  
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -376,9 +377,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/ohsactions",
       },
       {
-        id: "audits",
+        id: "ohsauditinspection",
         label: "Audits & Inspections Management",
         icon: AuditsIcon,
+        hasSubMenu: true,
+        submenuType: "ohsauditinspection",
+        pathPrefix: "/company/ohsauditinspection",
       },
       {
         id: "customer",
@@ -1275,6 +1279,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "ohsactions":
         submenuContent = (
           <OHSActionMeetingSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+        case "ohsauditinspection":
+        submenuContent = (
+          <OHSAuditInpectionSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
