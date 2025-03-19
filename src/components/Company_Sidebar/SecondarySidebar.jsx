@@ -64,6 +64,7 @@ import OHSCustomerSubmenu from "./OHS/Customer Management/OHSCustomerSubmenu";
 import OHSSupplierSubmenu from "./OHS/Supplier Management/OHSSupplierSubmenu";
 import OHSComplianceSubmenu from "./OHS/Compliance/OHSComplianceSubmenu";
 import OHSRiskManagementSubmenu from "./OHS/Risk Management/OHSRiskManagementSubmenu";
+import OHSEnergySubmenu from "./OHS/Energy Management/OHSEnergySubmenu";
  
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -421,9 +422,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/ohsriskmanagement",
       },
       {
-        id: "energy",
+        id: "ohsenergymanagement",
         label: "Energy Management",
         icon: EnergyIcon,
+        hasSubMenu: true,
+        submenuType: "ohsenergymanagement",
+        pathPrefix: "/company/ohsenergymanagement",
       },
       {
         id: "correction",
@@ -1335,6 +1339,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "ohsriskmanagement":
         submenuContent = (
           <OHSRiskManagementSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+        case "ohsenergymanagement":
+        submenuContent = (
+          <OHSEnergySubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
