@@ -78,6 +78,7 @@ import EnMSEmployeeSubmenu from "./EnMS/Employee Training/EnMSEmployeeSubmenu";
 import EnMSActionMeetingSubmenu from "./EnMS/Action Meeting Management/EnMSActionMeetingSubmenu";
 import EnMSAuditSubmenu from "./EnMS/Audit Inspection Management/EnMSAuditSubmenu";
 import EnMSCustomerSubmenu from "./EnMS/Customer Management/EnMSCustomerSubmenu";
+import EnMSSupplierSubmenu from "./EnMS/Supplier Management/EnMSSupplierSubmenu";
 
 
 
@@ -554,9 +555,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/enmscustomermanagement",
       },
       {
-        id: "supplier",
+        id: "enmssuppliermanagement",
         label: "Supplier Management",
         icon: SupplierIcon,
+        hasSubMenu: true,
+        submenuType: "enmssuppliermanagement",
+        pathPrefix: "/company/enmssuppliermanagement",
       },
       {
         id: "compliance",
@@ -1487,6 +1491,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "enmscustomermanagement":
           submenuContent = (
             <EnMSCustomerSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        case "enmssuppliermanagement":
+          submenuContent = (
+            <EnMSSupplierSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
             />
