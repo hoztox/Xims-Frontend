@@ -70,7 +70,11 @@ import OHSObjectivesSubmenu from "./OHS/Objectives and Targets/OHSObjectivesSubm
 import OHSUserSubmenu from "./OHS/User Management/OHSUserSubmenu";
 import OHSNonConformitySubmenu from "./OHS/Non Conformity Report/OHSNonConformitySubmenu";
 import OHSReportAnalysisSubmenu from "./OHS/Reports Analysis/OHSReportAnalysisSubmenu";
- 
+import EnMSDocumentationSubmenu from "./EnMS/Documentation/EnMSDocumentationSubmenu";
+
+
+// EnMS
+
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
   const location = useLocation();
@@ -352,9 +356,10 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         path: "/company/backup",
         hasSubMenu: false,
       },
-      { id: "logout", 
-        label: "Log Out", 
-        icon: LogoutIcon, 
+      {
+        id: "logout",
+        label: "Log Out",
+        icon: LogoutIcon,
         hasSubMenu: false,
       },
     ],
@@ -486,9 +491,10 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         path: "/company/backup",
         hasSubMenu: false,
       },
-      { id: "logout", 
-        label: "Log Out", 
-        icon: LogoutIcon, 
+      {
+        id: "logout",
+        label: "Log Out",
+        icon: LogoutIcon,
         hasSubMenu: false,
       },
     ],
@@ -499,11 +505,15 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         label: "Dashboard",
         icon: DashboardIcon,
         path: "/company/dashboard",
+        hasSubMenu: false,
       },
       {
-        id: "documentation",
+        id: "enmsdocumentation",
         label: "Documentation",
         icon: DocumentationIcon,
+        hasSubMenu: true,
+        submenuType: "enmsdocumentation",
+        pathPrefix: "/company/enmsdocumentation",
       },
       {
         id: "training",
@@ -1310,7 +1320,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         );
         break;
 
-        case "ohsdocumentation":
+      case "ohsdocumentation":
         submenuContent = (
           <OHSDocumentationSubmenu
             activeSubItem={activeSubItem}
@@ -1318,7 +1328,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-        case "ohsemployeetraining":
+      case "ohsemployeetraining":
         submenuContent = (
           <OHSEmployeeSubmenu
             activeSubItem={activeSubItem}
@@ -1326,7 +1336,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-        case "ohsactions":
+      case "ohsactions":
         submenuContent = (
           <OHSActionMeetingSubmenu
             activeSubItem={activeSubItem}
@@ -1334,7 +1344,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-        case "ohsauditinspection":
+      case "ohsauditinspection":
         submenuContent = (
           <OHSAuditInpectionSubmenu
             activeSubItem={activeSubItem}
@@ -1342,7 +1352,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-        case "ohscustomermanagement":
+      case "ohscustomermanagement":
         submenuContent = (
           <OHSCustomerSubmenu
             activeSubItem={activeSubItem}
@@ -1350,7 +1360,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-        case "ohssuppliermanagement":
+      case "ohssuppliermanagement":
         submenuContent = (
           <OHSSupplierSubmenu
             activeSubItem={activeSubItem}
@@ -1358,7 +1368,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-        case "ohscompliance":
+      case "ohscompliance":
         submenuContent = (
           <OHSComplianceSubmenu
             activeSubItem={activeSubItem}
@@ -1366,7 +1376,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-        case "ohsriskmanagement":
+      case "ohsriskmanagement":
         submenuContent = (
           <OHSRiskManagementSubmenu
             activeSubItem={activeSubItem}
@@ -1374,7 +1384,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-        case "ohsenergymanagement":
+      case "ohsenergymanagement":
         submenuContent = (
           <OHSEnergySubmenu
             activeSubItem={activeSubItem}
@@ -1382,7 +1392,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-        case "ohscorrectionmanagement":
+      case "ohscorrectionmanagement":
         submenuContent = (
           <OHSCorrectionSubmenu
             activeSubItem={activeSubItem}
@@ -1390,7 +1400,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-        case "ohsobjectives":
+      case "ohsobjectives":
         submenuContent = (
           <OHSObjectivesSubmenu
             activeSubItem={activeSubItem}
@@ -1398,7 +1408,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-        case "ohsuser":
+      case "ohsuser":
         submenuContent = (
           <OHSUserSubmenu
             activeSubItem={activeSubItem}
@@ -1406,7 +1416,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-        case "ohsnonconformity":
+      case "ohsnonconformity":
         submenuContent = (
           <OHSNonConformitySubmenu
             activeSubItem={activeSubItem}
@@ -1414,7 +1424,7 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-        case "ohsreportsanalysis":
+      case "ohsreportsanalysis":
         submenuContent = (
           <OHSReportAnalysisSubmenu
             activeSubItem={activeSubItem}
@@ -1422,7 +1432,17 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
           />
         );
         break;
-      default:
+      
+
+        case "enmsdocumentation":
+          submenuContent = (
+            <EnMSDocumentationSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        default:
         submenuContent = null;
     }
 
@@ -1446,14 +1466,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
     );
   };
 
-  
+
 
   const handleLogout = () => {
     // Remove authentication tokens
     localStorage.removeItem("companyAccessToken");
     localStorage.removeItem('logoutTime');
     navigate("/company-login");
-     
+
   };
 
   return (
