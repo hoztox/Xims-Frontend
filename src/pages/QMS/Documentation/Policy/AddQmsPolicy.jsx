@@ -1,8 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import {
-  Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, AlignJustify,
-  List, ListOrdered, FileUp, Undo, Redo, Link, Unlink, Image, FileDown, Upload
-} from 'lucide-react';
+import { FileUp } from 'lucide-react';
 
 import bold from "../../../../assets/images/Company Documentation/bold.svg"
 import itallic from '../../../../assets/images/Company Documentation/itallic.svg'
