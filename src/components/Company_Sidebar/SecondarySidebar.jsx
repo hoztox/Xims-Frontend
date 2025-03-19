@@ -96,6 +96,7 @@ import BMSCustomerSubmenu from "./BMS/Customer Management/BMSCustomerSubmenu";
 import BMSSupplierSubmenu from "./BMS/Supplier Management/BMSSupplierSubmenu";
 import BMSComplianceSubmenu from "./BMS/Compliance/BMSComplianceSubmenu";
 import BMSRiskSubmenu from "./BMS/Risk Management/BMSRiskSubmenu";
+import BMSBusinessSubmenu from "./BMS/Business Continuity Management/BMSBusinessSubmenu";
 
 
 
@@ -731,9 +732,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/bmsriskmanagement",
       },
       {
-        id: "business",
+        id: "bmsbusinessmanagement",
         label: "Business Continuity Management",
         icon: AnalysisIcon,
+        hasSubMenu: true,
+        submenuType: "bmsbusinessmanagement",
+        pathPrefix: "/company/bmsbusinessmanagement",
       },
       {
         id: "correction",
@@ -1700,6 +1704,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       case "bmsriskmanagement":
         submenuContent = (
           <BMSRiskSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "bmsbusinessmanagement":
+        submenuContent = (
+          <BMSBusinessSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
