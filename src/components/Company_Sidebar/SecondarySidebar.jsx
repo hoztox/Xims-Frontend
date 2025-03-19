@@ -71,6 +71,7 @@ import OHSUserSubmenu from "./OHS/User Management/OHSUserSubmenu";
 import OHSNonConformitySubmenu from "./OHS/Non Conformity Report/OHSNonConformitySubmenu";
 import OHSReportAnalysisSubmenu from "./OHS/Reports Analysis/OHSReportAnalysisSubmenu";
 import EnMSDocumentationSubmenu from "./EnMS/Documentation/EnMSDocumentationSubmenu";
+import EnMSEmployeeSubmenu from "./EnMS/Employee Training/EnMSEmployeeSubmenu";
 
 
 // EnMS
@@ -516,9 +517,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/enmsdocumentation",
       },
       {
-        id: "training",
+        id: "enmsemployeetraining",
         label: "Employee Training & Performance",
         icon: TrainingIcon,
+        hasSubMenu: true,
+        submenuType: "enmsemployeetraining",
+        pathPrefix: "/company/enmsemployeetraining",
       },
       {
         id: "actions",
@@ -1437,6 +1441,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "enmsdocumentation":
           submenuContent = (
             <EnMSDocumentationSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        case "enmsemployeetraining":
+          submenuContent = (
+            <EnMSEmployeeSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
             />
