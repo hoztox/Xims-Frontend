@@ -79,6 +79,7 @@ import EnMSActionMeetingSubmenu from "./EnMS/Action Meeting Management/EnMSActio
 import EnMSAuditSubmenu from "./EnMS/Audit Inspection Management/EnMSAuditSubmenu";
 import EnMSCustomerSubmenu from "./EnMS/Customer Management/EnMSCustomerSubmenu";
 import EnMSSupplierSubmenu from "./EnMS/Supplier Management/EnMSSupplierSubmenu";
+import EnMSComplianceSubmenu from "./EnMS/Compliance/EnMSComplianceSubmenu";
 
 
 
@@ -563,9 +564,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/enmssuppliermanagement",
       },
       {
-        id: "compliance",
+        id: "enmscompliance",
         label: "Compliance, Sustainability & Management of Change",
         icon: ComplianceIcon,
+        hasSubMenu: true,
+        submenuType: "enmscompliance",
+        pathPrefix: "/company/enmscompliance",
       },
       {
         id: "risk",
@@ -1499,6 +1503,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "enmssuppliermanagement":
           submenuContent = (
             <EnMSSupplierSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        case "enmscompliance":
+          submenuContent = (
+            <EnMSComplianceSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
             />
