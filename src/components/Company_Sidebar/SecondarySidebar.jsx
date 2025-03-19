@@ -95,6 +95,7 @@ import BMSAuditSubmenu from "./BMS/Audit Inspection Management/BMSAuditSubmenu";
 import BMSCustomerSubmenu from "./BMS/Customer Management/BMSCustomerSubmenu";
 import BMSSupplierSubmenu from "./BMS/Supplier Management/BMSSupplierSubmenu";
 import BMSComplianceSubmenu from "./BMS/Compliance/BMSComplianceSubmenu";
+import BMSRiskSubmenu from "./BMS/Risk Management/BMSRiskSubmenu";
 
 
 
@@ -722,9 +723,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/bmscompliance",
       },
       {
-        id: "risk",
+        id: "bmsriskmanagement",
         label: "Risk, Opportunities & Incident Management",
         icon: RiskIcon,
+        hasSubMenu: true,
+        submenuType: "bmsriskmanagement",
+        pathPrefix: "/company/bmsriskmanagement",
       },
       {
         id: "business",
@@ -1688,6 +1692,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       case "bmscompliance":
         submenuContent = (
           <BMSComplianceSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "bmsriskmanagement":
+        submenuContent = (
+          <BMSRiskSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
