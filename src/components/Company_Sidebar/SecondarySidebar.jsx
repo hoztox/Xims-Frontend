@@ -85,6 +85,7 @@ import EnMSEnergySubmenu from "./EnMS/Energy Management/EnMSEnergySubmenu";
 import EnMSCorrectionSubmenu from "./EnMS/Correction Preventive Actions/EnMSCorrectionSubmenu";
 import EnMSObjectivesSubmenu from "./EnMS/Objectives and Targets/EnMSObjectivesSubmenu";
 import EnMSUserSubmenu from "./EnMS/User Management/EnMSUserSubmenu";
+import EnMSNonConformitySubmenu from "./EnMS/Non Conformity Report/EnMSNonConformitySubmenu";
 
 
 
@@ -617,9 +618,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/enmsuser",
       },
       {
-        id: "nonconformity",
+        id: "enmsnonconformity",
         label: "Non Conformity Report Management",
         icon: NonConformityIcon,
+        hasSubMenu: true,
+        submenuType: "enmsnonconformity",
+        pathPrefix: "/company/enmsnonconformity",
       },
       {
         id: "reports",
@@ -1571,6 +1575,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "enmsuser":
           submenuContent = (
             <EnMSUserSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        case "enmsnonconformity":
+          submenuContent = (
+            <EnMSNonConformitySubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
             />
