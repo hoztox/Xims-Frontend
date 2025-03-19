@@ -1,6 +1,4 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { FileUp } from 'lucide-react';
-
 import bold from "../../../../assets/images/Company Documentation/bold.svg"
 import itallic from '../../../../assets/images/Company Documentation/itallic.svg'
 import underlines from '../../../../assets/images/Company Documentation/underline.svg'
