@@ -108,6 +108,7 @@ import AMSMeetingSubmenu from "./AMS/Meeting Communication Management/AMSMeeting
 import AMSAuditSubmenu from "./AMS/Audit Inspection Management/AMSAuditSubmenu";
 import AMSCustomerSubmenu from "./AMS/Customer Management/AMSCustomerSubmenu";
 import AMSSupplierSubmenu from "./AMS/Supplier Management/AMSSupplierSubmenu";
+import AMSComplianceSubmenu from "./AMS/Compliance/AMSComplianceSubmenu";
 
 
 
@@ -862,9 +863,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/amssuppliermanagement",
       },
       {
-        id: "compliance",
+        id: "amscompliance",
         label: "Compliance, Sustainability & Management of Change",
         icon: ComplianceIcon,
+        hasSubMenu: true,
+        submenuType: "amscompliance",
+        pathPrefix: "/company/amscompliance",
       },
       {
         id: "risk",
@@ -1852,6 +1856,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "amssuppliermanagement":
           submenuContent = (
             <AMSSupplierSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        case "amscompliance":
+          submenuContent = (
+            <AMSComplianceSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
             />
