@@ -98,6 +98,7 @@ import BMSComplianceSubmenu from "./BMS/Compliance/BMSComplianceSubmenu";
 import BMSRiskSubmenu from "./BMS/Risk Management/BMSRiskSubmenu";
 import BMSBusinessSubmenu from "./BMS/Business Continuity Management/BMSBusinessSubmenu";
 import BMSCorrectionSubmenu from "./BMS/Correction Preventive Actions/BMSCorrectionSubmenu";
+import BMSObjectivesSubmenu from "./BMS/Objectives and Targets/BMSObjectivesSubmenu";
 
 
 
@@ -749,9 +750,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/bmscorrectionmanagement",
       },
       {
-        id: "objectives",
+        id: "bmsobjectives",
         label: "Objectives & Targets",
         icon: ObjectivesIcon,
+        hasSubMenu: true,
+        submenuType: "bmsobjectives",
+        pathPrefix: "/company/bmsobjectives",
       },
       {
         id: "user",
@@ -1724,6 +1728,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       case "bmscorrectionmanagement":
         submenuContent = (
           <BMSCorrectionSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "bmsobjectives":
+        submenuContent = (
+          <BMSObjectivesSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
