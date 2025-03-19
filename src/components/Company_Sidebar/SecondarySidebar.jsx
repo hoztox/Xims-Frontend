@@ -93,6 +93,7 @@ import BMSEmployeeSubmenu from "./BMS/Employee Training/BMSEmployeeSubmenu";
 import BMSActionMeetingSubmenu from "./BMS/Action Meeting Management/BMSActionMeetingSubmenu";
 import BMSAuditSubmenu from "./BMS/Audit Inspection Management/BMSAuditSubmenu";
 import BMSCustomerSubmenu from "./BMS/Customer Management/BMSCustomerSubmenu";
+import BMSSupplierSubmenu from "./BMS/Supplier Management/BMSSupplierSubmenu";
 
 
 
@@ -704,9 +705,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/bmscustomermanagement",
       },
       {
-        id: "supplier",
+        id: "bmssuppliermanagement",
         label: "Supplier Management",
         icon: SupplierIcon,
+        hasSubMenu: true,
+        submenuType: "bmssuppliermanagement",
+        pathPrefix: "/company/bmssuppliermanagement",
       },
       {
         id: "compliance",
@@ -1664,6 +1668,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       case "bmscustomermanagement":
         submenuContent = (
           <BMSCustomerSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "bmssuppliermanagement":
+        submenuContent = (
+          <BMSSupplierSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
