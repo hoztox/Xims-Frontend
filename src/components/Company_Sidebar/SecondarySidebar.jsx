@@ -90,6 +90,7 @@ import EnMSReportAnalysisSubmenu from "./EnMS/Report Analysis/EnMSReportAnalysis
 import BMSDocumentationSubmenu from "./BMS/Documentation/BMSDocumentationSubmenu";
 import BMSEmployeeSubmenu from "./BMS/Employee Training/BMSEmployeeSubmenu";
 import BMSActionMeetingSubmenu from "./BMS/Action Meeting Management/BMSActionMeetingSubmenu";
+import BMSAuditSubmenu from "./BMS/Audit Inspection Management/BMSAuditSubmenu";
 
 
 
@@ -685,9 +686,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/bmsactions",
       },
       {
-        id: "audits",
+        id: "bmsauditinspection",
         label: "Audits & Inspections Management",
         icon: AuditsIcon,
+        hasSubMenu: true,
+        submenuType: "bmsauditinspection",
+        pathPrefix: "/company/bmsauditinspection",
       },
       {
         id: "customer",
@@ -1639,6 +1643,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       case "bmsactions":
         submenuContent = (
           <BMSActionMeetingSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "bmsauditinspection":
+        submenuContent = (
+          <BMSAuditSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
