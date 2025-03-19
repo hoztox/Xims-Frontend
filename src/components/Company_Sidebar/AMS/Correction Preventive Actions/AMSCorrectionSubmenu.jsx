@@ -3,7 +3,7 @@ import policy from "../../../../assets/images/Company-Sidebar/policy.svg";
 import manual from "../../../../assets/images/Company-Sidebar/manual.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const BMSCorrectionSubmenu = () => {
+const AMSCorrectionSubmenu = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -31,7 +31,7 @@ const BMSCorrectionSubmenu = () => {
       props.handleItemClick(
         category.id,
         category.path,
-        "bmscorrectionmanagement"
+        "amscorrectionmanagement"
       );
     } else {
       navigate(category.path);
@@ -45,7 +45,7 @@ const BMSCorrectionSubmenu = () => {
         return (
           <div
             key={category.id}
-            className="flex flex-col items-center justify-center py-[10px] rounded-md bg-[#F310FF10] transition-colors duration-200 cursor-pointer w-[165px] h-[100px] gap-[10px] documentation-submenu-cards"
+            className="flex flex-col items-center justify-center py-[10px] rounded-md bg-[#DD6B0610] transition-colors duration-200 cursor-pointer w-[165px] h-[100px] gap-[10px] documentation-submenu-cards"
             onClick={() => handleCategoryClick(category)}
           >
             <div className="bg-[#5B5B5B] rounded-full p-[5px] w-[26px] h-[26px] flex justify-center items-center">
@@ -65,4 +65,4 @@ const BMSCorrectionSubmenu = () => {
   );
 };
 
-export default BMSCorrectionSubmenu;
+export default AMSCorrectionSubmenu;
