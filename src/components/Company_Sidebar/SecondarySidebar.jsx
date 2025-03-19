@@ -109,6 +109,7 @@ import AMSAuditSubmenu from "./AMS/Audit Inspection Management/AMSAuditSubmenu";
 import AMSCustomerSubmenu from "./AMS/Customer Management/AMSCustomerSubmenu";
 import AMSSupplierSubmenu from "./AMS/Supplier Management/AMSSupplierSubmenu";
 import AMSComplianceSubmenu from "./AMS/Compliance/AMSComplianceSubmenu";
+import AMSRiskSubmenu from "./AMS/Risk Management/AMSRiskSubmenu";
 
 
 
@@ -871,9 +872,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/amscompliance",
       },
       {
-        id: "risk",
+        id: "amsriskmanagement",
         label: "Risk & Incident Management",
         icon: RiskIcon,
+        hasSubMenu: true,
+        submenuType: "amsriskmanagement",
+        pathPrefix: "/company/amsriskmanagement",
       },
       {
         id: "energy",
@@ -1864,6 +1868,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "amscompliance":
           submenuContent = (
             <AMSComplianceSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        case "amsriskmanagement":
+          submenuContent = (
+            <AMSRiskSubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
             />
