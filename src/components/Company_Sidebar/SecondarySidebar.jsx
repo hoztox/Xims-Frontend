@@ -71,7 +71,6 @@ import OHSUserSubmenu from "./OHS/User Management/OHSUserSubmenu";
 import OHSNonConformitySubmenu from "./OHS/Non Conformity Report/OHSNonConformitySubmenu";
 import OHSReportAnalysisSubmenu from "./OHS/Reports Analysis/OHSReportAnalysisSubmenu";
 
-
 // EnMS
 import EnMSDocumentationSubmenu from "./EnMS/Documentation/EnMSDocumentationSubmenu";
 import EnMSEmployeeSubmenu from "./EnMS/Employee Training/EnMSEmployeeSubmenu";
@@ -87,10 +86,13 @@ import EnMSObjectivesSubmenu from "./EnMS/Objectives and Targets/EnMSObjectivesS
 import EnMSUserSubmenu from "./EnMS/User Management/EnMSUserSubmenu";
 import EnMSNonConformitySubmenu from "./EnMS/Non Conformity Report/EnMSNonConformitySubmenu";
 import EnMSReportAnalysisSubmenu from "./EnMS/Report Analysis/EnMSReportAnalysisSubmenu";
+
+// BMS
 import BMSDocumentationSubmenu from "./BMS/Documentation/BMSDocumentationSubmenu";
 import BMSEmployeeSubmenu from "./BMS/Employee Training/BMSEmployeeSubmenu";
 import BMSActionMeetingSubmenu from "./BMS/Action Meeting Management/BMSActionMeetingSubmenu";
 import BMSAuditSubmenu from "./BMS/Audit Inspection Management/BMSAuditSubmenu";
+import BMSCustomerSubmenu from "./BMS/Customer Management/BMSCustomerSubmenu";
 
 
 
@@ -694,9 +696,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/bmsauditinspection",
       },
       {
-        id: "customer",
+        id: "bmscustomermanagement",
         label: "Customer Management",
         icon: CustomerIcon,
+        hasSubMenu: true,
+        submenuType: "bmscustomermanagement",
+        pathPrefix: "/company/bmscustomermanagement",
       },
       {
         id: "supplier",
@@ -1651,6 +1656,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
       case "bmsauditinspection":
         submenuContent = (
           <BMSAuditSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+      case "bmscustomermanagement":
+        submenuContent = (
+          <BMSCustomerSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
