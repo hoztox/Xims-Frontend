@@ -66,6 +66,7 @@ import OHSComplianceSubmenu from "./OHS/Compliance/OHSComplianceSubmenu";
 import OHSRiskManagementSubmenu from "./OHS/Risk Management/OHSRiskManagementSubmenu";
 import OHSEnergySubmenu from "./OHS/Energy Management/OHSEnergySubmenu";
 import OHSCorrectionSubmenu from "./OHS/Correction Preventive Actions/OHSCorrectionSubmenu";
+import OHSObjectivesSubmenu from "./OHS/Objectives and Targets/OHSObjectivesSubmenu";
  
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -439,9 +440,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/ohscorrectionmanagement",
       },
       {
-        id: "objectives",
+        id: "ohsobjectives",
         label: "Objectives & Targets",
         icon: ObjectivesIcon,
+        hasSubMenu: true,
+        submenuType: "ohsobjectives",
+        pathPrefix: "/company/ohsobjectives",
       },
       {
         id: "user",
@@ -1359,6 +1363,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "ohscorrectionmanagement":
         submenuContent = (
           <OHSCorrectionSubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+        case "ohsobjectives":
+        submenuContent = (
+          <OHSObjectivesSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
