@@ -69,6 +69,7 @@ import OHSCorrectionSubmenu from "./OHS/Correction Preventive Actions/OHSCorrect
 import OHSObjectivesSubmenu from "./OHS/Objectives and Targets/OHSObjectivesSubmenu";
 import OHSUserSubmenu from "./OHS/User Management/OHSUserSubmenu";
 import OHSNonConformitySubmenu from "./OHS/Non Conformity Report/OHSNonConformitySubmenu";
+import OHSReportAnalysisSubmenu from "./OHS/Reports Analysis/OHSReportAnalysisSubmenu";
  
 
 const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
@@ -349,8 +350,13 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         label: "Backup",
         icon: BackupIcon,
         path: "/company/backup",
+        hasSubMenu: false,
       },
-      { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
+      { id: "logout", 
+        label: "Log Out", 
+        icon: LogoutIcon, 
+        hasSubMenu: false,
+      },
     ],
 
     OHS: [
@@ -466,17 +472,25 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/ohsnonconformity",
       },
       {
-        id: "reports",
+        id: "ohsreportsanalysis",
         label: "Reports & Analysis",
         icon: ReportsIcon,
+        hasSubMenu: true,
+        submenuType: "ohsreportsanalysis",
+        pathPrefix: "/company/ohsreportsanalysis",
       },
       {
         id: "backup",
         label: "Backup",
         icon: BackupIcon,
         path: "/company/backup",
+        hasSubMenu: false,
       },
-      { id: "logout", label: "Log Out", icon: LogoutIcon, path: "/logout" },
+      { id: "logout", 
+        label: "Log Out", 
+        icon: LogoutIcon, 
+        hasSubMenu: false,
+      },
     ],
 
     EnMS: [
@@ -1395,6 +1409,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "ohsnonconformity":
         submenuContent = (
           <OHSNonConformitySubmenu
+            activeSubItem={activeSubItem}
+            handleItemClick={handleSubMenuItemClick}
+          />
+        );
+        break;
+        case "ohsreportsanalysis":
+        submenuContent = (
+          <OHSReportAnalysisSubmenu
             activeSubItem={activeSubItem}
             handleItemClick={handleSubMenuItemClick}
           />
