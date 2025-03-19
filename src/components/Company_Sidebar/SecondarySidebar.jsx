@@ -81,6 +81,7 @@ import EnMSCustomerSubmenu from "./EnMS/Customer Management/EnMSCustomerSubmenu"
 import EnMSSupplierSubmenu from "./EnMS/Supplier Management/EnMSSupplierSubmenu";
 import EnMSComplianceSubmenu from "./EnMS/Compliance/EnMSComplianceSubmenu";
 import EnMSRiskSubmenu from "./EnMS/Risk Management/EnMSRiskSubmenu";
+import EnMSEnergySubmenu from "./EnMS/Energy Management/EnMSEnergySubmenu";
 
 
 
@@ -581,9 +582,12 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         pathPrefix: "/company/enmsriskmanagement",
       },
       {
-        id: "energy",
+        id: "enmsenergymanagement",
         label: "Energy Management",
         icon: EnergyIcon,
+        hasSubMenu: true,
+        submenuType: "enmsenergymanagement",
+        pathPrefix: "/company/enmsenergymanagement",
       },
       {
         id: "correction",
@@ -1523,6 +1527,14 @@ const SecondarySidebar = ({ selectedMenuItem, collapsed, setCollapsed }) => {
         case "enmsriskmanagement":
           submenuContent = (
             <EnMSRiskSubmenu
+              activeSubItem={activeSubItem}
+              handleItemClick={handleSubMenuItemClick}
+            />
+          );
+          break;
+        case "enmsenergymanagement":
+          submenuContent = (
+            <EnMSEnergySubmenu
               activeSubItem={activeSubItem}
               handleItemClick={handleSubMenuItemClick}
             />
