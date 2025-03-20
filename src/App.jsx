@@ -68,6 +68,8 @@ import BmsRecordFormat from "./pages/BMS/Documentation/Record Format/BmsRecordFo
 import AddBmsRecordFormat from "./pages/BMS/Documentation/Record Format/AddBmsRecordFormat";
 import AMSPolicy from "./pages/AMS/Documentation/Policy/AMSPolicy";
 import AddAMSPolicy from "./pages/AMS/Documentation/Policy/AddAMSPolicy";
+import AmsManual from "./pages/AMS/Documentation/Manual/AmsManual";
+import AddAmsManual from "./pages/AMS/Documentation/Manual/AddAmsManual";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -184,6 +186,10 @@ const ThemedApp = () => {
 
           <Route path="ams/policy" element={<AMSPolicy />} />
           <Route path="ams/addpolicy" element={<AddAMSPolicy/>} />
+
+          <Route path="ams/manual" element={<AmsManual/>} />
+          <Route path="ams/addmanual" element={<AddAmsManual/>} />
+          
 
 
 

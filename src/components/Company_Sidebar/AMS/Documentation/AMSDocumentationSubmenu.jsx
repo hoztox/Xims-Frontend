@@ -21,7 +21,8 @@ const AMSDocumentationSubmenu = (props) => {
       id: "manual",
       label: "Manual",
       icon: <img src={manual} alt="Manual" className="w-[15px] h-[15px]" />,
-      // path: "/company/qms/manual",
+      path: "/company/ams/manual",
+      relatedPaths: ["/company/ams/addmanual"]
     },
     {
       id: "procedure",
