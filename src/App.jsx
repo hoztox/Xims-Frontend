@@ -74,6 +74,8 @@ import AmsProcedure from "./pages/AMS/Documentation/Procedure/AmsProcedure";
 import AddAmsProcedure from "./pages/AMS/Documentation/Procedure/AddAmsProcedure";
 import AmsRecordFormat from "./pages/AMS/Documentation/Record Format/AmsRecordFormat";
 import AddAmsRecordFormat from "./pages/AMS/Documentation/Record Format/AddAmsRecordFormat";
+import EMSAdduser from "./pages/EMS/User Management/Add User/adduser";
+import EMSListUser from "./pages/EMS/User Management/List User/ListUser";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -120,6 +122,11 @@ const ThemedApp = () => {
           <Route path="qms/processes" element={<QmsProcesses />} />
           <Route path="qms/scope-statements" element={<QmsScopeStatements />} />
 
+          <Route path="qms/adduser" element={<AddUser />} />
+          <Route path="qms/listuser" element={<ListUser />} />
+
+
+
 
 
 
@@ -134,6 +141,9 @@ const ThemedApp = () => {
 
           <Route path="ems/record-format" element={<EmsRecordFormat />} />
           <Route path="ems/addrecordformat" element={<AddEmsRecordFormat />} />
+
+          <Route path="ems/adduser" element={<EMSAdduser />} />
+          <Route path="ems/listuser" element={<EMSListUser />} />
 
 
 
@@ -209,8 +219,6 @@ const ThemedApp = () => {
 
 
           {/* User Management */}
-          <Route path="qms/adduser" element={<AddUser />} />
-          <Route path="qms/listuser" element={<ListUser />} />
 
           <Route path="backup" element={<CompanyBackup />} />
         </Route>
