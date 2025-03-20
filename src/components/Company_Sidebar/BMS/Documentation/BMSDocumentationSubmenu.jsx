@@ -33,7 +33,8 @@ const BMSDocumentationSubmenu = (props) => {
             icon: (
                 <img src={procedure} alt="Procedure" className="w-[15px] h-[15px]" />
             ),
-            // path: "/company/qms/procedure",
+            path: "/company/bms/procedure",
+            relatedPaths: ["/company/bms/addprocedure"]
         },
         {
             id: "record-format",
