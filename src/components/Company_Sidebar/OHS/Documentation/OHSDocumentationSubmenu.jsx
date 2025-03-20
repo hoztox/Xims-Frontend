@@ -8,7 +8,7 @@ import process from "../../../../assets/images/Company-Sidebar/interested partie
 import scope from "../../../../assets/images/Company-Sidebar/record-format.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const OHSDocumentationSubmenu = () => {
+const OHSDocumentationSubmenu = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -17,13 +17,15 @@ const OHSDocumentationSubmenu = () => {
             id: "policy",
             label: "Policy",
             icon: <img src={policy} alt="Policy" className="w-[15px] h-[15px]" />,
-            // path: "/company/ems/policy",
+            path: "/company/ohs/policy",
+            relatedPaths: ["/company/ohs/addpolicy"]
         },
         {
             id: "manual",
             label: "Manual",
             icon: <img src={manual} alt="Manual" className="w-[15px] h-[15px]" />,
-            // path: "/company/qms/manual",
+            path: "/company/ohs/manual",
+            relatedPaths: ["/company/ohs/addmanual"]
         },
         {
             id: "procedure",
@@ -31,7 +33,8 @@ const OHSDocumentationSubmenu = () => {
             icon: (
                 <img src={procedure} alt="Procedure" className="w-[15px] h-[15px]" />
             ),
-            // path: "/company/qms/procedure",
+            path: "/company/ohs/procedure",
+            relatedPaths: ["/company/ohs/addprocedure"]
         },
         {
             id: "record-format",
@@ -39,7 +42,8 @@ const OHSDocumentationSubmenu = () => {
             icon: (
                 <img src={record} alt="Record Format" className="w-[15px] h-[15px]" />
             ),
-            // path: "/company/qms/record-format",
+            path: "/company/ohs/record-format",
+            relatedPaths: ["/company/ohs/addrecordformat"]
         },
         {
             id: "interested-parties",
@@ -66,8 +70,10 @@ const OHSDocumentationSubmenu = () => {
     ];
 
     const isActive = (category) => {
-        return location.pathname === category.path;
-    };
+        const currentPath = location.pathname;
+        return currentPath === category.path || 
+               (category.relatedPaths && category.relatedPaths.includes(currentPath));
+      };
 
     // Handle clicking on a submenu item
     const handleCategoryClick = (category) => {

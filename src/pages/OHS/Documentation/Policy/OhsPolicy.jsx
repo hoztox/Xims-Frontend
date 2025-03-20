@@ -4,12 +4,18 @@ import arrow from '../../../../assets/images/Company Documentation/arrow.svg';
 import view from "../../../../assets/images/Company Documentation/view.svg";
 import edit from "../../../../assets/images/Company Documentation/edit.svg";
 import deleteIcon from "../../../../assets/images/Company Documentation/delete.svg";
+import { useNavigate } from 'react-router-dom';
 
 const OhsPolicy = () => {
+    const navigate = useNavigate()
     const [isExpanded, setIsExpanded] = useState(true);
     const [OhsPolicies, setOhsPolicies] = useState([
         { id: 1, name: 'Energy Policy' },
     ]);
+
+    const handleAddOhspolicy = () => {
+        navigate('/company/ohs/addpolicy')
+    }
 
     return (
         <div className="bg-[#1C1C24] rounded-lg text-white p-5">
@@ -31,9 +37,11 @@ const OhsPolicy = () => {
                         <Search className=" text-white w-[18px]" />
                     </div>
                 </div>
-                <button className="bg-transparent border border-[#38E76C] text-[#38E76C] rounded-[4px] p-[10px] flex items-center justify-center gap-[10px] transition-all duration-200 w-[140px] h-[42px] add-policy-btn hover:bg-[#38E76C] hover:text-white group">
+                <button className="bg-transparent border border-[#F9291F] text-[#F9291F] rounded-[4px] p-[10px] flex items-center justify-center gap-[10px] transition-all duration-200 w-[140px] h-[42px] add-policy-btn hover:bg-[#F9291F] hover:text-white group"
+                onClick={handleAddOhspolicy}
+                >
                     <span>Add Policy</span>
-                    <Plus size={22} className='text-[#38E76C] group-hover:text-white transition-colors duration-200' />
+                    <Plus size={22} className='text-[#F9291F] group-hover:text-white transition-colors duration-200' />
                 </button>
             </div>
 
@@ -51,7 +59,7 @@ const OhsPolicy = () => {
                         <div key={ohsPolicy.id} className="px-5 pt-6 pb-5 border-b border-gray-700 flex justify-start items-center last:border-b-0">
                             <div className="flex items-center gap-[50px]">
                                 <div className='gap-[15px] flex flex-col'>
-                                    <span className="policy-name text-[#38E76C]">{ohsPolicy.name}</span>
+                                    <span className="policy-name text-[#F9291F]">{ohsPolicy.name}</span>
                                     <button className='flex justify-center items-center gap-2'>
                                         <p className='view-policy-btn-text'>View Policy</p>
                                         <img src={view} alt="View Icon" className='w-[16px] h-[16px]' />

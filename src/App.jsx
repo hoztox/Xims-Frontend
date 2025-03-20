@@ -42,6 +42,14 @@ import EmsProcedure from "./pages/EMS/Documentation/Procedure/EmsProcedure";
 import AddEmsProcedure from "./pages/EMS/Documentation/Procedure/AddEmsProcedure";
 import EmsRecordFormat from "./pages/EMS/Documentation/Record Format/EmsRecordFormat";
 import AddEmsRecordFormat from "./pages/EMS/Documentation/Record Format/AddEmsRecordFormat";
+import OhsPolicy from "./pages/OHS/Documentation/Policy/OhsPolicy";
+import AddOhsPolicy from "./pages/OHS/Documentation/Policy/AddOhsPolicy";
+import OhsManual from "./pages/OHS/Documentation/Manual/OhsManual";
+import AddOhsManual from "./pages/OHS/Documentation/Manual/AddOhsManual";
+import OhsProcedure from "./pages/OHS/Documentation/Procedure/OhsProcedure";
+import AddOhsProcedure from "./pages/OHS/Documentation/Procedure/AddOhsProcedure";
+import OhsRecordFormat from "./pages/OHS/Documentation/Record Format/OhsRecordFormat";
+import AddOhsRecordFormat from "./pages/OHS/Documentation/Record Format/AddOhsRecordFormat";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -102,6 +110,28 @@ const ThemedApp = () => {
 
           <Route path="ems/record-format" element={<EmsRecordFormat />} />
           <Route path="ems/addrecordformat" element={<AddEmsRecordFormat />} />
+
+
+
+
+
+          <Route path="ohs/policy" element={<OhsPolicy />} />
+          <Route path="ohs/addpolicy" element={<AddOhsPolicy/>} />
+
+          <Route path="ohs/manual" element={<OhsManual/>} />
+          <Route path="ohs/addmanual" element={<AddOhsManual/>} />
+
+          <Route path="ohs/procedure" element={<OhsProcedure/>} />
+          <Route path="ohs/addprocedure" element={<AddOhsProcedure/>} />
+
+          <Route path="ohs/record-format" element={<OhsRecordFormat />} />
+          <Route path="ohs/addrecordformat" element={<AddOhsRecordFormat />} />
+
+
+
+
+
+
 
           {/* User Management */}
           <Route path="qms/adduser" element={<AddUser />} />
