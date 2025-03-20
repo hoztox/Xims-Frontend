@@ -70,6 +70,8 @@ import AMSPolicy from "./pages/AMS/Documentation/Policy/AMSPolicy";
 import AddAMSPolicy from "./pages/AMS/Documentation/Policy/AddAMSPolicy";
 import AmsManual from "./pages/AMS/Documentation/Manual/AmsManual";
 import AddAmsManual from "./pages/AMS/Documentation/Manual/AddAmsManual";
+import AmsProcedure from "./pages/AMS/Documentation/Procedure/AmsProcedure";
+import AddAmsProcedure from "./pages/AMS/Documentation/Procedure/AddAmsProcedure";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -189,6 +191,9 @@ const ThemedApp = () => {
 
           <Route path="ams/manual" element={<AmsManual/>} />
           <Route path="ams/addmanual" element={<AddAmsManual/>} />
+
+          <Route path="ams/procedure" element={<AmsProcedure/>} />
+          <Route path="ams/addprocedure" element={<AddAmsProcedure/>} />
           
 
 

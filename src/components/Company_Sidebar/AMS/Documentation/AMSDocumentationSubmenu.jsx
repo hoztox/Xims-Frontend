@@ -30,7 +30,8 @@ const AMSDocumentationSubmenu = (props) => {
       icon: (
         <img src={procedure} alt="Procedure" className="w-[15px] h-[15px]" />
       ),
-      // path: "/company/qms/procedure",
+      path: "/company/ams/procedure",
+      relatedPaths: ["/company/ams/addprocedure"]
     },
     {
       id: "record-format",
