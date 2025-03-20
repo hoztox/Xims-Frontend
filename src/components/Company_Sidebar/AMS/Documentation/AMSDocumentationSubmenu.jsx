@@ -39,7 +39,8 @@ const AMSDocumentationSubmenu = (props) => {
       icon: (
         <img src={record} alt="Record Format" className="w-[15px] h-[15px]" />
       ),
-      // path: "/company/qms/record-format",
+      path: "/company/ams/record-format",
+      relatedPaths: ["/company/ams/addrecordformat"]
     },
   ];
 

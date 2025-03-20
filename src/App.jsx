@@ -72,6 +72,8 @@ import AmsManual from "./pages/AMS/Documentation/Manual/AmsManual";
 import AddAmsManual from "./pages/AMS/Documentation/Manual/AddAmsManual";
 import AmsProcedure from "./pages/AMS/Documentation/Procedure/AmsProcedure";
 import AddAmsProcedure from "./pages/AMS/Documentation/Procedure/AddAmsProcedure";
+import AmsRecordFormat from "./pages/AMS/Documentation/Record Format/AmsRecordFormat";
+import AddAmsRecordFormat from "./pages/AMS/Documentation/Record Format/AddAmsRecordFormat";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -194,6 +196,9 @@ const ThemedApp = () => {
 
           <Route path="ams/procedure" element={<AmsProcedure/>} />
           <Route path="ams/addprocedure" element={<AddAmsProcedure/>} />
+
+          <Route path="ams/record-format" element={<AmsRecordFormat />} />
+          <Route path="ams/addrecordformat" element={<AddAmsRecordFormat />} />
           
 
 
