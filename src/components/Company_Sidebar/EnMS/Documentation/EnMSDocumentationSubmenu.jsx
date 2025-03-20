@@ -18,7 +18,7 @@ const EnMSDocumentationSubmenu = (props) => {
             label: "Policy",
             icon: <img src={policy} alt="Policy" className="w-[15px] h-[15px]" />,
             path: "/company/enms/policy",
-            // relatedPaths: ["/company/ohs/addpolicy"]
+            relatedPaths: ["/company/enms/addpolicy"]
         },
         {
             id: "manual",

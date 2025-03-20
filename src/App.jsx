@@ -51,6 +51,7 @@ import AddOhsProcedure from "./pages/OHS/Documentation/Procedure/AddOhsProcedure
 import OhsRecordFormat from "./pages/OHS/Documentation/Record Format/OhsRecordFormat";
 import AddOhsRecordFormat from "./pages/OHS/Documentation/Record Format/AddOhsRecordFormat";
 import EnMSPolicy from "./pages/EnMS/Documentation/Policy/EnMSPolicy";
+import AddEnMSPolicy from "./pages/EnMS/Documentation/Policy/AddEnMSPolicy";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -131,6 +132,7 @@ const ThemedApp = () => {
 
 
           <Route path="enms/policy" element={<EnMSPolicy />} />
+          <Route path="enms/addpolicy" element={<AddEnMSPolicy/>} />
 
 
 
