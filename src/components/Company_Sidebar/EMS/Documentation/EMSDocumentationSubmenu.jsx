@@ -19,6 +19,7 @@ const EMSDocumentationSubmenu = (props) => {
             label: "Policy",
             icon: <img src={policy} alt="Policy" className="w-[15px] h-[15px]" />,
             path: "/company/ems/policy",
+            relatedPaths: ["/company/ems/addpolicy"]
         },
         {
             id: "manual",
@@ -67,8 +68,10 @@ const EMSDocumentationSubmenu = (props) => {
     ];
 
     const isActive = (category) => {
-        return location.pathname === category.path;
-    };
+        const currentPath = location.pathname;
+        return currentPath === category.path || 
+               (category.relatedPaths && category.relatedPaths.includes(currentPath));
+      };
 
     // Handle clicking on a submenu item
     const handleCategoryClick = (category) => {

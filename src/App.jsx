@@ -35,6 +35,7 @@ import AddQmsPolicy from "./pages/QMS/Documentation/Policy/AddQmsPolicy";
 import AddQmsManual from "./pages/QMS/Documentation/Manual/AddQmsManual";
 import AddQmsProcedure from "./pages/QMS/Documentation/Procedure/AddQmsProcedure";
 import AddQmsRecordFormat from "./pages/QMS/Documentation/Record Format/AddQmsRecordFormat";
+import AddEmspolicy from "./pages/EMS/Documentation/Policy/AddEmspolicy";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -82,6 +83,7 @@ const ThemedApp = () => {
           <Route path="qms/scope-statements" element={<QmsScopeStatements />} />
 
           <Route path="ems/policy" element={<EmsPolicy />} />
+          <Route path="ems/addpolicy" element={<AddEmspolicy/>} />
 
           {/* User Management */}
           <Route path="qms/adduser" element={<AddUser />} />

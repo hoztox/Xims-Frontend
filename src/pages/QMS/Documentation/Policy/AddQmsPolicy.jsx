@@ -246,7 +246,7 @@ const AddQmsPolicy = () => {
       const [customColor, setCustomColor] = useState(activeColor);
 
       return (
-        <div className="absolute z-20 mt-2 p-3 bg-gray-800 border border-gray-700 rounded-md shadow-lg" ref={colorPickerRef}>
+        <div className="absolute z-20 mt-2 p-3 bg-gray-800 border border-gray-700 rounded-md shadow-lg " ref={colorPickerRef}>
           <div className="grid grid-cols-5 gap-2 mb-3">
             {colorPalette.map((color, index) => (
               <button
@@ -682,7 +682,7 @@ const AddQmsPolicy = () => {
     const [customColor, setCustomColor] = useState(activeColor);
 
     return (
-      <div className="absolute z-20 mt-2 p-3 bg-gray-800 border border-gray-700 rounded-md shadow-lg" ref={colorPickerRef}>
+      <div className="absolute z-20 mt-2 p-3 bg-gray-800 border border-gray-700 rounded-md shadow-lg right-0" ref={colorPickerRef}>
         <div className="grid grid-cols-5 gap-2 mb-3">
           {colorPalette.map((color, index) => (
             <button

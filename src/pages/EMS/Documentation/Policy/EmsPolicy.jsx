@@ -4,12 +4,18 @@ import arrow from '../../../../assets/images/Company Documentation/arrow.svg';
 import view from "../../../../assets/images/Company Documentation/view.svg";
 import edit from "../../../../assets/images/Company Documentation/edit.svg";
 import deleteIcon from "../../../../assets/images/Company Documentation/delete.svg";
+import { useNavigate } from 'react-router-dom';
 
 const EmsPolicy = () => {
+    const navigate = useNavigate();
     const [isExpanded, setIsExpanded] = useState(true);
     const [EmsPolicies, setEmsPolicies] = useState([
         { id: 1, name: 'Energy Policy' },
     ]);
+
+    const handleAddEMSPolicy = () => {
+        navigate('/company/ems/addpolicy')
+    }
 
     return (
         <div className="bg-[#1C1C24] rounded-lg text-white p-5">
@@ -31,7 +37,9 @@ const EmsPolicy = () => {
                         <Search className=" text-white w-[18px]" />
                     </div>
                 </div>
-                <button className="bg-transparent border border-[#38E76C] text-[#38E76C] rounded-[4px] p-[10px] flex items-center justify-center gap-[10px] transition-all duration-200 w-[140px] h-[42px] add-policy-btn hover:bg-[#38E76C] hover:text-white group">
+                <button className="bg-transparent border border-[#38E76C] text-[#38E76C] rounded-[4px] p-[10px] flex items-center justify-center gap-[10px] transition-all duration-200 w-[140px] h-[42px] add-policy-btn hover:bg-[#38E76C] hover:text-white group"
+                 onClick={handleAddEMSPolicy}
+                >
                     <span>Add Policy</span>
                     <Plus size={22} className='text-[#38E76C] group-hover:text-white transition-colors duration-200' />
                 </button>
