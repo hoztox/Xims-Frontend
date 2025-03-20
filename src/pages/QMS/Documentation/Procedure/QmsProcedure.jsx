@@ -90,11 +90,11 @@ const QmsProcedure = () => {
               <Search size={18} />
             </div>
           </div>
-          <button className="flex items-center justify-center add-manual-btn gap-[10px] duration-200"
+            <button className="flex items-center justify-center add-manual-btn gap-[10px] duration-200 border border-[#858585] text-[#858585] hover:bg-[#858585] hover:text-white"
           onClick={handleAddProcedure}
           >
             <span>Add Procedure</span>
-            <img src={plusicon} alt="Add Icon" className='w-[18px] h-[18px] add-plus' />
+            <img src={plusicon} alt="Add Icon" className='w-[18px] h-[18px] qms-add-plus' />
           </button>
         </div>
       </div>

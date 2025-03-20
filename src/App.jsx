@@ -36,6 +36,12 @@ import AddQmsManual from "./pages/QMS/Documentation/Manual/AddQmsManual";
 import AddQmsProcedure from "./pages/QMS/Documentation/Procedure/AddQmsProcedure";
 import AddQmsRecordFormat from "./pages/QMS/Documentation/Record Format/AddQmsRecordFormat";
 import AddEmspolicy from "./pages/EMS/Documentation/Policy/AddEmspolicy";
+import EmsManual from "./pages/EMS/Documentation/Manual/EmsManual";
+import AddEmsManual from "./pages/EMS/Documentation/Manual/AddEmsManual";
+import EmsProcedure from "./pages/EMS/Documentation/Procedure/EmsProcedure";
+import AddEmsProcedure from "./pages/EMS/Documentation/Procedure/AddEmsProcedure";
+import EmsRecordFormat from "./pages/EMS/Documentation/Record Format/EmsRecordFormat";
+import AddEmsRecordFormat from "./pages/EMS/Documentation/Record Format/AddEmsRecordFormat";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -82,8 +88,20 @@ const ThemedApp = () => {
           <Route path="qms/processes" element={<QmsProcesses />} />
           <Route path="qms/scope-statements" element={<QmsScopeStatements />} />
 
+
+
+
           <Route path="ems/policy" element={<EmsPolicy />} />
           <Route path="ems/addpolicy" element={<AddEmspolicy/>} />
+
+          <Route path="ems/manual" element={<EmsManual/>} />
+          <Route path="ems/addmanual" element={<AddEmsManual/>} />
+
+          <Route path="ems/procedure" element={<EmsProcedure/>} />
+          <Route path="ems/addprocedure" element={<AddEmsProcedure/>} />
+
+          <Route path="ems/record-format" element={<EmsRecordFormat />} />
+          <Route path="ems/addrecordformat" element={<AddEmsRecordFormat />} />
 
           {/* User Management */}
           <Route path="qms/adduser" element={<AddUser />} />

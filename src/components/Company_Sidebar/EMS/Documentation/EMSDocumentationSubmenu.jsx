@@ -25,7 +25,8 @@ const EMSDocumentationSubmenu = (props) => {
             id: "manual",
             label: "Manual",
             icon: <img src={manual} alt="Manual" className="w-[15px] h-[15px]" />,
-            // path: "/company/qms/manual",
+            path: "/company/ems/manual",
+            relatedPaths: ["/company/ems/addmanual"]
         },
         {
             id: "procedure",
@@ -33,7 +34,8 @@ const EMSDocumentationSubmenu = (props) => {
             icon: (
                 <img src={procedure} alt="Procedure" className="w-[15px] h-[15px]" />
             ),
-            // path: "/company/qms/procedure",
+            path: "/company/ems/procedure",
+            relatedPaths: ["/company/ems/addprocedure"]
         },
         {
             id: "record-format",
@@ -41,7 +43,8 @@ const EMSDocumentationSubmenu = (props) => {
             icon: (
                 <img src={record} alt="Record Format" className="w-[15px] h-[15px]" />
             ),
-            // path: "/company/qms/record-format",
+            path: "/company/ems/record-format",
+            relatedPaths: ["/company/ems/addrecordformat"]
         },
         {
             id: "interested-parties",
