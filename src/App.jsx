@@ -60,6 +60,8 @@ import EnMSRecordFormat from "./pages/EnMS/Documentation/Record Format/EnMSRecor
 import AddEnMSRecordFormat from "./pages/EnMS/Documentation/Record Format/AddEnMSRecordFormat";
 import BMSPolicy from "./pages/BMS/Documentation/Policy/BMSPolicy";
 import AddBMSPolicy from "./pages/BMS/Documentation/Policy/AddBMSPolicy";
+import BmsManual from "./pages/BMS/Documentation/Manual/BmsManual";
+import AddBmsManual from "./pages/BMS/Documentation/Manual/AddBmsManual";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -159,6 +161,9 @@ const ThemedApp = () => {
 
           <Route path="bms/policy" element={<BMSPolicy />} />
           <Route path="bms/addpolicy" element={<AddBMSPolicy/>} />
+
+          <Route path="bms/manual" element={<BmsManual/>} />
+          <Route path="bms/addmanual" element={<AddBmsManual/>} />
 
 
 

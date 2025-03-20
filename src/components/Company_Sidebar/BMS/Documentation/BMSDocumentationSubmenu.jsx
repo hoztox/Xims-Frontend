@@ -24,7 +24,8 @@ const BMSDocumentationSubmenu = (props) => {
             id: "manual",
             label: "Manual",
             icon: <img src={manual} alt="Manual" className="w-[15px] h-[15px]" />,
-            // path: "/company/qms/manual",
+            path: "/company/bms/manual",
+            relatedPaths: ["/company/bms/addmanual"]
         },
         {
             id: "procedure",
