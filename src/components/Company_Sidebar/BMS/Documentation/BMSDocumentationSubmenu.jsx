@@ -42,7 +42,8 @@ const BMSDocumentationSubmenu = (props) => {
             icon: (
                 <img src={record} alt="Record Format" className="w-[15px] h-[15px]" />
             ),
-            // path: "/company/qms/record-format",
+            path: "/company/bms/record-format",
+            relatedPaths: ["/company/bms/addrecordformat"]
         },
         {
             id: "interested-parties",

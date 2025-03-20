@@ -64,6 +64,8 @@ import BmsManual from "./pages/BMS/Documentation/Manual/BmsManual";
 import AddBmsManual from "./pages/BMS/Documentation/Manual/AddBmsManual";
 import BmsProcedure from "./pages/BMS/Documentation/Procedure/BmsProcedure";
 import AddBmsProcedure from "./pages/BMS/Documentation/Procedure/AddBmsProcedure";
+import BmsRecordFormat from "./pages/BMS/Documentation/Record Format/BmsRecordFormat";
+import AddBmsRecordFormat from "./pages/BMS/Documentation/Record Format/AddBmsRecordFormat";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -169,6 +171,9 @@ const ThemedApp = () => {
 
           <Route path="bms/procedure" element={<BmsProcedure/>} />
           <Route path="bms/addprocedure" element={<AddBmsProcedure/>} />
+
+          <Route path="bms/record-format" element={<BmsRecordFormat />} />
+          <Route path="bms/addrecordformat" element={<AddBmsRecordFormat />} />
 
 
 
