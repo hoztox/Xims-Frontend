@@ -8,7 +8,7 @@ import process from "../../../../assets/images/Company-Sidebar/interested partie
 import scope from "../../../../assets/images/Company-Sidebar/record-format.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const BMSDocumentationSubmenu = () => {
+const BMSDocumentationSubmenu = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -17,7 +17,8 @@ const BMSDocumentationSubmenu = () => {
             id: "policy",
             label: "Policy",
             icon: <img src={policy} alt="Policy" className="w-[15px] h-[15px]" />,
-            // path: "/company/ems/policy",
+            path: "/company/bms/policy",
+            // relatedPaths: ["/company/enms/addpolicy"]
         },
         {
             id: "manual",
@@ -66,8 +67,10 @@ const BMSDocumentationSubmenu = () => {
     ];
 
     const isActive = (category) => {
-        return location.pathname === category.path;
-    };
+        const currentPath = location.pathname;
+        return currentPath === category.path || 
+               (category.relatedPaths && category.relatedPaths.includes(currentPath));
+      };
 
     // Handle clicking on a submenu item
     const handleCategoryClick = (category) => {
