@@ -8,7 +8,7 @@ import process from "../../../../assets/images/Company-Sidebar/interested partie
 import scope from "../../../../assets/images/Company-Sidebar/record-format.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const EnMSDocumentationSubmenu = () => {
+const EnMSDocumentationSubmenu = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -17,7 +17,7 @@ const EnMSDocumentationSubmenu = () => {
             id: "policy",
             label: "Policy",
             icon: <img src={policy} alt="Policy" className="w-[15px] h-[15px]" />,
-            // path: "/company/ems/policy",
+            path: "/company/enms/policy",
             // relatedPaths: ["/company/ohs/addpolicy"]
         },
         {
