@@ -5,7 +5,7 @@ import procedure from "../../../../assets/images/Company-Sidebar/manual.svg";
 import record from "../../../../assets/images/Company-Sidebar/record-format.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const AMSDocumentationSubmenu = () => {
+const AMSDocumentationSubmenu = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -14,7 +14,8 @@ const AMSDocumentationSubmenu = () => {
       id: "policy",
       label: "Policy",
       icon: <img src={policy} alt="Policy" className="w-[15px] h-[15px]" />,
-      // path: "/company/ems/policy",
+      path: "/company/ams/policy",
+      relatedPaths: ["/company/ams/addpolicy"]
     },
     {
       id: "manual",
@@ -41,7 +42,9 @@ const AMSDocumentationSubmenu = () => {
   ];
 
   const isActive = (category) => {
-    return location.pathname === category.path;
+    const currentPath = location.pathname;
+    return currentPath === category.path || 
+           (category.relatedPaths && category.relatedPaths.includes(currentPath));
   };
 
   // Handle clicking on a submenu item

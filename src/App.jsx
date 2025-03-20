@@ -66,6 +66,8 @@ import BmsProcedure from "./pages/BMS/Documentation/Procedure/BmsProcedure";
 import AddBmsProcedure from "./pages/BMS/Documentation/Procedure/AddBmsProcedure";
 import BmsRecordFormat from "./pages/BMS/Documentation/Record Format/BmsRecordFormat";
 import AddBmsRecordFormat from "./pages/BMS/Documentation/Record Format/AddBmsRecordFormat";
+import AMSPolicy from "./pages/AMS/Documentation/Policy/AMSPolicy";
+import AddAMSPolicy from "./pages/AMS/Documentation/Policy/AddAMSPolicy";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -174,6 +176,14 @@ const ThemedApp = () => {
 
           <Route path="bms/record-format" element={<BmsRecordFormat />} />
           <Route path="bms/addrecordformat" element={<AddBmsRecordFormat />} />
+
+
+
+
+
+
+          <Route path="ams/policy" element={<AMSPolicy />} />
+          <Route path="ams/addpolicy" element={<AddAMSPolicy/>} />
 
 
 
