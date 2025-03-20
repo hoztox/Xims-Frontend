@@ -24,7 +24,8 @@ const EnMSDocumentationSubmenu = (props) => {
             id: "manual",
             label: "Manual",
             icon: <img src={manual} alt="Manual" className="w-[15px] h-[15px]" />,
-            // path: "/company/qms/manual",
+            path: "/company/enms/manual",
+            relatedPaths: ["/company/enms/addmanual"]
         },
         {
             id: "procedure",
