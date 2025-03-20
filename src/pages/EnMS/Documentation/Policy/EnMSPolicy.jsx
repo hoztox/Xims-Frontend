@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const EnMSPolicy = () => {
     const navigate = useNavigate()
     const [isExpanded, setIsExpanded] = useState(true);
-    const [OhsPolicies, setOhsPolicies] = useState([
+    const [EnMSPolicies, setEnMSPolicies] = useState([
         { id: 1, name: 'Energy Policy' },
     ]);
 
@@ -55,11 +55,11 @@ const EnMSPolicy = () => {
                 </div>
 
                 <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-                    {OhsPolicies.map((ohsPolicy) => (
-                        <div key={ohsPolicy.id} className="px-5 pt-6 pb-5 border-b border-gray-700 flex justify-start items-center last:border-b-0">
+                    {EnMSPolicies.map((enmsPolicy) => (
+                        <div key={enmsPolicy.id} className="px-5 pt-6 pb-5 border-b border-gray-700 flex justify-start items-center last:border-b-0">
                             <div className="flex items-center gap-[50px]">
                                 <div className='gap-[15px] flex flex-col'>
-                                    <span className="policy-name text-[#10B8FF]">{ohsPolicy.name}</span>
+                                    <span className="policy-name text-[#10B8FF]">{enmsPolicy.name}</span>
                                     <button className='flex justify-center items-center gap-2'>
                                         <p className='view-policy-btn-text'>View Policy</p>
                                         <img src={view} alt="View Icon" className='w-[16px] h-[16px]' />

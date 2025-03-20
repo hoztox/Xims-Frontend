@@ -18,7 +18,7 @@ const BMSDocumentationSubmenu = (props) => {
             label: "Policy",
             icon: <img src={policy} alt="Policy" className="w-[15px] h-[15px]" />,
             path: "/company/bms/policy",
-            // relatedPaths: ["/company/enms/addpolicy"]
+            relatedPaths: ["/company/bms/addpolicy"]
         },
         {
             id: "manual",

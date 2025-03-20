@@ -59,6 +59,7 @@ import AddEnMSProcedure from "./pages/EnMS/Documentation/Procedure/AddEnMSProced
 import EnMSRecordFormat from "./pages/EnMS/Documentation/Record Format/EnMSRecordFormat";
 import AddEnMSRecordFormat from "./pages/EnMS/Documentation/Record Format/AddEnMSRecordFormat";
 import BMSPolicy from "./pages/BMS/Documentation/Policy/BMSPolicy";
+import AddBMSPolicy from "./pages/BMS/Documentation/Policy/AddBMSPolicy";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -157,6 +158,7 @@ const ThemedApp = () => {
 
 
           <Route path="bms/policy" element={<BMSPolicy />} />
+          <Route path="bms/addpolicy" element={<AddBMSPolicy/>} />
 
 
 
