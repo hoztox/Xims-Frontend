@@ -54,6 +54,8 @@ import EnMSPolicy from "./pages/EnMS/Documentation/Policy/EnMSPolicy";
 import AddEnMSPolicy from "./pages/EnMS/Documentation/Policy/AddEnMSPolicy";
 import EnMSManual from "./pages/EnMS/Documentation/Manual/EnMSManual";
 import AddEnMSManual from "./pages/EnMS/Documentation/Manual/AddEnMSManual";
+import EnMSProcedure from "./pages/EnMS/Documentation/Procedure/EnMSProcedure";
+import AddEnMSProcedure from "./pages/EnMS/Documentation/Procedure/AddEnMSProcedure";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -140,6 +142,9 @@ const ThemedApp = () => {
 
           <Route path="enms/manual" element={<EnMSManual/>} />
           <Route path="enms/addmanual" element={<AddEnMSManual/>} />
+
+          <Route path="enms/procedure" element={<EnMSProcedure/>} />
+          <Route path="enms/addprocedure" element={<AddEnMSProcedure/>} />
 
 
 
