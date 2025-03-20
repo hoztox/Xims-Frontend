@@ -42,7 +42,8 @@ const EnMSDocumentationSubmenu = (props) => {
             icon: (
                 <img src={record} alt="Record Format" className="w-[15px] h-[15px]" />
             ),
-            // path: "/company/qms/record-format",
+            path: "/company/enms/record-format",
+            relatedPaths: ["/company/enms/addrecordformat"]
         },
         {
             id: "interested-parties",

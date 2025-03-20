@@ -56,6 +56,8 @@ import EnMSManual from "./pages/EnMS/Documentation/Manual/EnMSManual";
 import AddEnMSManual from "./pages/EnMS/Documentation/Manual/AddEnMSManual";
 import EnMSProcedure from "./pages/EnMS/Documentation/Procedure/EnMSProcedure";
 import AddEnMSProcedure from "./pages/EnMS/Documentation/Procedure/AddEnMSProcedure";
+import EnMSRecordFormat from "./pages/EnMS/Documentation/Record Format/EnMSRecordFormat";
+import AddEnMSRecordFormat from "./pages/EnMS/Documentation/Record Format/AddEnMSRecordFormat";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -145,6 +147,10 @@ const ThemedApp = () => {
 
           <Route path="enms/procedure" element={<EnMSProcedure/>} />
           <Route path="enms/addprocedure" element={<AddEnMSProcedure/>} />
+
+          <Route path="enms/record-format" element={<EnMSRecordFormat />} />
+          <Route path="enms/addrecordformat" element={<AddEnMSRecordFormat />} />
+
 
 
 
