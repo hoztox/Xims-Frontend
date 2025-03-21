@@ -1,14 +1,35 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { 
-  Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, 
-  AlignJustify, List, ListOrdered, Indent, Outdent, Link, Unlink, 
+import {
+  Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight,
+  AlignJustify, List, ListOrdered, Indent, Outdent, Link, Unlink,
   Image, FileUp, Type, Highlighter
 } from 'lucide-react';
+import bold from "../../../../assets/images/Company Documentation/bold.svg"
+import itallic from "../../../../assets/images/Company Documentation/itallic.svg"
+import underline from "../../../../assets/images/Company Documentation/underline.svg"
+import files from "../../../../assets/images/Company Documentation/file-icon.svg"
+import leftalign from "../../../../assets/images/Company Documentation/text-align-left.svg"
+import centeralign from "../../../../assets/images/Company Documentation/text-allign-center.svg"
+import rightalign from "../../../../assets/images/Company Documentation/text-align-right.svg"
+import sentencetext from "../../../../assets/images/Company Documentation/text-sentence.svg"
+import orderedlist from "../../../../assets/images/Company Documentation/ordered-list.svg"
+import unorderedlist from "../../../../assets/images/Company Documentation/unorderedlist.svg"
+import textindednt from "../../../../assets/images/Company Documentation/text-indent.svg"
+import textoutdent from "../../../../assets/images/Company Documentation/text-outdent.svg"
+import imagelink from "../../../../assets/images/Company Documentation/image-link.svg";
+import imageupload from "../../../../assets/images/Company Documentation/image-upload.svg";
+import addlinks from "../../../../assets/images/Company Documentation/add-link.svg"
+import removelinks from "../../../../assets/images/Company Documentation/remove-link.svg"
+import textcolor from "../../../../assets/images/Company Documentation/text-color.svg"
+import textbgcolor from "../../../../assets/images/Company Documentation/bg-color.svg"
 import axios from 'axios';
+import "./addqmspolicys.css"
 import { toast } from 'react-hot-toast';
 import { BASE_URL } from "../../../../Utils/Config";
+import { useNavigate } from 'react-router-dom';
 
 const AddQmsPolicy = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     content: '',
     energyPolicy: null
@@ -30,7 +51,7 @@ const AddQmsPolicy = () => {
     textColor: '#FFFFFF', // Default text color
     bgColor: 'transparent' // Default background color
   });
-  
+
   const colorPalette = [
     '#FFFFFF', '#000000', '#FF0000', '#00FF00', '#0000FF',
     '#FFFF00', '#00FFFF', '#FF00FF', '#C0C0C0', '#808080',
@@ -570,11 +591,13 @@ const AddQmsPolicy = () => {
       content: '',
       energyPolicy: null
     });
-    
+
     // Clear editor content
     if (editorRef.current) {
       editorRef.current.innerHTML = '<p><br></p>';
     }
+
+    navigate('/company/qms/policy')
   };
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -587,87 +610,87 @@ const AddQmsPolicy = () => {
     console.log("User Role:", role);
 
     if (!accessToken || !role || (!company_id && !user_id)) {
-        console.warn("Some values are missing from localStorage!");
+      console.warn("Some values are missing from localStorage!");
     }
-}, []);
+  }, []);
 
-const handleSave = async () => {
-  const editorContent = editorRef.current ? editorRef.current.innerHTML : '';
-  
-  if (!editorContent.trim() || editorContent === '\n\n\n\n\n') {
-    toast.error('Please enter policy content');
-    return;
-  }
-  
-  try {
-    // Gather user data
-    const accessToken = localStorage.getItem("accessToken");
-    const role = localStorage.getItem("role");
-    const companyId = localStorage.getItem("company_id");
-    const userId = localStorage.getItem("user_id");
-    
-    // Debug user info
-    console.log("Debug Info:", { role, companyId, userId, hasToken: !!accessToken });
-    
-    // Create FormData
-    const apiFormData = new FormData();
-    
-    // Add content
-    apiFormData.append('text', editorContent);
-    
-    // Add the correct ID field based on role
-    if (role === "company" && companyId) {
-      apiFormData.append('company', companyId);
-    } else if (userId) {
-      apiFormData.append('user', userId);
-    } else {
-      toast.error('User or Company information not found. Please login again.');
+  const handleSave = async () => {
+    const editorContent = editorRef.current ? editorRef.current.innerHTML : '';
+
+    if (!editorContent.trim() || editorContent === '\n\n\n\n\n') {
+      toast.error('Please enter policy content');
       return;
     }
-    
-    // Add policy file if exists
-    if (formData.energyPolicy) {
-      apiFormData.append('energy_policy', formData.energyPolicy);
-    }
-    
-    // Use the correct endpoint based on your API structure
-    const endpoint = '/company/documentation/create/';
-    
-    console.log("API URL:", `${BASE_URL}${endpoint}`);
-    console.log("Request data:", Object.fromEntries(apiFormData.entries()));
-    
-    const response = await axios.post(
-      `${BASE_URL}${endpoint}`,
-      apiFormData,
-      {
-        headers: {
-        
-          'Content-Type': 'multipart/form-data'
+
+    try {
+      // Gather user data
+      const accessToken = localStorage.getItem("accessToken");
+      const role = localStorage.getItem("role");
+      const companyId = localStorage.getItem("company_id");
+      const userId = localStorage.getItem("user_id");
+
+      // Debug user info
+      console.log("Debug Info:", { role, companyId, userId, hasToken: !!accessToken });
+
+      // Create FormData
+      const apiFormData = new FormData();
+
+      // Add content
+      apiFormData.append('text', editorContent);
+
+      // Add the correct ID field based on role
+      if (role === "company" && companyId) {
+        apiFormData.append('company', companyId);
+      } else if (userId) {
+        apiFormData.append('user', userId);
+      } else {
+        toast.error('User or Company information not found. Please login again.');
+        return;
+      }
+
+      // Add policy file if exists
+      if (formData.energyPolicy) {
+        apiFormData.append('energy_policy', formData.energyPolicy);
+      }
+
+      // Use the correct endpoint based on your API structure
+      const endpoint = '/company/documentation/create/';
+
+      console.log("API URL:", `${BASE_URL}${endpoint}`);
+      console.log("Request data:", Object.fromEntries(apiFormData.entries()));
+
+      const response = await axios.post(
+        `${BASE_URL}${endpoint}`,
+        apiFormData,
+        {
+          headers: {
+
+            'Content-Type': 'multipart/form-data'
+          }
         }
+      );
+
+      if (response && (response.status === 200 || response.status === 201)) {
+        toast.success('Policy added successfully');
+
+        // Reset form
+        setFormData({
+          content: '',
+          energyPolicy: null
+        });
+
+        // Clear editor
+        if (editorRef.current) {
+          editorRef.current.innerHTML = '\n\n\n\n\n';
+        }
+      } else {
+        toast.error('Failed to add policy. Please try again.');
       }
-    );
-    
-    if (response && (response.status === 200 || response.status === 201)) {
-      toast.success('Policy added successfully');
-      
-      // Reset form
-      setFormData({
-        content: '',
-        energyPolicy: null
-      });
-      
-      // Clear editor
-      if (editorRef.current) {
-        editorRef.current.innerHTML = '\n\n\n\n\n';
-      }
-    } else {
-      toast.error('Failed to add policy. Please try again.');
+    } catch (error) {
+      console.error('Error details:', error.response?.data || error.message);
+      toast.error('An error occurred. Please try again.');
     }
-  } catch (error) {
-    console.error('Error details:', error.response?.data || error.message);
-    toast.error('An error occurred. Please try again.');
-  }
-};
+  };
 
   // Dropdown component to show selected option
   const Dropdown = ({ title, options, onSelect, selectedValue }) => {
@@ -708,7 +731,7 @@ const handleSave = async () => {
     const [customColor, setCustomColor] = useState(activeColor);
 
     return (
-      <div className="absolute z-20 mt-2 p-3 bg-gray-800 border border-gray-700 rounded-md shadow-lg" ref={colorPickerRef}>
+      <div className="absolute z-20 mt-2 p-3 right-0 bg-gray-800 border border-gray-700 rounded-md shadow-lg" ref={colorPickerRef}>
         <div className="grid grid-cols-5 gap-2 mb-3">
           {colorPalette.map((color, index) => (
             <button
@@ -740,70 +763,82 @@ const handleSave = async () => {
   };
 
   return (
-    <div className="bg-gray-900 text-white p-6 min-h-screen">
-      <h1 className="text-2xl font-bold mb-4">Add Policies</h1>
-      
-      <div className="border border-gray-700 rounded-md mb-6">
-        <div className="flex items-center p-2 border-b border-gray-700 bg-gray-800 flex-wrap">
-          {/* Text formatting */}
-          <button 
-            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.bold ? 'bg-gray-700' : ''}`}
-            onClick={() => execCommand('bold')}
-            title="Bold"
-          >
-            <Bold size={18} />
-          </button>
-          <button 
-            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.italic ? 'bg-gray-700' : ''}`}
-            onClick={() => execCommand('italic')}
-            title="Italic"
-          >
-            <Italic size={18} />
-          </button>
-          <button 
-            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.underline ? 'bg-gray-700' : ''}`}
-            onClick={() => execCommand('underline')}
-            title="Underline"
-          >
-            <Underline size={18} />
-          </button>
-          
-          <div className="border-r border-gray-600 h-6 mx-2"></div>
-          
-          {/* Alignment */}
-          <button 
-            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.align === 'left' ? 'bg-gray-700' : ''}`}
-            onClick={() => execCommand('justifyLeft')}
-            title="Align Left"
-          >
-            <AlignLeft size={18} />
-          </button>
-          <button 
-            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.align === 'center' ? 'bg-gray-700' : ''}`}
-            onClick={() => execCommand('justifyCenter')}
-            title="Align Center"
-          >
-            <AlignCenter size={18} />
-          </button>
-          <button 
-            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.align === 'right' ? 'bg-gray-700' : ''}`}
-            onClick={() => execCommand('justifyRight')}
-            title="Align Right"
-          >
-            <AlignRight size={18} />
-          </button>
-          <button 
-            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.align === 'justify' ? 'bg-gray-700' : ''}`}
-            onClick={() => execCommand('justifyFull')}
-            title="Justify"
-          >
-            <AlignJustify size={18} />
-          </button>
-          
-          <div className="border-r border-gray-600 h-6 mx-2"></div>
-          
-          {/* Font dropdowns */}
-          <div className="flex items-center mx-1">
+    <div className="bg-[#1C1C24] text-white p-5 rounded-[8px]">
+      <h1 className="add-policy-head">Add Policies</h1>
+
+      <div className='border-t border-[#383840] mt-[21px] mb-5'></div>
+
+      <div className="flex items-center bg-[#24242D] justify-between px-5 py-[13px] rounded-[4px] mb-4">
+        {/* Text formatting */}
+        <button
+          className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.bold ? 'bg-gray-700' : ''}`}
+          onClick={() => execCommand('bold')}
+          title="Bold"
+        >
+          <img src={bold} alt="Bold" />
+        </button>
+        <button
+          className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.italic ? 'bg-gray-700' : ''}`}
+          onClick={() => execCommand('italic')}
+          title="Italic"
+        >
+          <img src={itallic} alt="Itallic" />
+        </button>
+        <button
+          className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.underline ? 'bg-gray-700' : ''}`}
+          onClick={() => execCommand('underline')}
+          title="Underline"
+        >
+          <img src={underline} alt="Underline" />
+        </button>
+
+        {/* Alignment */}
+        <button
+          className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.align === 'left' ? 'bg-gray-700' : ''}`}
+          onClick={() => execCommand('justifyLeft')}
+          title="Align Left"
+        >
+          <img src={leftalign} alt="Text Left Align" />
+        </button>
+        <button
+          className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.align === 'center' ? 'bg-gray-700' : ''}`}
+          onClick={() => execCommand('justifyCenter')}
+          title="Align Center"
+        >
+          <img src={centeralign} alt="Text Center Align" />
+        </button>
+        <button
+          className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.align === 'right' ? 'bg-gray-700' : ''}`}
+          onClick={() => execCommand('justifyRight')}
+          title="Align Right"
+        >
+          <img src={rightalign} alt="Text Right Align" />
+        </button>
+        <button
+          className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.align === 'justify' ? 'bg-gray-700' : ''}`}
+          onClick={() => execCommand('justifyFull')}
+          title="Justify"
+        >
+          <img src={sentencetext} alt="Align Justify" />
+        </button>
+        <button
+          className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.orderedList ? 'bg-gray-700' : ''}`}
+          onClick={() => handleList('ol')}
+          title="Ordered List"
+        >
+          <img src={orderedlist} alt="Ordered List" />
+        </button>
+        <button
+          className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.unorderedList ? 'bg-gray-700' : ''}`}
+          onClick={() => handleList('ul')}
+          title="Unordered List"
+        >
+          <img src={unorderedlist} alt="unordered List" />
+        </button>
+
+        {/* Font dropdowns */}
+        <div className='flex'>
+          <div className="flex items-center mr-[10px]">
             <Dropdown
               title="Font Size"
               options={fontSizes}
@@ -811,8 +846,8 @@ const handleSave = async () => {
               selectedValue={selectedFontSize}
             />
           </div>
-          
-          <div className="flex items-center mx-1">
+
+          <div className="flex items-center mr-[10px]">
             <Dropdown
               title="Font Style"
               options={fontStyles}
@@ -820,8 +855,8 @@ const handleSave = async () => {
               selectedValue={selectedFontStyle}
             />
           </div>
-          
-          <div className="flex items-center mx-1">
+
+          <div className="flex items-center">
             <Dropdown
               title="Font Format"
               options={fontFormats}
@@ -829,133 +864,129 @@ const handleSave = async () => {
               selectedValue={selectedFontFormat}
             />
           </div>
-          
-          <div className="border-r border-gray-600 h-6 mx-2"></div>
-          
-          {/* Lists and indentation */}
-          <button 
-            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.unorderedList ? 'bg-gray-700' : ''}`}
-            onClick={() => handleList('ul')}
-            title="Unordered List"
-          >
-            <List size={18} />
-          </button>
-          <button 
-            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.orderedList ? 'bg-gray-700' : ''}`}
-            onClick={() => handleList('ol')}
-            title="Ordered List"
-          >
-            <ListOrdered size={18} />
-          </button>
-          <button 
-            className="p-1 mx-1 hover:bg-gray-700 rounded"
-            onClick={handleIndent}
-            title="Indent"
-          >
-            <Indent size={18} />
-          </button>
-          <button 
-            className="p-1 mx-1 hover:bg-gray-700 rounded"
-            onClick={handleOutdent}
-            title="Outdent"
-          >
-            <Outdent size={18} />
-          </button>
-          
-          {/* Links */}
-          <button 
-            className="p-1 mx-1 hover:bg-gray-700 rounded"
-            onClick={handleCreateLink}
-            title="Insert Link"
-          >
-            <Link size={18} />
-          </button>
-          <button 
-            className="p-1 mx-1 hover:bg-gray-700 rounded"
-            onClick={() => execCommand('unlink')}
-            title="Remove Link"
-          >
-            <Unlink size={18} />
-          </button>
-          
-          {/* Images */}
-          <button 
-            className="p-1 mx-1 hover:bg-gray-700 rounded"
-            onClick={handleInsertImage}
-            title="Insert Image from URL"
-          >
-            <Image size={18} />
-          </button>
-          <button 
-            className="p-1 mx-1 hover:bg-gray-700 rounded"
-            onClick={triggerImageUpload}
-            title="Upload Image"
-          >
-            <FileUp size={18} />
-          </button>
-          
-          {/* Color pickers */}
-          <div className="relative">
-            <button 
-              className="p-1 mx-1 hover:bg-gray-700 rounded relative"
-              onClick={toggleTextColorPicker}
-              title="Text Color"
-              style={{ color: activeStyles.textColor }}
-            >
-              <Type size={18} />
-            </button>
-            {showTextColorPicker && (
-              <ColorPickerPanel
-                onColorSelect={handleTextColor}
-                activeColor={activeStyles.textColor}
-              />
-            )}
-          </div>
-          
-          <div className="relative">
-            <button 
-              className="p-1 mx-1 hover:bg-gray-700 rounded"
-              onClick={toggleBgColorPicker}
-              title="Background Color"
-            >
-              <Highlighter size={18} style={{ color: activeStyles.bgColor !== 'transparent' ? activeStyles.bgColor : undefined }} />
-            </button>
-            {showBgColorPicker && (
-              <ColorPickerPanel
-                onColorSelect={handleBackgroundColor}
-                activeColor={activeStyles.bgColor}
-              />
-            )}
-          </div>
         </div>
-        
+
+        {/* Lists and indentation */}
+
+
+        <button
+          className="p-1 mx-1 hover:bg-gray-700 rounded"
+          onClick={handleIndent}
+          title="Indent"
+        >
+          <img src={textoutdent} alt="Text Indent" />
+        </button>
+        <button
+          className="p-1 mx-1 hover:bg-gray-700 rounded"
+          onClick={handleOutdent}
+          title="Outdent"
+        >
+          <img src={textindednt} alt="Text Indent" />
+        </button>
+        <button
+          className="p-1 mx-1 hover:bg-gray-700 rounded"
+          onClick={handleInsertImage}
+          title="Insert Image from URL"
+        >
+          <img src={imagelink} alt="" />
+        </button>
+        <button
+          className="p-1 mx-1 hover:bg-gray-700 rounded"
+          onClick={triggerImageUpload}
+          title="Upload Image"
+        >
+          <img src={imageupload} alt="" />
+        </button>
+
+        {/* Links */}
+        <button
+          className="p-1 mx-1 hover:bg-gray-700 rounded"
+          onClick={handleCreateLink}
+          title="Insert Link"
+        >
+          <img src={addlinks} alt="Add Link" />
+        </button>
+        <button
+          className="p-1 mx-1 hover:bg-gray-700 rounded"
+          onClick={() => execCommand('unlink')}
+          title="Remove Link"
+        >
+          <img src={removelinks} alt="remove Links" />
+        </button>
+
+        {/* Images */}
+
+
+
+        {/* Color pickers */}
+        <div className="relative">
+          <button
+            className="p-1 mx-1 hover:bg-gray-700 rounded relative"
+            onClick={toggleTextColorPicker}
+            title="Text Color"
+            style={{ color: activeStyles.textColor }}
+          >
+            <img src={textcolor} alt="text Color" />
+          </button>
+          {showTextColorPicker && (
+            <ColorPickerPanel
+              onColorSelect={handleTextColor}
+              activeColor={activeStyles.textColor}
+            />
+          )}
+        </div>
+
+        <div className="relative">
+          <button
+            className="p-1 mx-1 hover:bg-gray-700 rounded"
+            onClick={toggleBgColorPicker}
+            title="Background Color"
+          >
+            <img src={textbgcolor} style={{ color: activeStyles.bgColor !== 'transparent' ? activeStyles.bgColor : undefined }} />
+          </button>
+          {showBgColorPicker && (
+            <ColorPickerPanel
+              onColorSelect={handleBackgroundColor}
+              activeColor={activeStyles.bgColor}
+            />
+          )}
+        </div>
+      </div>
+      <div className="rounded-md mb-6">
+
         {/* Editor Content Area */}
         <div
           ref={editorRef}
           contentEditable
-          className="bg-gray-950 p-4 min-h-[300px] focus:outline-none"
+          className="bg-[#24242D] px-5 py-[16px] min-h-[300px] focus:outline-none rounded-[4px]"
           onInput={() => setFormData(prev => ({ ...prev, content: editorRef.current.innerHTML }))}
         />
       </div>
-      
+
       {/* File Upload Section */}
-      <div className="mb-6">
-        <label className="block text-sm font-medium mb-2">
-          Upload Energy Policy (Optional)
-        </label>
-        <input
-          type="file"
-          onChange={handleFileChange}
-          className="bg-gray-800 text-white p-2 rounded w-full"
-          accept=".pdf,.doc,.docx"
-        />
-        {formData.energyPolicy && (
-          <div className="mt-2 text-sm text-green-400">
-            File selected: {formData.energyPolicy.name}
-          </div>
-        )}
+      <div className="flex items-center justify-between mt-8 mb-[23px]">
+        <label className="attach-policy-text">Attach Quality Policy:</label>
+        <div className="flex items-center ">
+          <label className="flex justify-center gap-[10px] items-center w-[326px] h-[44px] px-[10px] text-[#AAAAAA] rounded-md border border-[#383840] cursor-pointer transition">
+            Choose File
+            <img src={files} alt="File Icon" />
+            <input
+              type="file"
+              className="hidden"
+              onChange={handleFileChange}
+              accept=".pdf,.doc,.docx"
+            />
+          </label>
+          {formData.energyPolicy && (
+            <div className="mt-2 text-sm text-green-400">
+              File selected: {formData.energyPolicy.name}
+            </div>
+          )}
+        </div>
       </div>
-      
+
+      <div className='border-t border-[#383840] mb-8'></div>
+
       {/* Hidden input for image upload */}
       <input
         type="file"
@@ -964,17 +995,17 @@ const handleSave = async () => {
         accept="image/*"
         style={{ display: 'none' }}
       />
-      
+
       {/* Form Actions */}
-      <div className="flex justify-end gap-4">
+      <div className="flex justify-end gap-[21px]">
         <button
-          className="px-5 py-2 bg-gray-700 text-white rounded hover:bg-gray-600"
+          className="cancel-btn duration-200"
           onClick={handleCancel}
         >
           Cancel
         </button>
         <button
-          className="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-500"
+          className="save-btn duration-200"
           onClick={handleSave}
         >
           Save Policy
