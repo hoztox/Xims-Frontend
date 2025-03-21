@@ -593,101 +593,81 @@ const AddQmsPolicy = () => {
 
 const handleSave = async () => {
   const editorContent = editorRef.current ? editorRef.current.innerHTML : '';
-
-  if (!editorContent.trim() || editorContent === '<p><br></p>') {
-      console.log("Empty content detected");
-      toast.error('Please enter policy content');
-      return;
+  
+  if (!editorContent.trim() || editorContent === '\n\n\n\n\n') {
+    toast.error('Please enter policy content');
+    return;
   }
-
+  
   try {
-      // Get role and IDs
-      const role = localStorage.getItem("role");
-      const companyId = localStorage.getItem("company_id");
-      const userId = localStorage.getItem("user_id");
-
-      console.log("Logged-in Role:", role);
-      console.log("Company ID:", companyId);
-      console.log("User ID:", userId);
-
-      let entityId = null;
-      let entityType = null;
-
-      if (role === "company" && companyId) {
-          entityId = companyId;
-          entityType = "company";
-      } else if (role === "user" && userId) {
-          entityId = userId;
-          entityType = "user";
+    // Gather user data
+    const accessToken = localStorage.getItem("accessToken");
+    const role = localStorage.getItem("role");
+    const companyId = localStorage.getItem("company_id");
+    const userId = localStorage.getItem("user_id");
+    
+    // Debug user info
+    console.log("Debug Info:", { role, companyId, userId, hasToken: !!accessToken });
+    
+    // Create FormData
+    const apiFormData = new FormData();
+    
+    // Add content
+    apiFormData.append('text', editorContent);
+    
+    // Add the correct ID field based on role
+    if (role === "company" && companyId) {
+      apiFormData.append('company', companyId);
+    } else if (userId) {
+      apiFormData.append('user', userId);
+    } else {
+      toast.error('User or Company information not found. Please login again.');
+      return;
+    }
+    
+    // Add policy file if exists
+    if (formData.energyPolicy) {
+      apiFormData.append('energy_policy', formData.energyPolicy);
+    }
+    
+    // Use the correct endpoint based on your API structure
+    const endpoint = '/company/documentation/create/';
+    
+    console.log("API URL:", `${BASE_URL}${endpoint}`);
+    console.log("Request data:", Object.fromEntries(apiFormData.entries()));
+    
+    const response = await axios.post(
+      `${BASE_URL}${endpoint}`,
+      apiFormData,
+      {
+        headers: {
+        
+          'Content-Type': 'multipart/form-data'
+        }
       }
-
-      if (!entityId) {
-          console.log("No valid ID found for the logged-in entity");
-          toast.error('User or Company information not found. Please login again.');
-          return;
+    );
+    
+    if (response && (response.status === 200 || response.status === 201)) {
+      toast.success('Policy added successfully');
+      
+      // Reset form
+      setFormData({
+        content: '',
+        energyPolicy: null
+      });
+      
+      // Clear editor
+      if (editorRef.current) {
+        editorRef.current.innerHTML = '\n\n\n\n\n';
       }
-
-      console.log(`Creating policy for: ${entityType} ID: ${entityId}`);
-
-      // Create FormData
-      const apiFormData = new FormData();
-      apiFormData.append('text', editorContent);
-      apiFormData.append('created_by', entityId);
-
-      // Ensure correct field name
-      if (entityType === "company") {
-          apiFormData.append('company_id', entityId);  // Fix: Use 'company_id'
-      } else {
-          apiFormData.append('user_id', entityId);  // Fix: Use 'user_id' for users
-      }
-
-      if (formData.energyPolicy) {
-          apiFormData.append('energy_policy', formData.energyPolicy);
-          console.log("Energy policy file attached:", formData.energyPolicy.name);
-      } else {
-          console.log("No energy policy file attached");
-      }
-
-      // Debugging: Log form data
-      console.log("Form data:");
-      for (let pair of apiFormData.entries()) {
-          console.log(pair[0] + ': ' + pair[1]);
-      }
-
-      // API Request
-      const response = await axios.post(
-          `${BASE_URL}/company/documentation/create/`, // Check if this is the correct endpoint
-          apiFormData
-      );
-
-      console.log("API response:", response);
-
-      if (response.status === 201 || response.status === 200) {
-          toast.success('Policy added successfully');
-
-          // Reset form after submission
-          setFormData({
-              content: '',
-              energyPolicy: null
-          });
-
-          // Clear editor content
-          if (editorRef.current) {
-              editorRef.current.innerHTML = '<p><br></p>';
-          }
-      }
+    } else {
+      toast.error('Failed to add policy. Please try again.');
+    }
   } catch (error) {
-      console.error('Error creating policy:', error);
-      toast.error(
-          error.response?.data?.detail ||
-          error.response?.data?.message ||
-          'Failed to add policy. Please try again.'
-      );
+    console.error('Error details:', error.response?.data || error.message);
+    toast.error('An error occurred. Please try again.');
   }
 };
-
-
-
 
   // Dropdown component to show selected option
   const Dropdown = ({ title, options, onSelect, selectedValue }) => {
