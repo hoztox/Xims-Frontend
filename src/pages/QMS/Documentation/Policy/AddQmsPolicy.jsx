@@ -1,9 +1,4 @@
 import React, { useRef, useState, useEffect } from 'react';
-import {
-  Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight,
-  AlignJustify, List, ListOrdered, Indent, Outdent, Link, Unlink,
-  Image, FileUp, Type, Highlighter
-} from 'lucide-react';
 import bold from "../../../../assets/images/Company Documentation/bold.svg"
 import itallic from "../../../../assets/images/Company Documentation/itallic.svg"
 import underline from "../../../../assets/images/Company Documentation/underline.svg"
@@ -22,6 +17,7 @@ import addlinks from "../../../../assets/images/Company Documentation/add-link.s
 import removelinks from "../../../../assets/images/Company Documentation/remove-link.svg"
 import textcolor from "../../../../assets/images/Company Documentation/text-color.svg"
 import textbgcolor from "../../../../assets/images/Company Documentation/bg-color.svg"
+import { ChevronDown } from 'lucide-react';
 import axios from 'axios';
 import "./addqmspolicys.css"
 import { toast } from 'react-hot-toast';
@@ -700,18 +696,18 @@ const AddQmsPolicy = () => {
     return (
       <div className="relative">
         <button
-          className="px-2 py-1 bg-gray-700 rounded flex items-center text-sm"
+          className="px-2 py-1 bg-transparent border border-[#AAAAAA] rounded flex items-center custom-fonts"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {displayTitle} <span className="ml-1">▼</span>
+          {displayTitle} <span className="ml-1"><ChevronDown size={15}/></span>
         </button>
 
         {isOpen && (
-          <div className="absolute z-10 mt-1 w-40 bg-gray-800 border border-gray-700 rounded shadow-lg">
+          <div className="absolute z-10  w-40 bg-[#1C1C24] border border-[#AAAAAA] rounded shadow-lg">
             {options.map((option, index) => (
               <button
                 key={index}
-                className="w-full text-left px-4 py-2 hover:bg-gray-700"
+                className="w-full text-left px-4 py-1 hover:bg-gray-700 custom-fonts"
                 onClick={() => {
                   onSelect(option.value);
                   setIsOpen(false);

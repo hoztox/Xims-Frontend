@@ -19,3 +19,11 @@
     line-height: normal;
     font-style: normal;
 }
+
+.custom-fonts {
+    font-family: 'Switzer Regular';
+    font-size: 14px;
+    font-style: normal;
+    line-height: normal;
+    color: #AAAAAA;
+}
