@@ -974,8 +974,8 @@ const AddQmsPolicy = () => {
             />
           </label>
           {formData.energyPolicy && (
-            <div className="mt-2 text-sm text-green-400">
-              File selected: {formData.energyPolicy.name}
+            <div className="mt-1 text-sm text-[#54545B]">
+              {formData.energyPolicy.name}
             </div>
           )}
         </div>
