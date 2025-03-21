@@ -8,6 +8,7 @@ import uploadIcon from "../../assets/images/Companies/choose file.svg";
 import { useTheme } from "../../ThemeContext";
 import { Cropper } from "react-advanced-cropper";
 import "react-advanced-cropper/dist/style.css";
+import { motion, AnimatePresence } from "framer-motion";
 // import Cropper from "react-easy-crop";
 
 const EditCompany = () => {
@@ -35,6 +36,28 @@ const EditCompany = () => {
   const [isCropModalOpen, setIsCropModalOpen] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
+
+  // Password modal state
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: ""
+  });
+  const [passwordError, setPasswordError] = useState("");
+
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Toggle password visibility functions
+  const toggleNewPasswordVisibility = () => {
+    setShowNewPassword(!showNewPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
 
   const cropperSettings = {
     stencilProps: {
@@ -143,10 +166,10 @@ const EditCompany = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const formData = new FormData();
     console.log('Formdataaaa', formData);
-    
+
     formData.append("company_name", formDataState.company_name);
     formData.append("company_admin_name", formDataState.company_admin_name);
     formData.append("email_address", formDataState.email_address);
@@ -158,23 +181,23 @@ const EditCompany = () => {
       "permissions",
       JSON.stringify(formDataState.permissions)
     );
-  
+
     if (croppedImage && typeof croppedImage !== "string") {
       formData.append("company_logo", croppedImage);
     } else if (originalFile && originalFile !== companyLogoPreview) {
       formData.append("company_logo", originalFile);
     }
-    
+
     // Log each entry to see what's actually in the FormData
     console.log('Form data contents:');
     for (let [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);
     }
-    
+
     // Or debug the permissions specifically before submission
     console.log('Permissions being sent:', formDataState.permissions);
     console.log('Permissions JSON:', JSON.stringify(formDataState.permissions));
-  
+
     try {
       const response = await axios.put(
         `${BASE_URL}/accounts/companies/update/${companyId}/`,
@@ -185,7 +208,7 @@ const EditCompany = () => {
           },
         }
       );
-  
+
       if (response.status === 200 || response.status === 201) {
         toast.success("Company updated successfully!");
         setTimeout(() => {
@@ -195,6 +218,57 @@ const EditCompany = () => {
     } catch (error) {
       console.error("Error updating company:", error);
       toast.error("Failed to update company. Please try again.");
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    setPasswordData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    // Clear error when user types
+    if (passwordError) setPasswordError("");
+  };
+
+  const handlePasswordSubmit = async (e) => {
+    e.preventDefault();
+
+    // Validate passwords
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      setPasswordError("New passwords do not match");
+      return;
+    }
+
+    if (passwordData.newPassword.length < 6) {
+      setPasswordError("Password must be at least 6 characters");
+      return;
+    }
+
+    try {
+      // Example API call - adjust to your actual endpoint
+      const response = await axios.post(
+        `${BASE_URL}/accounts/companies/change-password/${companyId}/`,
+        {
+          current_password: passwordData.currentPassword,
+          new_password: passwordData.newPassword
+        }
+      );
+
+      if (response.status === 200) {
+        toast.success("Password changed successfully!");
+        setIsPasswordModalOpen(false);
+        // Reset password form data
+        setPasswordData({
+          currentPassword: "",
+          newPassword: "",
+          confirmPassword: ""
+        });
+      }
+    } catch (error) {
+      console.error("Error changing password:", error);
+      setPasswordError(error.response?.data?.message || "Failed to change password");
+      toast.error("Failed to change password. Please try again.");
     }
   };
 
@@ -384,11 +458,11 @@ const EditCompany = () => {
 
             <div>
               <h3 className="text-[#677487] my-8">Permissions</h3>
-              <div className="permissions-list permissionboxes flex">
+              <div className="permissions-list permissionboxes flex flex-wrap">
                 {permissionList.map((permission) => (
                   <label
                     key={permission.id}
-                    className="flex items-center space-x-2"
+                    className="flex items-center space-x-2 mr-4 mb-2"
                   >
                     <input
                       type="checkbox"
@@ -404,15 +478,17 @@ const EditCompany = () => {
             </div>
           </div>
 
-          <div className="flex justify-between gap-5">
+          <div className="flex justify-between gap-5 change-pswds-sbt">
             <button
-              className="lg:w-1/7 md:w-auto text-white px-7 py-2 rounded duration-200 cursor-pointer updatebtns"
+              type="button" // Changed to button type to prevent form submission
+              className="md:w-auto text-white px-7 py-2 rounded duration-200 cursor-pointer updatebtns"
+              onClick={() => setIsPasswordModalOpen(true)}
             >
               Change Password
             </button>
             <button
               type="submit"
-              className="lg:w-1/7 md:w-auto text-white px-7 py-2 rounded duration-200 cursor-pointer updatebtn"
+              className="md:w-auto text-white px-7 py-2 rounded duration-200 cursor-pointer updatebtn"
             >
               Submit
             </button>
@@ -421,10 +497,9 @@ const EditCompany = () => {
       </div>
 
       {/* Image Crop Modal */}
-      {/* Image Crop Modal */}
       {isCropModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className=" p-4 rounded-lg max-w-2xl">
+          <div className="bg-white p-4 rounded-lg max-w-2xl">
             <div className="h-96">
               <Cropper
                 ref={cropperRef}
@@ -450,6 +525,133 @@ const EditCompany = () => {
           </div>
         </div>
       )}
+
+      {/* Password Change Modal */}
+      <AnimatePresence>
+        {isPasswordModalOpen && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="bg-white p-6 rounded-lg max-w-md w-full shadow-lg pswd-modal"
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            >
+              <div className="flex justify-between items-center mb-8">
+                <h2 className="change-pswrd-edit-cmpy">Change Password</h2>
+                <button
+                  onClick={() => setIsPasswordModalOpen(false)}
+                  className="text-[#25282B] focus:outline-none cross-icon"
+                >
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <form onSubmit={handlePasswordSubmit}>
+                {passwordError && (
+                  <motion.div
+                    className="mb-4 p-2 bg-red-100 text-red-600 rounded text-sm"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {passwordError}
+                  </motion.div>
+                )}
+
+                <div className="mb-4">
+                  <label htmlFor="newPassword" className="new-pswd-label">
+                    New Password
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showNewPassword ? "text" : "password"}
+                      id="newPassword"
+                      name="newPassword"
+                      value={passwordData.newPassword}
+                      onChange={handlePasswordChange}
+                      className="w-full p-2 border border-[#E9E9E9] rounded focus:outline-none new-pswd-inputs"
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none"
+                      onClick={toggleNewPasswordVisibility}
+                    >
+                      {showNewPassword ? (
+                        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                        </svg>
+                      ) : (
+                        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <label htmlFor="confirmPassword" className="cnfrm-paswd-label">
+                    Confirm Password
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      value={passwordData.confirmPassword}
+                      onChange={handlePasswordChange}
+                      className="w-full border border-[#E9E9E9] rounded focus:outline-none confrm-paswd-inputs"
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none"
+                      onClick={toggleConfirmPasswordVisibility}
+                    >
+                      {showConfirmPassword ? (
+                        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                        </svg>
+                      ) : (
+                        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex justify-end gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setIsPasswordModalOpen(false)}
+                    className="px-5 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors pswd-cancel-btn"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-[#1E4DA1] text-white rounded hover:bg-[#1d3e75] transition-colors pswd-update-btn"
+                  >
+                    Update Password
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

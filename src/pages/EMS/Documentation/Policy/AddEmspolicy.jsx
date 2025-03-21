@@ -19,7 +19,6 @@ import textcolor from "../../../../assets/images/Company Documentation/text-colo
 import textbgcolor from "../../../../assets/images/Company Documentation/bg-color.svg"
 import { ChevronDown } from 'lucide-react';
 import axios from 'axios';
-
 import { toast } from 'react-hot-toast';
 import { BASE_URL } from "../../../../Utils/Config";
 import { useNavigate } from 'react-router-dom';
@@ -668,6 +667,7 @@ const AddEmspolicy = () => {
 
       if (response && (response.status === 200 || response.status === 201)) {
         toast.success('Policy added successfully');
+        navigate('/company/ems/policy')
 
         // Reset form
         setFormData({
@@ -699,7 +699,7 @@ const AddEmspolicy = () => {
           className="px-2 py-1 bg-transparent border border-[#AAAAAA] rounded flex items-center custom-fonts"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {displayTitle} <span className="ml-1"><ChevronDown size={15}/></span>
+          {displayTitle} <span className="ml-1"><ChevronDown size={15} /></span>
         </button>
 
         {isOpen && (
@@ -973,11 +973,9 @@ const AddEmspolicy = () => {
               accept=".pdf,.doc,.docx"
             />
           </label>
-          {formData.energyPolicy && (
-            <div className="mt-2 text-sm text-green-400">
-            {formData.energyPolicy.name}
-            </div>
-          )}
+          <div className="mt-1 ml-2 text-sm text-[#54545B]">
+            {formData.energyPolicy?.name ? formData.energyPolicy.name : "No file chosen"}
+          </div>
         </div>
       </div>
 

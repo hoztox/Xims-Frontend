@@ -669,6 +669,8 @@ const AddQmsPolicy = () => {
       if (response && (response.status === 200 || response.status === 201)) {
         toast.success('Policy added successfully');
 
+        navigate('/company/qms/policy')
+
         // Reset form
         setFormData({
           content: '',
@@ -699,7 +701,7 @@ const AddQmsPolicy = () => {
           className="px-2 py-1 bg-transparent border border-[#AAAAAA] rounded flex items-center custom-fonts"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {displayTitle} <span className="ml-1"><ChevronDown size={15}/></span>
+          {displayTitle} <span className="ml-1"><ChevronDown size={15} /></span>
         </button>
 
         {isOpen && (
@@ -973,11 +975,10 @@ const AddQmsPolicy = () => {
               accept=".pdf,.doc,.docx"
             />
           </label>
-          {formData.energyPolicy && (
-            <div className="mt-1 text-sm text-[#54545B]">
-              {formData.energyPolicy.name}
-            </div>
-          )}
+          <div className="mt-1 ml-2 text-sm text-[#54545B]">
+            {formData.energyPolicy?.name ? formData.energyPolicy.name : "No file chosen"}
+          </div>
+
         </div>
       </div>
 

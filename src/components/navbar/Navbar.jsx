@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useTheme } from "../../ThemeContext";
 import "./navbar.css";
 import bell from "../../assets/images/Navbar/bell.svg";
-import setting from "../../assets/images/Navbar/settings.svg";
+// import setting from "../../assets/images/Navbar/settings.svg";
 import profile from "../../assets/images/Navbar/profile.svg";
 import logo from "../../assets/images/logo.svg";
 import dashboardicon from "../../assets/images/Sidebar/dashboard.svg";
@@ -159,14 +159,14 @@ const Navbar = () => {
         >
           <img src={bell} alt="bell icon" className="bellimg" />
         </button>
-        <button
+        {/* <button
           aria-label="Settings"
           className={`icon-button settingicon ${
             theme === "dark" ? "dark" : "light"
           } duration-200`}
         >
           <img src={setting} alt="setting icon" className="settingimg" />
-        </button>
+        </button> */}
         <div
           className={`divider ${
             theme === "dark" ? "dark" : "light"

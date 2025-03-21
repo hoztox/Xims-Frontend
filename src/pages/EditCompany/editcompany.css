@@ -226,10 +226,44 @@ input[type="checkbox"]:not(:checked) + span {
   transition: 1000s ease-in-out 0s !important;
 }
 
+.change-pswrd-edit-cmpy {
+  font-family: 'Switzer Regular';
+  font-size: 20px;
+  color: #25282B;
+}
+.new-pswd-label, .cnfrm-paswd-label {
+  font-family: 'Switzer Regular';
+  font-size: 14px;
+  color: #25282B;
+}
+
+.new-pswd-inputs,.confrm-paswd-inputs {
+  font-family: 'Switzer Light'; 
+  margin-top: 8px;
+  background-color: transparent;
+}
+
+.pswd-cancel-btn, .pswd-update-btn {
+  font-family: 'Switzer Light'; 
+}
+
+.maineditcmpy.dark .pswd-modal {
+  background-color: #13131A;
+}
+.maineditcmpy.dark .change-pswrd-edit-cmpy,.maineditcmpy.dark .cross-icon  {
+  color: white;
+}
+
+.maineditcmpy.dark .new-pswd-inputs, .maineditcmpy.dark .confrm-paswd-inputs {
+  border-color: #343434;
+}
+
+
   @media(max-width:431px ) {
     .maineditcmpy {
         margin-bottom: 100px;
-        height: 58rem;
+        height: auto;
+        /* max-width: calc(100vw- 40px); */
     }
     .permissionhead {
         margin-top: 50px;
@@ -245,7 +279,11 @@ input[type="checkbox"]:not(:checked) + span {
 
     }
     .updatebtn{
-     margin-top: 125px;
+     margin-top: 50px;
+    }
+    .change-pswds-sbt {
+      flex-direction: column;
+      row-gap: 0px;
     }
   }
 
