@@ -32,28 +32,43 @@ export async function adminLogin(email, password) {
 }
 
 
-export async function companyLogin(email, password) {
+export async function companyLogin(username, password) {
     try {
         const response = await axios.post(`${BASE_URL}/company/company/login/`, {
-            email,
+            username,
             password,
         });
 
         if (response.status === 200) {
-            const { access, refresh, ...companyData } = response.data;
+            const { access, refresh, company_id, company_name, role, ...companyData } = response.data;
 
+            console.log("Login Successful");
             console.log("Access Token:", access);
             console.log("Refresh Token:", refresh);
+            console.log("Company ID:", company_id);
+            console.log("Company Name:", company_name);
             console.log("Company Data:", companyData);
 
-            // Store tokens
-            localStorage.setItem("companyAccessToken", access);
-            localStorage.setItem("companyRefreshToken", refresh);
+            // Store access tokens
+            localStorage.setItem("accessToken", access);
+            localStorage.setItem("refreshToken", refresh);
+            localStorage.setItem("role", role);
 
-            // Store company data
-            Object.keys(companyData).forEach((key) => {
-                localStorage.setItem(`company_${key}`, JSON.stringify(companyData[key]));
-            });
+            // Store company ID and details if role is company
+            if (role === "company" && company_id) {
+                localStorage.setItem("company_id", company_id);
+                localStorage.setItem("company_name", company_name);
+                console.log("Stored company_id:", localStorage.getItem("company_id"));
+
+                Object.keys(companyData).forEach((key) => {
+                    localStorage.setItem(`company_${key}`, JSON.stringify(companyData[key]));
+                });
+            }
+
+            // Remove user data if switching from user to company
+            localStorage.removeItem("user_id");
+            localStorage.removeItem("userAccessToken");
+            localStorage.removeItem("userRefreshToken");
 
             toast.success("Admin Login Success");
             return response.data;

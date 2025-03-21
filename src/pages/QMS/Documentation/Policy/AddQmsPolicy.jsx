@@ -1,29 +1,18 @@
-import React, { useRef, useState, useEffect } from 'react'
-import bold from "../../../../assets/images/Company Documentation/bold.svg"
-import itallic from '../../../../assets/images/Company Documentation/itallic.svg'
-import underlines from '../../../../assets/images/Company Documentation/underline.svg'
-import textleft from "../../../../assets/images/Company Documentation/text-align-left.svg"
-import textcenter from "../../../../assets/images/Company Documentation/text-allign-center.svg"
-import textright from "../../../../assets/images/Company Documentation/text-align-right.svg"
-import textsentence from '../../../../assets/images/Company Documentation/text-sentence.svg'
-import orderedlist from "../../../../assets/images/Company Documentation/ordered-list.svg"
-import unorderedlist from "../../../../assets/images/Company Documentation/unorderedlist.svg"
-import textoutdent from "../../../../assets/images/Company Documentation/text-outdent.svg"
-import textindent from '../../../../assets/images/Company Documentation/text-indent.svg'
-import imageupload from '../../../../assets/images/Company Documentation/image-upload.svg'
-import imagelink from '../../../../assets/images/Company Documentation/image-link.svg'
-import addlink from "../../../../assets/images/Company Documentation/add-link.svg"
-import removelink from "../../../../assets/images/Company Documentation/remove-link.svg"
-import textcolor from '../../../../assets/images/Company Documentation/text-color.svg'
-import bgcolor from '../../../../assets/images/Company Documentation/bg-color.svg'
-import files from "../../../../assets/images/Company Documentation/file-icon.svg"
-import { useNavigate } from 'react-router-dom';
-import "./addqmspolicy.css"
+import React, { useRef, useState, useEffect } from 'react';
+import { 
+  Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, 
+  AlignJustify, List, ListOrdered, Indent, Outdent, Link, Unlink, 
+  Image, FileUp, Type, Highlighter
+} from 'lucide-react';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
+import { BASE_URL } from "../../../../Utils/Config";
 
 const AddQmsPolicy = () => {
-  const navigate = useNavigate()
-  const [fileName, setFileName] = useState('');
-  const [fileSelected, setFileSelected] = useState(false);
+  const [formData, setFormData] = useState({
+    content: '',
+    energyPolicy: null
+  });
   const editorRef = useRef(null);
   const imageInputRef = useRef(null);
   const [showTextColorPicker, setShowTextColorPicker] = useState(false);
@@ -41,14 +30,13 @@ const AddQmsPolicy = () => {
     textColor: '#FFFFFF', // Default text color
     bgColor: 'transparent' // Default background color
   });
-
+  
   const colorPalette = [
     '#FFFFFF', '#000000', '#FF0000', '#00FF00', '#0000FF',
     '#FFFF00', '#00FFFF', '#FF00FF', '#C0C0C0', '#808080',
     '#800000', '#808000', '#008000', '#800080', '#008080',
     '#000080', '#FFA500', '#A52A2A', '#F5F5DC', '#FFD700'
   ];
-
 
   // Font options
   const fontSizes = [
@@ -73,16 +61,19 @@ const AddQmsPolicy = () => {
     { label: 'Preformatted', value: 'pre' }
   ];
 
-  // Add state for selected dropdown values - initializing with more user-friendly defaults
+  // Add state for selected dropdown values
   const [selectedFontSize, setSelectedFontSize] = useState(fontSizes[1].label); // 'Normal'
   const [selectedFontStyle, setSelectedFontStyle] = useState(fontStyles[0].label); // 'Arial'
   const [selectedFontFormat, setSelectedFontFormat] = useState(fontFormats[0].label); // 'Paragraph'
 
   // Handle file selection for policy attachment
   const handleFileChange = (e) => {
-    if (e.target.files.length > 0) {
-      setFileName(e.target.files[0].name);
-      setFileSelected(true);
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({
+        ...formData,
+        energyPolicy: file
+      });
     }
   };
 
@@ -93,7 +84,7 @@ const AddQmsPolicy = () => {
 
       // Only process image files
       if (!file.type.startsWith('image/')) {
-        alert('Please select an image file');
+        toast.error('Please select an image file');
         return;
       }
 
@@ -195,7 +186,6 @@ const AddQmsPolicy = () => {
     setShowTextColorPicker(false);
   };
 
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (colorPickerRef.current && !colorPickerRef.current.contains(event.target)) {
@@ -210,19 +200,13 @@ const AddQmsPolicy = () => {
     };
   }, []);
 
-
-
-
-
   // Update active styles based on current selection
   const updateActiveStyles = () => {
     if (document.activeElement !== editorRef.current) return;
 
     // Check format block state
     const formatBlock = document.queryCommandValue('formatBlock');
-
     const textColor = document.queryCommandValue('foreColor');
-
     const bgColor = document.queryCommandValue('hiliteColor') || 'transparent';
 
     setActiveStyles({
@@ -241,43 +225,6 @@ const AddQmsPolicy = () => {
       bgColor: bgColor || 'transparent'
     });
 
-
-    const ColorPickerPanel = ({ onColorSelect, activeColor }) => {
-      const [customColor, setCustomColor] = useState(activeColor);
-
-      return (
-        <div className="absolute z-20 mt-2 p-3 bg-gray-800 border border-gray-700 rounded-md shadow-lg " ref={colorPickerRef}>
-          <div className="grid grid-cols-5 gap-2 mb-3">
-            {colorPalette.map((color, index) => (
-              <button
-                key={index}
-                className={`w-6 h-6 rounded-sm border ${color === activeColor ? 'border-blue-500' : 'border-gray-600'}`}
-                style={{ backgroundColor: color }}
-                onClick={() => onColorSelect(color)}
-                title={color}
-              />
-            ))}
-          </div>
-          <div className="flex items-center gap-2">
-            <input
-              type="color"
-              value={customColor}
-              onChange={(e) => setCustomColor(e.target.value)}
-              className="w-8 h-8 rounded cursor-pointer bg-transparent border-0"
-            />
-            <div className="flex-1 text-xs text-gray-400">Custom</div>
-            <button
-              className="px-2 py-1 bg-blue-600 text-xs rounded hover:bg-blue-700"
-              onClick={() => onColorSelect(customColor)}
-            >
-              Apply
-            </button>
-          </div>
-        </div>
-      );
-    };
-
-
     // Update selected format
     if (formatBlock) {
       const fontFormatOption = fontFormats.find(option => option.value === formatBlock);
@@ -288,7 +235,6 @@ const AddQmsPolicy = () => {
 
     // Update font style
     const fontName = document.queryCommandValue('fontName');
-
     if (fontName) {
       // Check if it's a system font stack or one of our defined fonts
       const matchedFont = fontStyles.find(
@@ -320,9 +266,6 @@ const AddQmsPolicy = () => {
   const createList = (type) => {
     // Ensure we have focus
     editorRef.current.focus();
-
-    // Get selection
-    const selection = window.getSelection();
 
     // Determine the command to execute
     const command = type === 'ul' ? 'insertUnorderedList' : 'insertOrderedList';
@@ -599,8 +542,6 @@ const AddQmsPolicy = () => {
       }
     };
 
-    
-
     // Handle paste events to preserve list formatting
     const handlePaste = (e) => {
       e.preventDefault();
@@ -623,39 +564,143 @@ const AddQmsPolicy = () => {
     };
   }, []);
 
-  // Create a styled button component
-  const ToolbarButton = ({ icon, command, active, value = null, onClick, tooltip }) => {
-    // Use custom onClick if provided, otherwise use execCommand
-    const handleClick = onClick || (() => execCommand(command, value));
-
-    return (
-      <button
-        className={`p-1 rounded ${active ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700'}`}
-        onClick={handleClick}
-        title={tooltip}
-      >
-        {icon}
-      </button>
-    );
+  const handleCancel = () => {
+    // Reset form data
+    setFormData({
+      content: '',
+      energyPolicy: null
+    });
+    
+    // Clear editor content
+    if (editorRef.current) {
+      editorRef.current.innerHTML = '<p><br></p>';
+    }
   };
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    const role = localStorage.getItem("role");
+    const company_id = localStorage.getItem("company_id");
+    const user_id = localStorage.getItem("user_id");
 
-  // Updated Dropdown component to show selected option
+    console.log("Logged-in User ID:", user_id);
+    console.log("Logged-in Company ID:", company_id);
+    console.log("User Role:", role);
+
+    if (!accessToken || !role || (!company_id && !user_id)) {
+        console.warn("Some values are missing from localStorage!");
+    }
+}, []);
+
+const handleSave = async () => {
+  const editorContent = editorRef.current ? editorRef.current.innerHTML : '';
+
+  if (!editorContent.trim() || editorContent === '<p><br></p>') {
+      console.log("Empty content detected");
+      toast.error('Please enter policy content');
+      return;
+  }
+
+  try {
+      // Get role and IDs
+      const role = localStorage.getItem("role");
+      const companyId = localStorage.getItem("company_id");
+      const userId = localStorage.getItem("user_id");
+
+      console.log("Logged-in Role:", role);
+      console.log("Company ID:", companyId);
+      console.log("User ID:", userId);
+
+      let entityId = null;
+      let entityType = null;
+
+      if (role === "company" && companyId) {
+          entityId = companyId;
+          entityType = "company";
+      } else if (role === "user" && userId) {
+          entityId = userId;
+          entityType = "user";
+      }
+
+      if (!entityId) {
+          console.log("No valid ID found for the logged-in entity");
+          toast.error('User or Company information not found. Please login again.');
+          return;
+      }
+
+      console.log(`Creating policy for: ${entityType} ID: ${entityId}`);
+
+      // Create FormData
+      const apiFormData = new FormData();
+      apiFormData.append('text', editorContent);
+      apiFormData.append('created_by', entityId);
+
+      // Ensure correct field name
+      if (entityType === "company") {
+          apiFormData.append('company_id', entityId);  // Fix: Use 'company_id'
+      } else {
+          apiFormData.append('user_id', entityId);  // Fix: Use 'user_id' for users
+      }
+
+      if (formData.energyPolicy) {
+          apiFormData.append('energy_policy', formData.energyPolicy);
+          console.log("Energy policy file attached:", formData.energyPolicy.name);
+      } else {
+          console.log("No energy policy file attached");
+      }
+
+      // Debugging: Log form data
+      console.log("Form data:");
+      for (let pair of apiFormData.entries()) {
+          console.log(pair[0] + ': ' + pair[1]);
+      }
+
+      // API Request
+      const response = await axios.post(
+          `${BASE_URL}/company/documentation/create/`, // Check if this is the correct endpoint
+          apiFormData
+      );
+
+      console.log("API response:", response);
+
+      if (response.status === 201 || response.status === 200) {
+          toast.success('Policy added successfully');
+
+          // Reset form after submission
+          setFormData({
+              content: '',
+              energyPolicy: null
+          });
+
+          // Clear editor content
+          if (editorRef.current) {
+              editorRef.current.innerHTML = '<p><br></p>';
+          }
+      }
+  } catch (error) {
+      console.error('Error creating policy:', error);
+      toast.error(
+          error.response?.data?.detail ||
+          error.response?.data?.message ||
+          'Failed to add policy. Please try again.'
+      );
+  }
+};
+
+
+
+
+  // Dropdown component to show selected option
   const Dropdown = ({ title, options, onSelect, selectedValue }) => {
     const [isOpen, setIsOpen] = useState(false);
-
-    // Use the provided selectedValue or the original title if not available
     const displayTitle = selectedValue || title;
 
     return (
       <div className="relative">
         <button
-          className="flex items-center px-3 py-1 options-title bg-transparent border border-[#AAAAAA] rounded hover:bg-gray-800"
+          className="px-2 py-1 bg-gray-700 rounded flex items-center text-sm"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {displayTitle}
-          <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-          </svg>
+          {displayTitle} <span className="ml-1">▼</span>
         </button>
 
         {isOpen && (
@@ -663,7 +708,7 @@ const AddQmsPolicy = () => {
             {options.map((option, index) => (
               <button
                 key={index}
-                className="w-full text-left px-4 py-2 options-list hover:bg-gray-700"
+                className="w-full text-left px-4 py-2 hover:bg-gray-700"
                 onClick={() => {
                   onSelect(option.value);
                   setIsOpen(false);
@@ -678,11 +723,12 @@ const AddQmsPolicy = () => {
     );
   };
 
+  // Color picker component
   const ColorPickerPanel = ({ onColorSelect, activeColor }) => {
     const [customColor, setCustomColor] = useState(activeColor);
 
     return (
-      <div className="absolute z-20 mt-2 p-3 bg-gray-800 border border-gray-700 rounded-md shadow-lg right-0" ref={colorPickerRef}>
+      <div className="absolute z-20 mt-2 p-3 bg-gray-800 border border-gray-700 rounded-md shadow-lg" ref={colorPickerRef}>
         <div className="grid grid-cols-5 gap-2 mb-3">
           {colorPalette.map((color, index) => (
             <button
@@ -713,62 +759,71 @@ const AddQmsPolicy = () => {
     );
   };
 
-  const handleCancelAddPolicy = () => {
-    navigate('/company/qms/policy')
-  }
-
   return (
-    <div className="w-full bg-[#1C1C24] rounded-lg p-5 text-white">
-      <h1 className="add-policy-head">Add Policies</h1>
-      <div className="border-t border-[#383840] my-[20px]"></div>
-
-      {/* Toolbar */}
-      <div className="flex flex-wrap rounded-[4px] items-center justify-between mb-4 bg-[#24242D] px-5 py-[13px]">
-        <ToolbarButton icon={<img src={bold} alt="Bold" className="w-3" />} command="bold" active={activeStyles.bold} tooltip="Bold" />
-        <ToolbarButton icon={<img src={itallic} alt="Itallic" className="w-[7px] " />} command="italic" active={activeStyles.italic} tooltip="Italic" />
-        <ToolbarButton icon={<img src={underlines} alt="Underline" className="w-3 mt-[1px]" />} command="underline" active={activeStyles.underline} tooltip="Underline" />
-
-        <ToolbarButton
-          icon={<img src={textleft} alt="text Left" />}
-          command="justifyLeft"
-          active={activeStyles.align === 'left'}
-          tooltip="Align Left"
-        />
-        <ToolbarButton
-          icon={<img src={textcenter} alt="text center" />}
-          command="justifyCenter"
-          active={activeStyles.align === 'center'}
-          tooltip="Align Center"
-        />
-        <ToolbarButton
-          icon={<img src={textright} alt="text right" />}
-          command="justifyRight"
-          active={activeStyles.align === 'right'}
-          tooltip="Align Right"
-        />
-        <ToolbarButton
-          icon={<img src={textsentence} alt="justify full" />}
-          command="justifyFull"
-          active={activeStyles.align === 'justify'}
-          tooltip="Justify Text"
-        />
-
-        {/* Enhanced list controls with custom handlers */}
-        <ToolbarButton
-          icon={<img src={orderedlist} alt="ordered list" />}
-          active={activeStyles.orderedList}
-          onClick={() => handleList('ol')}
-          tooltip="Ordered List"
-        />
-        <ToolbarButton
-          icon={<img src={unorderedlist} alt="Unordered list" />}
-          active={activeStyles.unorderedList}
-          onClick={() => handleList('ul')}
-          tooltip="Unordered List"
-        />
-
-        <div className='flex'>
-          <div className="mr-[10px]">
+    <div className="bg-gray-900 text-white p-6 min-h-screen">
+      <h1 className="text-2xl font-bold mb-4">Add Policies</h1>
+      
+      <div className="border border-gray-700 rounded-md mb-6">
+        <div className="flex items-center p-2 border-b border-gray-700 bg-gray-800 flex-wrap">
+          {/* Text formatting */}
+          <button 
+            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.bold ? 'bg-gray-700' : ''}`}
+            onClick={() => execCommand('bold')}
+            title="Bold"
+          >
+            <Bold size={18} />
+          </button>
+          <button 
+            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.italic ? 'bg-gray-700' : ''}`}
+            onClick={() => execCommand('italic')}
+            title="Italic"
+          >
+            <Italic size={18} />
+          </button>
+          <button 
+            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.underline ? 'bg-gray-700' : ''}`}
+            onClick={() => execCommand('underline')}
+            title="Underline"
+          >
+            <Underline size={18} />
+          </button>
+          
+          <div className="border-r border-gray-600 h-6 mx-2"></div>
+          
+          {/* Alignment */}
+          <button 
+            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.align === 'left' ? 'bg-gray-700' : ''}`}
+            onClick={() => execCommand('justifyLeft')}
+            title="Align Left"
+          >
+            <AlignLeft size={18} />
+          </button>
+          <button 
+            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.align === 'center' ? 'bg-gray-700' : ''}`}
+            onClick={() => execCommand('justifyCenter')}
+            title="Align Center"
+          >
+            <AlignCenter size={18} />
+          </button>
+          <button 
+            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.align === 'right' ? 'bg-gray-700' : ''}`}
+            onClick={() => execCommand('justifyRight')}
+            title="Align Right"
+          >
+            <AlignRight size={18} />
+          </button>
+          <button 
+            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.align === 'justify' ? 'bg-gray-700' : ''}`}
+            onClick={() => execCommand('justifyFull')}
+            title="Justify"
+          >
+            <AlignJustify size={18} />
+          </button>
+          
+          <div className="border-r border-gray-600 h-6 mx-2"></div>
+          
+          {/* Font dropdowns */}
+          <div className="flex items-center mx-1">
             <Dropdown
               title="Font Size"
               options={fontSizes}
@@ -776,8 +831,8 @@ const AddQmsPolicy = () => {
               selectedValue={selectedFontSize}
             />
           </div>
-
-          <div className="mr-[10px]">
+          
+          <div className="flex items-center mx-1">
             <Dropdown
               title="Font Style"
               options={fontStyles}
@@ -785,8 +840,8 @@ const AddQmsPolicy = () => {
               selectedValue={selectedFontStyle}
             />
           </div>
-
-          <div className="">
+          
+          <div className="flex items-center mx-1">
             <Dropdown
               title="Font Format"
               options={fontFormats}
@@ -794,145 +849,155 @@ const AddQmsPolicy = () => {
               selectedValue={selectedFontFormat}
             />
           </div>
+          
+          <div className="border-r border-gray-600 h-6 mx-2"></div>
+          
+          {/* Lists and indentation */}
+          <button 
+            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.unorderedList ? 'bg-gray-700' : ''}`}
+            onClick={() => handleList('ul')}
+            title="Unordered List"
+          >
+            <List size={18} />
+          </button>
+          <button 
+            className={`p-1 mx-1 hover:bg-gray-700 rounded ${activeStyles.orderedList ? 'bg-gray-700' : ''}`}
+            onClick={() => handleList('ol')}
+            title="Ordered List"
+          >
+            <ListOrdered size={18} />
+          </button>
+          <button 
+            className="p-1 mx-1 hover:bg-gray-700 rounded"
+            onClick={handleIndent}
+            title="Indent"
+          >
+            <Indent size={18} />
+          </button>
+          <button 
+            className="p-1 mx-1 hover:bg-gray-700 rounded"
+            onClick={handleOutdent}
+            title="Outdent"
+          >
+            <Outdent size={18} />
+          </button>
+          
+          {/* Links */}
+          <button 
+            className="p-1 mx-1 hover:bg-gray-700 rounded"
+            onClick={handleCreateLink}
+            title="Insert Link"
+          >
+            <Link size={18} />
+          </button>
+          <button 
+            className="p-1 mx-1 hover:bg-gray-700 rounded"
+            onClick={() => execCommand('unlink')}
+            title="Remove Link"
+          >
+            <Unlink size={18} />
+          </button>
+          
+          {/* Images */}
+          <button 
+            className="p-1 mx-1 hover:bg-gray-700 rounded"
+            onClick={handleInsertImage}
+            title="Insert Image from URL"
+          >
+            <Image size={18} />
+          </button>
+          <button 
+            className="p-1 mx-1 hover:bg-gray-700 rounded"
+            onClick={triggerImageUpload}
+            title="Upload Image"
+          >
+            <FileUp size={18} />
+          </button>
+          
+          {/* Color pickers */}
+          <div className="relative">
+            <button 
+              className="p-1 mx-1 hover:bg-gray-700 rounded relative"
+              onClick={toggleTextColorPicker}
+              title="Text Color"
+              style={{ color: activeStyles.textColor }}
+            >
+              <Type size={18} />
+            </button>
+            {showTextColorPicker && (
+              <ColorPickerPanel
+                onColorSelect={handleTextColor}
+                activeColor={activeStyles.textColor}
+              />
+            )}
+          </div>
+          
+          <div className="relative">
+            <button 
+              className="p-1 mx-1 hover:bg-gray-700 rounded"
+              onClick={toggleBgColorPicker}
+              title="Background Color"
+            >
+              <Highlighter size={18} style={{ color: activeStyles.bgColor !== 'transparent' ? activeStyles.bgColor : undefined }} />
+            </button>
+            {showBgColorPicker && (
+              <ColorPickerPanel
+                onColorSelect={handleBackgroundColor}
+                activeColor={activeStyles.bgColor}
+              />
+            )}
+          </div>
         </div>
-
-        {/* Improved Indent/Outdent buttons */}
-        <ToolbarButton
-          icon={<img src={textoutdent} alt="Text Outdent" />}
-          onClick={handleOutdent}
-          active={activeStyles.outdent}
-          tooltip="Outdent"
-        />
-        <ToolbarButton
-          icon={<img src={textindent} alt="Text Indent" />}
-          onClick={handleIndent}
-          active={activeStyles.indent}
-          tooltip="Indent"
-        />
-
-        {/* Image insertion buttons */}
-        <ToolbarButton
-          icon={<img src={imagelink} alt="Image Add" />}
-          onClick={handleInsertImage}
-          tooltip="Insert Image by URL"
-        />
-        <ToolbarButton
-          icon={<img src={imageupload} alt="Image Upload" />}
-          onClick={triggerImageUpload}
-          tooltip="Upload Image"
-        />
-
-        {/* Link buttons */}
-        <ToolbarButton
-          icon={<img src={addlink} alt="Add Link" />}
-          onClick={handleCreateLink}
-          tooltip="Insert Link"
-        />
-        <ToolbarButton
-          icon={<img src={removelink} alt="Remove Link" />}
-          command="unlink"
-          tooltip="Remove Link"
-        />
-
-        <div className="relative">
-          <ToolbarButton
-            icon={<img src={textcolor} alt="Text Color" />}
-            onClick={toggleTextColorPicker}
-            tooltip="Text Color"
-          />
-          {showTextColorPicker && (
-            <ColorPickerPanel
-              onColorSelect={handleTextColor}
-              activeColor={activeStyles.textColor}
-            />
-          )}
-        </div>
-
-        <div className="relative">
-          <ToolbarButton
-            icon={<img src={bgcolor} alt="Background Color" />}
-            onClick={toggleBgColorPicker}
-            tooltip="Background Color"
-          />
-          {showBgColorPicker && (
-            <ColorPickerPanel
-              onColorSelect={handleBackgroundColor}
-              activeColor={activeStyles.bgColor === 'transparent' ? '#000000' : activeStyles.bgColor}
-            />
-          )}
-        </div>
-
-
-        {/* Hidden input for image upload */}
-        <input
-          ref={imageInputRef}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={handleImageUpload}
-        />
-      </div>
-
-      {/* Text area - Using contentEditable div instead of textarea for rich text */}
-      <div className="w-full h-[287px] bg-[#24242D] rounded-[4px] p-5">
+        
+        {/* Editor Content Area */}
         <div
           ref={editorRef}
-          className="w-full h-full outline-none text-[#AAAAAA] add-policy-text overflow-auto"
           contentEditable
-          onMouseUp={updateActiveStyles}
-          onKeyUp={updateActiveStyles}
-          onInput={updateActiveStyles}
-          data-placeholder="Type here..."
-          onFocus={(e) => {
-            if (e.currentTarget.innerHTML === "") {
-              e.currentTarget.setAttribute("data-empty", "true");
-            }
-            updateActiveStyles();
-          }}
-          onBlur={(e) => {
-            if (e.currentTarget.innerHTML === "") {
-              e.currentTarget.removeAttribute("data-empty");
-            }
-          }}
-          style={{
-            minHeight: '100%',
-            wordWrap: 'break-word',
-            whiteSpace: 'pre-wrap',
-            overflowWrap: 'break-word',
-          }}
+          className="bg-gray-950 p-4 min-h-[300px] focus:outline-none"
+          onInput={() => setFormData(prev => ({ ...prev, content: editorRef.current.innerHTML }))}
         />
       </div>
-
-      {/* File upload */}
-      <div className="flex items-center justify-between mt-8 mb-[23px]">
-        <label className="attach-policy-text">Attach Energy Policy:</label>
-        <div className="flex items-center ">
-          <label className="flex justify-center gap-[10px] items-center w-[326px] h-[44px] px-[10px] text-[#AAAAAA] rounded-md border border-[#383840] cursor-pointer transition">
-            Choose File
-            <img src={files} alt="File Icon" />
-            <input
-              type="file"
-              className="hidden"
-              onChange={handleFileChange}
-            />
-          </label>
-          <span className="ml-3 text-[#54545B] no-file ">
-            {fileSelected ? fileName : 'No file chosen'}
-          </span>
-        </div>
+      
+      {/* File Upload Section */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium mb-2">
+          Upload Energy Policy (Optional)
+        </label>
+        <input
+          type="file"
+          onChange={handleFileChange}
+          className="bg-gray-800 text-white p-2 rounded w-full"
+          accept=".pdf,.doc,.docx"
+        />
+        {formData.energyPolicy && (
+          <div className="mt-2 text-sm text-green-400">
+            File selected: {formData.energyPolicy.name}
+          </div>
+        )}
       </div>
-
-      <div className="border-t border-[#383840]"></div>
-
-      {/* Buttons */}
-      <div className="flex justify-end gap-[21px] mt-8">
-        <button className="cancel-btn duration-200"
-        onClick={handleCancelAddPolicy}
+      
+      {/* Hidden input for image upload */}
+      <input
+        type="file"
+        ref={imageInputRef}
+        onChange={handleImageUpload}
+        accept="image/*"
+        style={{ display: 'none' }}
+      />
+      
+      {/* Form Actions */}
+      <div className="flex justify-end gap-4">
+        <button
+          className="px-5 py-2 bg-gray-700 text-white rounded hover:bg-gray-600"
+          onClick={handleCancel}
         >
           Cancel
         </button>
-        <button className="save-btn duration-200">
-          Save
+        <button
+          className="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-500"
+          onClick={handleSave}
+        >
+          Save Policy
         </button>
       </div>
     </div>

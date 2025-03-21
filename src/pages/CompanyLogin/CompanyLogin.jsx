@@ -35,51 +35,59 @@ const AdminLogin = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
+    
         if (!username || !password) {
             toast.error("Username and Password are required");
             return;
         }
+    
         try {
             setLoading(true);
             const response = await axios.post(`${BASE_URL}/company/company/login/`, {
-                username,
+                username,  
                 password,
             });
     
-            console.log("Login Response:", response.data); // Log the entire response
+            console.log("Login Response:", response.data);
     
             if (response.status === 200) {
-               const { access, refresh, id, company_id = id, ...userData } = response.data;
-// Extract company_id
+                const { access, refresh, id, company_name, role, ...userData } = response.data;
                 
+                // Setting id as company_id since the response does not have company_id
+                const company_id = id; 
+    
                 console.log("Access Token:", access);
                 console.log("Refresh Token:", refresh);
-                console.log("Company ID:", company_id); // Log the company_id
+                console.log("Company ID:", company_id);
                 console.log("User Data:", userData);
     
-                if (userData.company_name) {
-                    // Company login detected
-                    localStorage.setItem("companyAccessToken", access);
-                    localStorage.setItem("companyRefreshToken", refresh);
-                    localStorage.setItem("company_id", company_id); // Store company_id
+                localStorage.setItem("accessToken", access);
+                localStorage.setItem("refreshToken", refresh);
+                localStorage.setItem("role", role);
+    
+                if (role === "company" && company_id) {
+                    localStorage.setItem("company_id", company_id);
+                    localStorage.setItem("company_name", company_name);
     
                     Object.keys(userData).forEach((key) => {
                         localStorage.setItem(`company_${key}`, JSON.stringify(userData[key]));
                     });
     
-                    console.log("Stored Company ID:", localStorage.getItem("company_id")); // Check if stored
+                    localStorage.removeItem("user_id");  // Removing user_id to avoid confusion
     
-                    navigate("/company/dashboard");
-                } else {
-                    // User login detected
-                    localStorage.setItem("userAccessToken", access);
-                    localStorage.setItem("userRefreshToken", refresh);
+                    console.log("Navigating to /company/dashboard");
+                    setTimeout(() => navigate("/company/dashboard"), 100);
+                } else if (role === "user") {
+                    localStorage.setItem("user_id", id);
     
                     Object.keys(userData).forEach((key) => {
                         localStorage.setItem(`user_${key}`, JSON.stringify(userData[key]));
                     });
     
-                    navigate("/user/dashboard");
+                    localStorage.removeItem("company_id");  // Removing company_id when it's a user
+    
+                    console.log("Navigating to /user/dashboard");
+                    setTimeout(() => navigate("/company/dashboard"), 100);
                 }
     
                 toast.success("Successfully Logged In");
@@ -91,10 +99,7 @@ const AdminLogin = () => {
             setLoading(false);
         }
     };
-    
-    
-
-    
+     
  
 
     return (
