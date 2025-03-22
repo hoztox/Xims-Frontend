@@ -49,7 +49,7 @@ const CompanyProfilePhotoModal = ({ isOpen, onClose, onSave, currentProfilePic, 
         const blob = await response.blob();
         const file = new File([blob], 'profile-image.jpg', { type: 'image/jpeg' });
         
-        // Create FormData for the API request
+         
         const formData = new FormData();
         formData.append('logo', file);
         
