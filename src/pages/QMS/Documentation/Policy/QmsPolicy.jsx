@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BASE_URL } from "../../../../Utils/Config";
-import { Search, ChevronUp, X, Download, FileText } from 'lucide-react';
-import plus from "../../../../assets/images/Company Documentation/plus icon.svg";
+import { Search, ChevronUp, X, Download, FileText, Plus } from 'lucide-react';
+// import plus from "../../../../assets/images/Company Documentation/plus icon.svg";
 import arrow from '../../../../assets/images/Company Documentation/arrow.svg';
 import view from "../../../../assets/images/Company Documentation/view.svg";
 import edit from "../../../../assets/images/Company Documentation/edit.svg";
@@ -12,8 +12,8 @@ import './qmspolicy.css';
 
 const QmsPolicy = () => {
   const navigate = useNavigate();
-  const [isExpanded, setIsExpanded] = useState(true);
-  const [qmsPolicies, setQmsPolicies] = useState([]);  
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [qmsPolicies, setQmsPolicies] = useState([]);
   const [showViewModal, setShowViewModal] = useState(false);
   const [selectedPolicy, setSelectedPolicy] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,31 +24,31 @@ const QmsPolicy = () => {
     // First check if company_id is stored directly
     const storedCompanyId = localStorage.getItem("company_id");
     if (storedCompanyId) return storedCompanyId;
-    
+
     // If user data exists with company_id
     const userRole = localStorage.getItem("role");
     if (userRole === "user") {
-        // Try to get company_id from user data that was stored during login
-        const userData = localStorage.getItem("user_company_id");
-        if (userData) {
-            try {
-                return JSON.parse(userData);
-            } catch (e) {
-                console.error("Error parsing user company ID:", e);
-                return null;
-            }
+      // Try to get company_id from user data that was stored during login
+      const userData = localStorage.getItem("user_company_id");
+      if (userData) {
+        try {
+          return JSON.parse(userData);
+        } catch (e) {
+          console.error("Error parsing user company ID:", e);
+          return null;
         }
+      }
     }
     return null;
-};
+  };
   const companyId = getUserCompanyId();
   console.log("Stored Company ID:", companyId);
-  
+
   const fetchPolicies = async () => {
     try {
       const companyId = getUserCompanyId();
       console.log("Fetching manuals for Company ID:", companyId);
-      const response = await axios.get(`${BASE_URL}/company/policy-documents/${companyId}/`); 
+      const response = await axios.get(`${BASE_URL}/company/policy-documents/${companyId}/`);
       setQmsPolicies(response.data);
       console.log("Policies loaded:", response.data);
     } catch (error) {
@@ -69,7 +69,7 @@ const QmsPolicy = () => {
   const handleDeletePolicy = async (policyId) => {
     if (window.confirm("Are you sure you want to delete this policy?")) {
       try {
-        await axios.delete(`${BASE_URL}/company/policy-documents/${policyId}/`);
+        await axios.delete(`${BASE_URL}/company/documentation/${policyId}/delete/`);
         // Refresh the list after deletion
         fetchPolicies();
       } catch (error) {
@@ -104,7 +104,7 @@ const QmsPolicy = () => {
   const getFileIcon = (url) => {
     if (!url) return null;
     const extension = url.split('.').pop().toLowerCase();
-    
+
     switch (extension) {
       case 'pdf':
         return <FileText className="text-red-400 w-5 h-5" />;
@@ -143,21 +143,34 @@ const QmsPolicy = () => {
             <Search className="text-white w-[18px]" />
           </div>
         </div>
-        <button className="bg-transparent border border-[#858585] text-[#858585] rounded-[4px] p-[10px] flex items-center justify-center gap-[10px] transition-all duration-200 w-[140px] h-[42px] add-policy-btn hover:bg-[#858585] hover:text-white"
-          onClick={handleAddQMSPolicy}
-        >
-          <span>Add Policy</span>
-          <img src={plus} alt="Add Policy" className='add-policy-img' />
-        </button>
+        {qmsPolicies.length === 0 && (
+          <button
+            className="bg-transparent border border-[#858585] text-[#858585] rounded-[4px] p-[10px] flex items-center justify-center gap-[10px] transition-all duration-200 w-[140px] h-[42px] add-policy-btn hover:bg-[#858585] hover:text-white group"
+            onClick={handleAddQMSPolicy}
+          >
+            <span>Add Policy</span>
+            <Plus size={22} className='text-[#858585] group-hover:text-white transition-colors duration-200' />
+          </button>
+        )}
+
       </div>
       <div className="bg-[#24242D] rounded-md overflow-hidden">
         <div
-          className="flex justify-between items-center px-5 pt-5 pb-6 cursor-pointer transition-colors duration-200 border-b border-[#383840]"
-          onClick={() => setIsExpanded(!isExpanded)}
+          className={`flex justify-between items-center px-5 pt-5 pb-6 border-b border-[#383840] 
+    ${qmsPolicies.length === 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+          onClick={() => {
+            if (qmsPolicies.length > 0) {
+              setIsExpanded(!isExpanded);
+            }
+          }}
         >
           <h2 className="policy-list-head">Policy</h2>
-          <ChevronUp className={`h-5 w-5 transition-transform duration-300 ease-in-out text-[#AAAAAA] ${isExpanded ? '' : 'rotate-180'}`} />
+          <ChevronUp
+            className={`h-5 w-5 transition-transform duration-300 ease-in-out text-[#AAAAAA] 
+    ${isExpanded ? '' : 'rotate-180'}`}
+          />
         </div>
+
         <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
           {filteredPolicies.length > 0 ? (
             filteredPolicies.map((policy) => (
@@ -168,14 +181,14 @@ const QmsPolicy = () => {
                       Quality Policy
                     </span>
                     <div className="flex gap-4">
-                      <button 
-                        className='flex justify-center items-center gap-2 hover:text-blue-400 transition-colors' 
+                      <button
+                        className='flex justify-center items-center gap-2 hover:text-blue-400 transition-colors'
                         onClick={() => handleViewPolicy(policy)}
                       >
                         <p className='view-policy-btn-text'>View Policy</p>
                         <img src={view} alt="View Icon" className='w-[16px] h-[16px]' />
                       </button>
-                      
+
                       {/* {policy.energy_policy && (
                         <button 
                           className='flex justify-center items-center gap-2 text-green-400 hover:text-green-300 transition-colors' 
@@ -188,7 +201,7 @@ const QmsPolicy = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-[60px]">
                   <div className="flex flex-col items-center gap-[15px]">
                     <span className="actions-text">Edit</span>
@@ -216,14 +229,14 @@ const QmsPolicy = () => {
           <div className="bg-[#24242D] rounded-lg w-full max-w-2xl max-h-[80vh] overflow-auto shadow-lg">
             <div className="flex justify-between items-center p-5 border-b border-[#383840]">
               <h2 className="text-xl font-semibold">Policy Details</h2>
-              <button 
+              <button
                 onClick={handleCloseModal}
                 className="text-gray-400 hover:text-white"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
-            
+
             <div className="p-6">
               <h3 className="text-xl mb-4 text-[#A3A3A3]">Policy Content:</h3>
               <div className="bg-[#1C1C24] p-5 rounded-md">
@@ -233,7 +246,7 @@ const QmsPolicy = () => {
                   <p>{selectedPolicy.text}</p>
                 )}
               </div>
-              
+
               {selectedPolicy.energy_policy && (
                 <div className="mt-6">
                   <h3 className="text-xl mb-4 text-[#A3A3A3]">Attached Document:</h3>
@@ -244,18 +257,18 @@ const QmsPolicy = () => {
                         {getFileNameFromUrl(selectedPolicy.energy_policy)}
                       </span>
                     </div>
-                    
+
                     <div className="flex gap-2">
-                      <a 
-                        href={selectedPolicy.energy_policy} 
-                        target="_blank" 
+                      <a
+                        href={selectedPolicy.energy_policy}
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="bg-[#2C2C36] hover:bg-[#383844] text-white font-medium py-2 px-4 rounded inline-flex items-center"
                       >
                         <span>View</span>
                       </a>
-                      
-                      <button 
+
+                      <button
                         onClick={() => downloadFile(selectedPolicy.energy_policy, getFileNameFromUrl(selectedPolicy.energy_policy))}
                         className="bg-[#3A3A47] hover:bg-[#4A4A57] text-white font-medium py-2 px-4 rounded inline-flex items-center gap-2"
                       >
@@ -271,7 +284,7 @@ const QmsPolicy = () => {
                 {selectedPolicy.user && <p>Created by: User ID: {selectedPolicy.user}</p>}
               </div>
             </div>
-            
+
             <div className="flex justify-end p-5 border-t border-[#383840]">
               <button
                 onClick={handleCloseModal}

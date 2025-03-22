@@ -489,7 +489,7 @@ const AddCompany = () => {
                     <img
                       src={previewImage}
                       alt="Cropped"
-                      className="w-auto h-8"
+                      className="w-20"
                     />
                   </div>
                 )}

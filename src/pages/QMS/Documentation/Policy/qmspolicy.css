@@ -74,10 +74,10 @@
     color: #AAAAAA;
 }
 
-.add-policy-img {
+.qms-policy-img {
     filter: brightness(0) saturate(100%) invert(56%) sepia(0%) saturate(1773%) hue-rotate(279deg) brightness(93%) contrast(93%);
 }
 
-.add-policy-btn:hover .add-policy-img {
+.add-policy-btn:hover .qms-policy-img {
     filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(20deg) brightness(103%) contrast(103%);
 }

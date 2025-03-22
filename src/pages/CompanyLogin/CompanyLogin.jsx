@@ -51,7 +51,7 @@ const AdminLogin = () => {
             console.log("Login Response:", response.data);
     
             if (response.status === 200) {
-                const { access, refresh, id, company_name, role, ...userData } = response.data;
+                const { access, refresh, id, email_address, company_name, role, ...userData } = response.data;
                 
                 // Setting id as company_id since the response does not have company_id
                 const company_id = id; 
@@ -64,16 +64,19 @@ const AdminLogin = () => {
                 localStorage.setItem("accessToken", access);
                 localStorage.setItem("refreshToken", refresh);
                 localStorage.setItem("role", role);
-    
+                
+
+                
                 if (role === "company" && company_id) {
                     localStorage.setItem("company_id", company_id);
                     localStorage.setItem("company_name", company_name);
-    
+                    localStorage.setItem("email_address", email_address);
                     Object.keys(userData).forEach((key) => {
                         localStorage.setItem(`company_${key}`, JSON.stringify(userData[key]));
+                         
                     });
     
-                    localStorage.removeItem("user_id");  // Removing user_id to avoid confusion
+                    localStorage.removeItem("user_id");  
     
                     console.log("Navigating to /company/dashboard");
                     setTimeout(() => navigate("/company/dashboard"), 100);

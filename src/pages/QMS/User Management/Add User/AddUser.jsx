@@ -1,15 +1,16 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../../../Utils/Config";
 import axios from 'axios';
-import { Toaster, toast } from 'react-hot-toast'; // Import react-hot-toast
+import { Toaster, toast } from 'react-hot-toast';
 import "./adduser.css";
 
 const AddUser = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
- 
+  const [companyPermissions, setCompanyPermissions] = useState([]);
+  const [selectedPermissions, setSelectedPermissions] = useState([]);
 
   const [formData, setFormData] = useState({
     username: '',
@@ -35,7 +36,43 @@ const AddUser = () => {
     answer: '',
     notes: '',
     status: 'live',
+    user_logo: '',
   });
+
+ 
+
+  const fetchLatestPermissions = async () => {
+    try {
+      const companyId = getUserCompanyId();
+      if (!companyId) {
+        console.error("Company ID not found");
+        return;
+      }
+  
+      const response = await axios.get(`${BASE_URL}/accounts/permissions/${companyId}/`);
+      
+      console.log("Company API Response:", response.data);
+  
+      if (response.status === 200) {
+        console.log("fetchLatestPermissions response:", response.data);
+        
+ 
+        if (response.data && response.data.permissions && Array.isArray(response.data.permissions)) {
+          setCompanyPermissions(response.data.permissions);
+          console.log("Permissions set:", response.data.permissions);
+        } else {
+          console.error("Permissions not found or not in expected format");
+        }
+      }
+    } catch (err) {
+      console.error("Error fetching latest permissions:", err);
+    }
+  };
+useEffect(() => {
+   
+  fetchLatestPermissions();
+ 
+}, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,6 +91,16 @@ const AddUser = () => {
         [name]: value
       }
     });
+  };
+
+  const handlePermissionChange = (e) => {
+    const { value, checked } = e.target;
+    
+    if (checked) {
+      setSelectedPermissions([...selectedPermissions, value]);
+    } else {
+      setSelectedPermissions(selectedPermissions.filter(permission => permission !== value));
+    }
   };
 
   const handleListUsers = () => {
@@ -87,77 +134,129 @@ const AddUser = () => {
       return false;
     }
 
+    // Check if at least one permission is selected
+    if (selectedPermissions.length === 0) {
+      setError('At least one permission must be selected');
+      return false;
+    }
+
     return true;
+  };
+
+  const getUserCompanyId = () => {
+    // First check if company_id is stored directly
+    const storedCompanyId = localStorage.getItem("company_id");
+    if (storedCompanyId) return storedCompanyId;
+    // If user data exists with company_id
+    const userRole = localStorage.getItem("role");
+    if (userRole === "user") {
+      // Try to get company_id from user data that was stored during login
+      const userData = localStorage.getItem("user_company_id");
+      if (userData) {
+        try {
+          return JSON.parse(userData);  // Ensure it's valid JSON
+        } catch (e) {
+          console.error("Error parsing user company ID:", e);
+          return null;
+        }
+      }
+    }
+    return null;
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({
+        ...formData,
+        user_logo: file
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
     if (!validateForm()) {
       return;
     }
-  
     setIsLoading(true);
     setError(null);
-  
     try {
-     
-      const companyToken = localStorage.getItem("companyAccessToken");
-
-  
-      if (!companyToken) {
-        throw new Error("Unauthorized: No token found");
-      }
-  
-    
-      const tokenParts = companyToken.split(".");
-      if (tokenParts.length !== 3) {
-        throw new Error("Invalid token format");
-      }
-  
-      const payload = JSON.parse(atob(tokenParts[1])); 
-      console.log("Decoded Token Payload:", payload);
-  
-      const companyId = payload?.id; 
+      const companyId = getUserCompanyId();
       if (!companyId) {
-        throw new Error("Company ID not found in token payload");
+        setError('Company ID not found. Please log in again.');
+        setIsLoading(false);
+        return;
       }
-  
       
       let formattedDob = "";
-      const { day, month, year } = formData.date_of_birth;
-      if (day && month && year) {
-        formattedDob = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+      if (formData.date_of_birth.day && formData.date_of_birth.month && formData.date_of_birth.year) {
+        formattedDob = `${formData.date_of_birth.year}-${formData.date_of_birth.month.padStart(2, "0")}-${formData.date_of_birth.day.padStart(2, "0")}`;
       }
-  
-    
-      const dataToSubmit = {
-        ...formData,
-        company_id: companyId,  
-        date_of_birth: formattedDob || null,
-        confirm_password: formData.confirm_password,
-        confirm_email: formData.confirm_email,
-      };
-  
-      console.log("Sending data:", dataToSubmit);
-  
-      const response = await axios.post(`${BASE_URL}/company/users/create/`, dataToSubmit);
-  
-      // ✅ Handle success
+      
+      // Create a FormData object
+      const formDataToSubmit = new FormData();
+      
+      // Add all the text fields
+      formDataToSubmit.append('company_id', companyId);
+      formDataToSubmit.append('username', formData.username);
+      formDataToSubmit.append('first_name', formData.first_name);
+      formDataToSubmit.append('last_name', formData.last_name);
+      formDataToSubmit.append('password', formData.password);
+      formDataToSubmit.append('confirm_password', formData.confirm_password);
+      formDataToSubmit.append('gender', formData.gender);
+      formDataToSubmit.append('date_of_birth', formattedDob);
+      formDataToSubmit.append('address', formData.address);
+      formDataToSubmit.append('city', formData.city);
+      formDataToSubmit.append('zip_po_box', formData.zip_po_box);
+      formDataToSubmit.append('province_state', formData.province_state);
+      formDataToSubmit.append('country', formData.country);
+      formDataToSubmit.append('department_division', formData.department_division);
+      formDataToSubmit.append('email', formData.email);
+      formDataToSubmit.append('confirm_email', formData.confirm_email);
+      formDataToSubmit.append('phone', formData.phone);
+      formDataToSubmit.append('office_phone', formData.office_phone);
+      formDataToSubmit.append('mobile_phone', formData.mobile_phone);
+      formDataToSubmit.append('fax', formData.fax);
+      formDataToSubmit.append('secret_question', formData.secret_question);
+      formDataToSubmit.append('answer', formData.answer);
+      formDataToSubmit.append('notes', formData.notes);
+      formDataToSubmit.append('status', formData.status);
+      
+      // Add the permissions as an array
+      selectedPermissions.forEach((permission) => {
+        formDataToSubmit.append('permissions', permission);
+      });
+      
+      // Add the file if it exists
+      if (formData.user_logo) {
+        formDataToSubmit.append('user_logo', formData.user_logo);
+      }
+      
+      console.log("Sending data:", formDataToSubmit); // Debugging
+      
+      const response = await axios.post(`${BASE_URL}/company/users/create/`, formDataToSubmit, {
+        headers: { "Content-Type": "multipart/form-data" }  // Important for file uploads
+      });
+      
       if (response.status === 201) {
-        console.log("Added User", response.data);
+        console.log("User added successfully", response.data);
         toast.success("User added successfully!");
         navigate("/company/qms/listuser");
       }
     } catch (err) {
       console.error("Error saving user:", err);
       toast.error("Failed to add user");
+      if (err.response && err.response.data) {
+        setError(err.response.data.message || "Failed to add user");
+      } else {
+        setError("Failed to add user. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
   };
-  
-  
+
   return (
     <div className="bg-[#1C1C24]">
       <Toaster position="top-center" />
@@ -355,7 +454,7 @@ const AddUser = () => {
               className="w-full add-user-inputs"
             />
           </div>
-          <div></div> {/* Empty div for alignment (removed business sector) */}
+          <div></div> {/* Empty div for alignment */}
 
           <div>
             <label className="add-user-label">Country <span className='required-field'>*</span></label>
@@ -493,63 +592,38 @@ const AddUser = () => {
             </div>
           </div>
 
-          {/* <div className="md:col-span-2">
-            <label className="permissions-texts cursor-pointer">Permissions</label>
-            <div className="flex flex-wrap gap-5 mt-3">
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  name="quality"
-                  // checked={formData.permissions.quality}
-                  // onChange={handleChange}
-                  className="mr-2 form-checkboxes"
-                />
-                <span className="permissions-texts cursor-pointer">QUALITY</span>
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  name="environment"
-                  // checked={formData.permissions.environment}
-                  // onChange={handleChange}
-                  className="mr-2 form-checkboxes"
-                />
-                <span className="permissions-texts cursor-pointer">ENVIRONMENT</span>
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  name="healthAndSafety"
-                  // checked={formData.permissions.healthAndSafety}
-                  // onChange={handleChange}
-                  className="mr-2 form-checkboxes"
-                />
-                <span className="permissions-texts cursor-pointer whitespace-nowrap">HEALTH AND SAFETY</span>
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  name="energy"
-                  // checked={formData.permissions.energy}
-                  // onChange={handleChange}
-                  className="mr-2 form-checkboxes"
-                />
-                <span className="permissions-texts cursor-pointer">ENERGY</span>
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  name="iso"
-                  // checked={formData.permissions.iso}
-                  // onChange={handleChange}
-                  className="mr-2 form-checkboxes"
-                />
-                <span className="permissions-texts cursor-pointer">ISO</span>
-              </label>
-            </div>
-          </div> */}
-        </div>
+          <div className='flex items-end'>
+          <input 
+  type="file"
+  name="user_logo"
+  onChange={handleFileChange}
+  className="h-[49px] border-0 bg-[#24242D] text-white"
+/>
+          </div>
 
+          <div className="md:col-span-2">
+            <label className="permissions-texts cursor-pointer">Permissions <span className='required-field'>*</span></label>
+            <div className="flex flex-wrap gap-5 mt-3">
+              {companyPermissions && companyPermissions.length > 0 ? (
+                companyPermissions.map((permission) => (
+                  <label key={permission} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="permissions"
+                      value={permission}
+                      checked={selectedPermissions.includes(permission)}
+                      onChange={handlePermissionChange}
+                      className="mr-2 form-checkboxes"
+                    />
+                    <span className="permissions-texts cursor-pointer">{permission}</span>
+                  </label>
+                ))
+              ) : (
+                <p className="text-yellow-500"> </p>
+              )}
+            </div>
+          </div>
+        </div>
 
         <div className="flex justify-end gap-[22px] mt-5 mx-[122px] pb-[22px]">
           <button

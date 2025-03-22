@@ -650,7 +650,7 @@ const AddQmsPolicy = () => {
       }
 
       // Use the correct endpoint based on your API structure
-      const endpoint = '/company/documentation/create/';
+      const endpoint = '/company/policy-documents/';
 
       console.log("API URL:", `${BASE_URL}${endpoint}`);
       console.log("Request data:", Object.fromEntries(apiFormData.entries()));

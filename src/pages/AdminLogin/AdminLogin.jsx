@@ -41,12 +41,10 @@ const AdminLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!email || !password) {
       toast.error("Username and Password are required");
       return;
     }
-
     try {
       setLoading(true);
       console.log("Attempting to send request to backend...");
@@ -54,20 +52,20 @@ const AdminLogin = () => {
         email: email,
         password: password,
       });
-      console.log("Response:", response);
+      console.log("Full Response:", response);
       if (response.status === 200) {
-        const adminToken = response.data.access;
-        const expirationTime = 24 * 60 * 60 * 1000;
+        const { access, admin } = response.data;
+        const expirationTime = 24 * 60 * 60 * 1000; // 1 day
         const logoutTime = new Date().getTime() + expirationTime;
-
-        localStorage.setItem("adminAuthToken", adminToken);
+        // Store admin details in localStorage
+        localStorage.setItem("adminAuthToken", access);
         localStorage.setItem("logoutTime", logoutTime);
-
+        localStorage.setItem("adminDetails", JSON.stringify(admin)); // Store admin details
+        console.log("Stored Admin Details:", JSON.parse(localStorage.getItem("adminDetails")));
         toast.success("Admin Login Success");
         setTimeout(() => {
           navigate("/admin/dashboard");
         }, 500);
-
       } else {
         throw new Error(response.data.error || "Login failed");
       }
@@ -77,14 +75,14 @@ const AdminLogin = () => {
         toast.error("Invalid username or password");
       } else {
         toast.error(
-          error.message ||
-          "An error occurred during login. Please try again later."
+          error.message || "An error occurred during login. Please try again later."
         );
       }
     } finally {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     const adminToken = localStorage.getItem("adminAuthToken");

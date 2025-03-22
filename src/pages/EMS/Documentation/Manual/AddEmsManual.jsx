@@ -94,7 +94,7 @@ const AddEmsManual = () => {
       }
     } catch (error) {
       console.error("Error fetching users:", error);
-      setError("Failed to load users. Please check your connection and try again.");
+      setError("Failed to load manuals. Please check your connection and try again.");
     }
   };
 
@@ -220,7 +220,7 @@ const AddEmsManual = () => {
 
       setLoading(false);
       alert('Manual added successfully!');
-      navigate('/company/qms/manual');
+      navigate('/company/ems/manual');
     } catch (err) {
       setLoading(false);
       setError('Failed to save manual');

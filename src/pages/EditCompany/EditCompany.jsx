@@ -40,7 +40,7 @@ const EditCompany = () => {
   // Password modal state
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [passwordData, setPasswordData] = useState({
-    currentPassword: "",
+    
     newPassword: "",
     confirmPassword: ""
   });
@@ -195,7 +195,7 @@ const EditCompany = () => {
     }
 
     // Or debug the permissions specifically before submission
-    console.log('Permissions being sent:', formDataState.permissions);
+    console.log('Permissions being sentvvvvvvvvvvvvvvvv:', formDataState.permissions);
     console.log('Permissions JSON:', JSON.stringify(formDataState.permissions));
 
     try {
@@ -230,6 +230,9 @@ const EditCompany = () => {
     // Clear error when user types
     if (passwordError) setPasswordError("");
   };
+ 
+
+  
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
@@ -240,17 +243,11 @@ const EditCompany = () => {
       return;
     }
 
-    if (passwordData.newPassword.length < 6) {
-      setPasswordError("Password must be at least 6 characters");
-      return;
-    }
-
     try {
-      // Example API call - adjust to your actual endpoint
-      const response = await axios.post(
-        `${BASE_URL}/accounts/companies/change-password/${companyId}/`,
+      const response = await axios.put(
+        `${BASE_URL}/accounts/admin-company/change-password/${companyId}/`,
         {
-          current_password: passwordData.currentPassword,
+              
           new_password: passwordData.newPassword
         }
       );
@@ -258,16 +255,11 @@ const EditCompany = () => {
       if (response.status === 200) {
         toast.success("Password changed successfully!");
         setIsPasswordModalOpen(false);
-        // Reset password form data
-        setPasswordData({
-          currentPassword: "",
-          newPassword: "",
-          confirmPassword: ""
-        });
+        setPasswordData({  newPassword: "", confirmPassword: "" });
       }
     } catch (error) {
       console.error("Error changing password:", error);
-      setPasswordError(error.response?.data?.message || "Failed to change password");
+      setPasswordError(error.response?.data?.error || "Failed to change password");
       toast.error("Failed to change password. Please try again.");
     }
   };
@@ -388,6 +380,17 @@ const EditCompany = () => {
                   type="email"
                   id="email_address"
                   value={formDataState.email_address}
+                  onChange={handleInputChange}
+                  className="w-full text-sm focus:outline-none editcmpyinput"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="user_id">Company Username *</label>
+                <input
+                  type="text"
+                  id="user_id"
+                  value={formDataState.user_id}
                   onChange={handleInputChange}
                   className="w-full text-sm focus:outline-none editcmpyinput"
                   required
@@ -565,7 +568,9 @@ const EditCompany = () => {
                     {passwordError}
                   </motion.div>
                 )}
-
+                <div className="mb-4">
+                  
+                </div>
                 <div className="mb-4">
                   <label htmlFor="newPassword" className="new-pswd-label">
                     New Password
@@ -577,7 +582,7 @@ const EditCompany = () => {
                       name="newPassword"
                       value={passwordData.newPassword}
                       onChange={handlePasswordChange}
-                      className="w-full p-2 border border-[#E9E9E9] rounded focus:outline-none new-pswd-inputs"
+                      className="w-full p-2 border border-[#E9E9E9] rounded focus:outline-none new-pswd-inputs text-white"
                       required
                     />
                     <button
@@ -610,7 +615,7 @@ const EditCompany = () => {
                       name="confirmPassword"
                       value={passwordData.confirmPassword}
                       onChange={handlePasswordChange}
-                      className="w-full border border-[#E9E9E9] rounded focus:outline-none confrm-paswd-inputs"
+                      className="w-full border border-[#E9E9E9] rounded focus:outline-none confrm-paswd-inputs text-white"
                       required
                     />
                     <button

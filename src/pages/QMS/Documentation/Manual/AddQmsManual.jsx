@@ -96,7 +96,7 @@ const AddQmsManual = () => {
             }
         } catch (error) {
             console.error("Error fetching users:", error);
-            setError("Failed to load users. Please check your connection and try again.");
+            setError("Failed to load manuals. Please check your connection and try again.");
         }
     };
 

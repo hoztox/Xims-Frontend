@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./companysidebar.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../../Utils/Config";
 
 const CompanySidebar = ({ setSelectedMenuItem }) => {
   const [activeItem, setActiveItem] = useState("QMS");
   const [hoveredItem, setHoveredItem] = useState(null);
+  const [companyPermissions, setCompanyPermissions] = useState([]);
   const navigate = useNavigate();
 
+  // Define menu items
   const menuItems = [
     { id: "QMS", label: "Quality Management System", shortLabel: "QMS", borderColor: "#858585", activeColor: "#858585" },
     { id: "EMS", label: "Environmental Management System", shortLabel: "EMS", borderColor: "#38E76C", activeColor: "#38E76C" },
@@ -17,23 +21,72 @@ const CompanySidebar = ({ setSelectedMenuItem }) => {
     { id: "IMS", label: "Integrated Management System", shortLabel: "IMS", borderColor: "#CBA301", activeColor: "#CBA301" },
   ];
 
+  const getUserCompanyId = () => {
+    // First check if company_id is stored directly
+    const storedCompanyId = localStorage.getItem("company_id");
+    if (storedCompanyId) return storedCompanyId;
+    // If user data exists with company_id
+    const userRole = localStorage.getItem("role");
+    if (userRole === "user") {
+      // Try to get company_id from user data that was stored during login
+      const userData = localStorage.getItem("user_company_id");
+      if (userData) {
+        try {
+          return JSON.parse(userData);  // Ensure it's valid JSON
+        } catch (e) {
+          console.error("Error parsing user company ID:", e);
+          return null;
+        }
+      }
+    }
+    return null;
+  };
+
+  // Fetch permissions from API
+  const fetchLatestPermissions = async () => {
+    try {
+      const companyId = getUserCompanyId();
+      if (!companyId) {
+        console.error("Company ID not found");
+        return;
+      }
+  
+      const response = await axios.get(`${BASE_URL}/accounts/permissions/${companyId}/`);
+      
+      console.log("Company API Response:", response.data);
+  
+      if (response.status === 200) {
+        console.log("fetchLatestPermissions response:", response.data);
+        
+ 
+        if (response.data && response.data.permissions && Array.isArray(response.data.permissions)) {
+          setCompanyPermissions(response.data.permissions);
+          console.log("Permissions set:", response.data.permissions);
+        } else {
+          console.error("Permissions not found or not in expected format");
+        }
+      }
+    } catch (err) {
+      console.error("Error fetching latest permissions:", err);
+    }
+  };
+useEffect(() => {
+   
+  fetchLatestPermissions();
+ 
+}, []);
+
+  // Filter menu items based on permissions
+  const filteredMenuItems = menuItems.filter((item) => companyPermissions.includes(item.id));
+
   const handleItemClick = (item) => {
-    // Check if this is a different menu item than the currently active one
     if (activeItem !== item.id) {
-      // Reset the active state in localStorage to "dashboard"
       localStorage.setItem("activeMainItem", "dashboard");
       localStorage.removeItem("activeSubItem");
-      
-      // Set the new active item
       setActiveItem(item.id);
-      
-      // Update the selected menu item in the parent component
       setSelectedMenuItem({ id: item.id, label: item.label, borderColor: item.borderColor });
-      
-      // Navigate to the dashboard page
       navigate("/company/dashboard");
     } else {
-      // If clicking the same item, just set it as active without resetting
       setActiveItem(item.id);
       setSelectedMenuItem({ id: item.id, label: item.label, borderColor: item.borderColor });
     }
@@ -41,12 +94,12 @@ const CompanySidebar = ({ setSelectedMenuItem }) => {
 
   return (
     <div className='w-[93px] bg-[#13131A] text-white h-screen flex flex-col gap-[2px] relative'>
-      {menuItems.map((item) => {
+      {filteredMenuItems.map((item) => {
         const isActive = activeItem === item.id;
         const isHovered = hoveredItem === item.id;
 
         return (
-          <div key={item.id} className="relative" 
+          <div key={item.id} className="relative"
             onMouseEnter={() => setHoveredItem(item.id)}
             onMouseLeave={() => setHoveredItem(null)}
           >

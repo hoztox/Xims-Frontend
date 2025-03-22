@@ -76,6 +76,11 @@ import AmsRecordFormat from "./pages/AMS/Documentation/Record Format/AmsRecordFo
 import AddAmsRecordFormat from "./pages/AMS/Documentation/Record Format/AddAmsRecordFormat";
 import EMSAdduser from "./pages/EMS/User Management/Add User/adduser";
 import EMSListUser from "./pages/EMS/User Management/List User/ListUser";
+import OHSAddUser from "./pages/OHS/User Management/Add User/OHSAddUser";
+import OHSListUser from "./pages/OHS/User Management/List User/OHSListUser";
+import EnmsAddUser from "./pages/EnMS/User Management/Add User/EnmsAddUser";
+import EnmsListUser from "./pages/EnMS/User Management/List User/EnmsListUser";
+
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -161,6 +166,9 @@ const ThemedApp = () => {
           <Route path="ohs/record-format" element={<OhsRecordFormat />} />
           <Route path="ohs/addrecordformat" element={<AddOhsRecordFormat />} />
 
+          <Route path="ohs/adduser" element={<OHSAddUser/>} />
+          <Route path="ohs/listuser" element={<OHSListUser/>} />
+
 
 
 
@@ -176,6 +184,9 @@ const ThemedApp = () => {
 
           <Route path="enms/record-format" element={<EnMSRecordFormat />} />
           <Route path="enms/addrecordformat" element={<AddEnMSRecordFormat />} />
+
+          <Route path="enms/adduser" element={<EnmsAddUser/>} />
+          <Route path="enms/listuser" element={<EnmsListUser/>} />
 
 
 
