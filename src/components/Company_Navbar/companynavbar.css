@@ -99,6 +99,14 @@
     background-color: #13131A;
   }
 
+  .company-navbar.dark .change-pswd-img {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(132deg) brightness(103%) contrast(103%);
+  }
+
+  .cmpy-nav-menu, .change-profile {
+    font-family: 'Switzer Light'; 
+  }
+
   
 
 /* Default filter (gray) */

@@ -161,14 +161,11 @@ const QmsPolicy = () => {
         <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
           {filteredPolicies.length > 0 ? (
             filteredPolicies.map((policy) => (
-              <div key={policy.id} className="px-5 pt-6 pb-5 border-b border-gray-700 flex justify-between items-center last:border-b-0">
+              <div key={policy.id} className="px-5 pt-6 pb-5 border-b border-gray-700 flex justify-start space-x-[50px] items-center last:border-b-0">
                 <div className="flex items-center gap-[50px]">
                   <div className='gap-[15px] flex flex-col max-w-xl'>
                     <span className="policy-name text-[#858585] truncate">
-                      {policy.text.startsWith('<') ? 
-                        <span dangerouslySetInnerHTML={createMarkup(policy.text)} /> : 
-                        policy.text
-                      }
+                      Quality Policy
                     </span>
                     <div className="flex gap-4">
                       <button 
@@ -179,7 +176,7 @@ const QmsPolicy = () => {
                         <img src={view} alt="View Icon" className='w-[16px] h-[16px]' />
                       </button>
                       
-                      {policy.energy_policy && (
+                      {/* {policy.energy_policy && (
                         <button 
                           className='flex justify-center items-center gap-2 text-green-400 hover:text-green-300 transition-colors' 
                           onClick={() => downloadFile(policy.energy_policy, getFileNameFromUrl(policy.energy_policy))}
@@ -187,12 +184,12 @@ const QmsPolicy = () => {
                           <p>Download File</p>
                           <Download className="w-[16px] h-[16px]" />
                         </button>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-[60px]">
                   <div className="flex flex-col items-center gap-[15px]">
                     <span className="actions-text">Edit</span>
                     <button onClick={() => handleEditPolicy(policy.id)}>

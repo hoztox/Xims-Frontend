@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { useTheme } from "../../ThemeContext";
 import "./navbar.css";
 import bell from "../../assets/images/Navbar/bell.svg";
-// import setting from "../../assets/images/Navbar/settings.svg";
 import profile from "../../assets/images/Navbar/profile.svg";
 import logo from "../../assets/images/logo.svg";
 import dashboardicon from "../../assets/images/Sidebar/dashboard.svg";
@@ -16,12 +15,11 @@ import dropdownicon from "../../assets/images/Navbar/dropdown.svg";
 import closeIcon from "../../assets/images/Navbar/closeicon.svg";
 import menuicons from "../../assets/images/Navbar/menu.svg";
 import navfooter from "../../assets/images/Navbar/navfooter.svg";
-import profileicon from "../../assets/images/Navbar/profile icon.svg";
-// Import SVG as regular images
 import sunIcon from "../../assets/images/Navbar/sun.svg";
 import moonIcon from "../../assets/images/Navbar/moon.svg";
 import { BASE_URL } from "../../Utils/Config";
 import axios from "axios";
+import AdminProfilePhotoModal from "./AdminProfilePhotoModal"; // Import the AdminProfilePhotoModal component
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -32,12 +30,28 @@ const Navbar = () => {
   const [isSubscribersOpen, setIsSubscribersOpen] = useState(false);
   const [isSubscriptionOpen, setIsSubscriptionOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const [activeMenu, setActiveMenu] = useState("Dashboard"); // Default active menu is 'Dashboard'
+  const [activeMenu, setActiveMenu] = useState("Dashboard");
+  const [notifications, setNotifications] = useState([]);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const notificationRef = useRef(null);
+  // State for profile photo modal
+  const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
+  const [profilePhoto, setProfilePhoto] = useState(profile); // Default to the imported profile
 
+  // Handle outside click to close notification dropdown
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (notificationRef.current && !notificationRef.current.contains(e.target)) {
+        setIsNotificationOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
-
-
-  // Handle outside click to close dropdown
+  // Handle outside click to close profile dropdown
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -54,9 +68,14 @@ const Navbar = () => {
     const fetchUserDetails = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/accounts/admins-detail/`);
-        // Check if the response has data and extract the email from the first object
+        console.log('Admin Details:', response.data);
+       
         if (response.data && response.data.length > 0) {
-          setUserEmail(response.data[0]?.email || ""); // Set email from the first object
+          setUserEmail(response.data[0]?.email || "");
+          // If the API returns a profile photo URL, update the state
+          if (response.data[0]?.profile_photo) {
+            setProfilePhoto(response.data[0].profile_photo);
+          }
         }
       } catch (error) {
         console.error("Error fetching user details:", error);
@@ -66,19 +85,104 @@ const Navbar = () => {
     fetchUserDetails();
   }, []);
   
+  // Fetch notifications
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/notifications/`);
+        setNotifications(response.data || []);
+      } catch (error) {
+        console.error("Error fetching notifications:", error);
+        setNotifications([
+          { id: 1, message: "New company registered", isRead: false, timestamp: "2024-03-22T10:30:00Z" },
+          { id: 2, message: "Subscription plan expired for XYZ Corp", isRead: false, timestamp: "2024-03-21T15:45:00Z" },
+          { id: 3, message: "New subscriber added", isRead: true, timestamp: "2024-03-20T09:15:00Z" }
+        ]);
+      }
+    };
+    
+    fetchNotifications();
+    
+    const interval = setInterval(fetchNotifications, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+  
+  const toggleNotifications = () => {
+    setIsNotificationOpen(!isNotificationOpen);
+    setIsDropdownOpen(false);
+  };
+  
   const toggleDropdowns = () => {
     setIsSubscribersOpen((prev) => !prev);
-    setIsSubscriptionOpen(false); // Close subscription dropdown when subscribers is opened
+    setIsSubscriptionOpen(false);
   };
 
   const toggleDropdownsubscription = () => {
     setIsSubscriptionOpen((prev) => !prev);
-    setIsSubscribersOpen(false); // Close subscribers dropdown when subscription is opened
+    setIsSubscribersOpen(false);
   };
+
+  const markNotificationAsRead = async (id) => {
+    try {
+      await axios.put(`${BASE_URL}/notifications/${id}/read/`);
+      
+      setNotifications(prev => 
+        prev.map(notif => 
+          notif.id === id ? { ...notif, isRead: true } : notif
+        )
+      );
+    } catch (error) {
+      console.error("Error marking notification as read:", error);
+      setNotifications(prev => 
+        prev.map(notif => 
+          notif.id === id ? { ...notif, isRead: true } : notif
+        )
+      );
+    }
+  };
+  
+  const markAllNotificationsAsRead = async () => {
+    try {
+      await axios.put(`${BASE_URL}/notifications/read-all/`);
+      
+      setNotifications(prev => 
+        prev.map(notif => ({ ...notif, isRead: true }))
+      );
+    } catch (error) {
+      console.error("Error marking all notifications as read:", error);
+      setNotifications(prev => 
+        prev.map(notif => ({ ...notif, isRead: true }))
+      );
+    }
+  };
+  
+  const handleNotificationClick = (id, link) => {
+    markNotificationAsRead(id);
+    setIsNotificationOpen(false);
+    if (link) navigate(link);
+  };
+
+  const formatNotificationTime = (timestamp) => {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffInHours = Math.floor((now - date) / (1000 * 60 * 60));
+    
+    if (diffInHours < 1) {
+      const diffInMinutes = Math.floor((now - date) / (1000 * 60));
+      return `${diffInMinutes} min ago`;
+    } else if (diffInHours < 24) {
+      return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
+    } else {
+      const diffInDays = Math.floor(diffInHours / 24);
+      return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
+    }
+  };
+
+  const unreadCount = notifications.filter(n => !n.isRead).length;
 
   const handleLogout = () => {
     localStorage.removeItem("adminAuthToken");
@@ -89,25 +193,58 @@ const Navbar = () => {
   const handleChangePassword = () => {
     navigate("/changepassword");
   };
+  
+  // Open the profile photo modal
+  const handleChangeProfilePhoto = () => {
+    setIsPhotoModalOpen(true);
+    setIsDropdownOpen(false); // Close the dropdown when opening the modal
+  };
+  
+  // Handle photo upload success
+  const handlePhotoUploadSuccess = (newPhotoUrl) => {
+    setProfilePhoto(newPhotoUrl);
+    // Optionally refetch user details to ensure sync with backend
+    fetchUserDetails();
+  };
+  
+  // Close the photo modal
+  const handleClosePhotoModal = () => {
+    setIsPhotoModalOpen(false);
+  };
+  
+  // Fetch user details function for reuse
+  const fetchUserDetails = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/accounts/admins-detail/`);
+      
+      if (response.data && response.data.length > 0) {
+        setUserEmail(response.data[0]?.email || "");
+        // If the API returns a profile photo URL, update the state
+        if (response.data[0]?.profile_photo) {
+          setProfilePhoto(response.data[0].profile_photo);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    }
+  };
 
   const handleItemClick = (path) => {
     setIsDropdownOpen(false);
     navigate(path);
   };
 
-  // Trigger rotation on theme change
   const handleThemeToggle = () => {
     setIsRotating(true);
     toggleTheme();
   };
 
-  // Reset rotation animation after it's completed
   useEffect(() => {
     if (isRotating) {
       const timer = setTimeout(() => {
         setIsRotating(false);
-      }, 600); // Match the duration of the animation
-      return () => clearTimeout(timer); // Cleanup timer
+      }, 600);
+      return () => clearTimeout(timer);
     }
   }, [isRotating]);
 
@@ -116,7 +253,7 @@ const Navbar = () => {
   };
 
   const handleMenuClick = (menu) => {
-    setActiveMenu(menu); // Set the active menu when a menu item is clicked
+    setActiveMenu(menu);
   };
 
   return (
@@ -151,22 +288,90 @@ const Navbar = () => {
             className={`theme-icon ${isRotating ? "rotate" : ""}`}
           />
         </button>
-        <button
-          aria-label="Notifications"
-          className={`icon-button bellicon ${
-            theme === "dark" ? "dark" : "light"
-          } duration-200`}
-        >
-          <img src={bell} alt="bell icon" className="bellimg" />
-        </button>
-        {/* <button
-          aria-label="Settings"
-          className={`icon-button settingicon ${
-            theme === "dark" ? "dark" : "light"
-          } duration-200`}
-        >
-          <img src={setting} alt="setting icon" className="settingimg" />
-        </button> */}
+        
+        {/* Notification Bell with Badge */}
+        <div className="relative" ref={notificationRef}>
+          <button
+            aria-label="Notifications"
+            className={`icon-button bellicon ${
+              theme === "dark" ? "dark" : "light"
+            } duration-200 relative`}
+            onClick={toggleNotifications}
+          >
+            <img src={bell} alt="bell icon" className="bellimg" />
+            {unreadCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                {unreadCount > 9 ? '9+' : unreadCount}
+              </span>
+            )}
+          </button>
+          
+          {/* Notification Dropdown */}
+          <div
+            className={`notification-dropdown absolute right-0 mt-2 shadow-lg rounded-lg w-72 z-10 ${
+              isNotificationOpen ? "" : "hidden"
+            } ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-gray-800"}`}
+          >
+            <div className="p-3 border-b border-[#343434] flex justify-between items-center">
+              <h3 className="font-semibold">Notifications</h3>
+              {unreadCount > 0 && (
+                <button 
+                  className="text-xs text-blue-500 hover:text-blue-700"
+                  onClick={markAllNotificationsAsRead}
+                >
+                  Mark all as read
+                </button>
+              )}
+            </div>
+            
+            <div className="max-h-80 overflow-y-auto">
+              {notifications.length === 0 ? (
+                <div className="p-4 text-center text-gray-500">
+                  No notifications yet
+                </div>
+              ) : (
+                notifications.map((notification) => (
+                  <div 
+                    key={notification.id} 
+                    className={`p-3 border-b border-[#343434] hover:bg-gray-700 cursor-pointer ${
+                      notification.isRead 
+                        ? theme === "dark" ? "text-gray-400" : "text-gray-600" 
+                        : theme === "dark" ? "bg-gray-700" : "bg-blue-50"
+                    } ${theme === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-100"}`}
+                    onClick={() => handleNotificationClick(notification.id, notification.link)}
+                  >
+                    <div className="flex items-start">
+                      <div className="flex-grow">
+                        <p className={`text-sm ${!notification.isRead && "font-semibold"}`}>
+                          {notification.message}
+                        </p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {formatNotificationTime(notification.timestamp)}
+                        </p>
+                      </div>
+                      {!notification.isRead && (
+                        <span className="h-2 w-2 bg-blue-500 rounded-full mt-1"></span>
+                      )}
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+            
+            <div className="p-2 text-center border-t border-[#343434]">
+              <button 
+                className="text-sm text-blue-500 hover:underline"
+                onClick={() => {
+                  navigate("/admin/all-notifications");
+                  setIsNotificationOpen(false);
+                }}
+              >
+                View all notifications
+              </button>
+            </div>
+          </div>
+        </div>
+        
         <div
           className={`divider ${
             theme === "dark" ? "dark" : "light"
@@ -179,9 +384,9 @@ const Navbar = () => {
             onClick={toggleDropdown}
           >
             <img
-              src={profile}
+              src={profilePhoto}
               alt="Profile Avatar"
-              className="w-10 h-10 rounded-full profileicon"
+              className="w-10 h-10 rounded-full profileicon object-cover"
             />
             <button
               aria-label="Dashboard"
@@ -210,19 +415,30 @@ const Navbar = () => {
 
           <div
             ref={dropdownRef}
-            className={`dropdown-menu absolute right-0 mt-2 shadow-lg rounded-lg w-48 ${
+            className={`dropdown-menu absolute right-0 mt-2 shadow-lg rounded-lg w-56 ${
               isDropdownOpen ? "show" : ""
             } ${theme === "dark" ? "dark" : "light"}`}
           >
             <ul className="py-2 changpswdlogout">
-              {/* <li
-              className="px-4 py-2 cursor-pointer text-sm chngepaswd md:flex md:gap-4"
-              >
-                <img src={profileicon} alt="" className="w-6 desktopprofileicon" />
-                Profile
-              </li> */}
+              {/* Profile Photo Section */}
+              <li className="px-4 py-4 text-center border-b border-[#343434]">
+                <div className="flex flex-col items-center">
+                  <img
+                    src={profilePhoto}
+                    alt="Profile"
+                    className="w-16 h-16 rounded-full mb-2 border-2 border-gray-200 object-cover"
+                  />
+                  <button 
+                    className="text-sm text-[#1E4DA1] hover:text-[#1f3c6e] mt-1 mb-2"
+                    onClick={handleChangeProfilePhoto}
+                  >
+                    Change Profile Photo
+                  </button>
+                </div>
+              </li>
+              
               <li
-                className="px-4 py-2 cursor-pointer text-sm chngepaswd md:flex md:gap-4"
+                className="px-4 py-2 cursor-pointer text-sm chngepaswd md:flex md:gap-4 mt-2"
                 onClick={handleChangePassword}
               >
                 <img src={changepswd} alt="" className="desktopchangepswdimg" />
@@ -400,6 +616,14 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      
+      {/* Profile Photo Modal */}
+      <AdminProfilePhotoModal 
+        isOpen={isPhotoModalOpen}
+        onClose={handleClosePhotoModal}
+        onSuccess={handlePhotoUploadSuccess}
+        currentPhoto={profilePhoto}
+      />
     </div>
   );
 };
