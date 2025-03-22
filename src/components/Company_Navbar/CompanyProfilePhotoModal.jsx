@@ -53,7 +53,7 @@ const CompanyProfilePhotoModal = ({ isOpen, onClose, onSave, currentProfilePic, 
         const formData = new FormData();
         formData.append('logo', file);
         
-        // Make API call to update profile logo
+         
         const result = await axios.put(`${BASE_URL}/accounts/edit-logo/${companyId}/`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
